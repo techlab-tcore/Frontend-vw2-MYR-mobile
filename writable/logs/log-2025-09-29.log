@@ -1,0 +1,32 @@
+CRITICAL - 2025-09-29 16:12:00 --> array_column() expects parameter 1 to be array, null given
+in APPPATH/Controllers/Game_control.php on line 1060.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 APPPATH/Controllers/Game_control.php(1060): array_column()
+ 3 SYSTEMPATH/CodeIgniter.php(898): App\Controllers\Game_control->exslotGamesList()
+ 4 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 6 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-29 16:12:02 --> array_column() expects parameter 1 to be array, null given
+in APPPATH/Controllers/Game_control.php on line 958.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 APPPATH/Controllers/Game_control.php(958): array_column()
+ 3 SYSTEMPATH/CodeIgniter.php(898): App\Controllers\Game_control->slotGamesList()
+ 4 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 6 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-29 16:12:10 --> array_column() expects parameter 1 to be array, null given
+in APPPATH/Controllers/Game_control.php on line 958.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 APPPATH/Controllers/Game_control.php(958): array_column()
+ 3 SYSTEMPATH/CodeIgniter.php(898): App\Controllers\Game_control->slotGamesList()
+ 4 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 6 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-29 16:25:01 --> array_column() expects parameter 1 to be array, null given
+in APPPATH/Controllers/Game_control.php on line 1060.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 APPPATH/Controllers/Game_control.php(1060): array_column()
+ 3 SYSTEMPATH/CodeIgniter.php(898): App\Controllers\Game_control->exslotGamesList()
+ 4 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 5 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 6 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()

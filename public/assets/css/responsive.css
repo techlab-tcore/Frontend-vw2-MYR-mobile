@@ -1,0 +1,769 @@
+/**
+Copyright 2019
+**/
+
+/* Portrait */
+@media screen and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)
+{
+    ::-webkit-scrollbar { display: none; }
+    main{ margin-top: 0px; padding-bottom: 70px; }
+    footer { padding-bottom: 82px; }
+
+    .navbar-brand {
+        width: 26% !important;
+        margin-right: 0;
+    }
+
+    .announcementBar {
+        font-size: .8rem;
+        padding: 0;
+    }
+
+    .navbar-toggler i {
+        font-size: 2rem;
+    }
+
+    .outter {
+        padding: 0;
+    }
+
+    .btn-float-fw {
+        width: 20%;
+        height: 85px;
+    }
+
+    .btn-float-angpow {
+        width: 35%;
+        display: none;
+    }
+
+    .wrap-jackpot figure {
+        width: 100%;
+        padding-top: 1rem;
+    }
+
+    .wrap-jackpot .jackpotAmount {
+        font-size: 3rem;
+    }
+
+    .wrap-bigJackpot .img-default {
+        width: 100%;
+    }
+
+    .wrap-bigJackpot figure {
+        width: 100%
+    }
+
+    .wrap-bigJackpot .btn-close-bigPrize {
+        width: 15%;
+        top: 33%;
+        right: 3%;
+    }
+
+    .wrap-bigJackpot .jackpotAmount {
+        font-size: 2rem;
+    }
+
+    .wrap-bigJackpot .instructions {
+        height: 68px;
+        bottom: 17%;
+        padding: 1.5rem 1rem 1rem 1rem;
+        font-size: .8rem;
+        line-height: 16px;
+        font-weight: 400;
+    }
+
+    .wrap-bigJackpot .instructions.my {
+        font-size: .7rem;
+    }
+
+    .wrap-bigJackpot .instructions.zh {
+        font-size: 1rem;
+        line-height: 15px;
+        padding: 2rem 1rem 1rem 1rem;
+    }
+
+    .wrap-bigJackpot .jackpotPass {
+        padding-right: 2rem;
+        font-size: 1rem;
+        line-height: 37px;
+        width: 170px;
+        height: 34px;
+        bottom: 3%;
+        right: 2%;
+    }
+
+    .wrap-bigJackpot .btn-service {
+        width: 50%;
+        bottom: 3%;
+    }
+
+    .mobile-lang .dropdown-toggle::after {
+        display: none;
+    }
+
+    .btn-float.angpow {
+        width: 35%;
+    }
+
+    .btn-spin {
+        width: 70px;
+        height: 70px;
+        margin: -100px 0 0 -35px !important;
+    }
+
+    .game-menu {
+        height: 4rem;
+        width: -webkit-calc(20% * 8);
+        width: calc(20% * 8);
+    }
+
+    .game-menu a > i {
+        max-width: 50px;
+    }
+
+    .promoSubject {
+        font-size: 1rem;
+    }
+
+    .wrap-float-widget .btn-float-content {
+        width: 80px;
+    }
+
+    .btn-profileWallet.cn .btn-sm {
+        padding: 0.15rem 0.5rem !important;
+        font-size: .8rem !important;
+    }
+
+    .regi-mobile-code {
+        font-size: 0.8rem;
+        max-width: 55%;
+    }
+
+    .btn-regis-login {
+        margin-bottom: 0rem
+    }
+}
+
+/* Landscape */
+@media screen and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)
+{
+}
+
+/* ----------- Android ----------- */
+
+/* Portrait */
+@media only screen and (min-device-width: 360px) and (max-device-width: 846px) and (orientation: portrait)
+{
+    ::-webkit-scrollbar { display: none; }
+    main{ margin-top: 0px; padding-bottom: 70px; }
+    footer { padding-bottom: 82px; }
+
+    .navbar-brand {
+        width: 26% !important;
+        margin-right: 0;
+    }
+
+    .announcementBar {
+        font-size: .8rem;
+        padding: 0;
+    }
+
+    .navbar-toggler i {
+        font-size: 2rem;
+    }
+
+    .outter {
+        padding: 0;
+    }
+
+    .btn-float-fw {
+        width: 20%;
+        height: 85px;
+    }
+
+    .btn-float-angpow {
+        width: 35%;
+        display: none;
+    }
+
+    .wrap-jackpot figure {
+        width: 100%;
+        padding-top: 1rem;
+    }
+
+    .wrap-jackpot .jackpotAmount {
+        font-size: 3rem;
+    }
+
+    .wrap-bigJackpot .img-default {
+        width: 100%;
+    }
+
+    .wrap-bigJackpot figure {
+        width: 100%
+    }
+
+    .wrap-bigJackpot .btn-close-bigPrize {
+        width: 15%;
+        top: 33%;
+        right: 3%;
+    }
+
+    .wrap-bigJackpot .jackpotAmount {
+        font-size: 2rem;
+    }
+
+    .wrap-bigJackpot .instructions {
+        height: 68px;
+        bottom: 17%;
+        padding: 1.5rem 1rem 1rem 1rem;
+        font-size: .8rem;
+        line-height: 16px;
+        font-weight: 400;
+    }
+
+    .wrap-bigJackpot .instructions.my {
+        font-size: .7rem;
+    }
+
+    .wrap-bigJackpot .instructions.zh {
+        font-size: 1rem;
+        line-height: 15px;
+        padding: 2rem 1rem 1rem 1rem;
+    }
+
+    .wrap-bigJackpot .jackpotPass {
+        padding-right: 2rem;
+        font-size: 1rem;
+        line-height: 37px;
+        width: 170px;
+        height: 34px;
+        bottom: 3%;
+        right: 2%;
+    }
+
+    .wrap-bigJackpot .btn-service {
+        width: 50%;
+        bottom: 3%;
+    }
+
+    .mobile-lang .dropdown-toggle::after {
+        display: none;
+    }
+
+    .btn-float.angpow {
+        width: 35%;
+    }
+
+    .btn-spin {
+        width: 70px;
+        height: 70px;
+        margin: -38px 0 0 -35px !important;
+    }
+
+    .game-menu {
+        height: 4rem;
+        width: -webkit-calc(20% * 8);
+        width: calc(20% * 8);
+    }
+
+    .game-menu a > i {
+        max-width: 50px;
+    }
+
+    .promoSubject {
+        font-size: 1rem;
+    }
+
+    .wrap-float-widget {
+        bottom: 30%;
+    }
+
+    .wrap-float-widget .btn-float-content {
+        width: 60px;
+    }
+
+    .btn-profileWallet.cn .btn-sm {
+        padding: 0.15rem 0.5rem !important;
+        font-size: .8rem !important;
+    }
+
+    .regi-mobile-code {
+        font-size: 0.8rem;
+        max-width: 55%;
+    }
+
+    .btn-regis-login {
+        margin-bottom: 0rem
+    }
+}
+
+/* Landscape */
+@media only screen and (min-device-width: 360px) and (max-device-width: 846px) and (orientation: landscape)
+{ 
+}
+
+/* ----------- iPhone 6, 6S, 7 and 8 ----------- */
+
+/* Portrait */
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)
+{
+    ::-webkit-scrollbar { display: none; }
+    main{ margin-top: 0px; padding-bottom: 70px; }
+    footer { padding-bottom: 82px; }
+
+    .navbar-brand {
+        width: 26% !important;
+        margin-right: 0;
+    }
+
+    .announcementBar {
+        font-size: .8rem;
+        padding: 0;
+    }
+
+    .navbar-toggler i {
+        font-size: 2rem;
+    }
+
+    .outter {
+        padding: 0;
+    }
+
+    .btn-float-fw {
+        width: 20%;
+        height: 85px;
+    }
+
+    .btn-float-angpow {
+        width: 35%;
+        display: none;
+    }
+
+    .wrap-jackpot figure {
+        width: 100%;
+        padding-top: 1rem;
+    }
+
+    .wrap-jackpot .jackpotAmount {
+        font-size: 3rem;
+    }
+
+    .wrap-bigJackpot .img-default {
+        width: 100%;
+    }
+
+    .wrap-bigJackpot figure {
+        width: 100%
+    }
+
+    .wrap-bigJackpot .btn-close-bigPrize {
+        width: 15%;
+        top: 33%;
+        right: 3%;
+    }
+
+    .wrap-bigJackpot .jackpotAmount {
+        font-size: 2rem;
+    }
+
+    .wrap-bigJackpot .instructions {
+        height: 68px;
+        bottom: 17%;
+        padding: 1.5rem 1rem 1rem 1rem;
+        font-size: .8rem;
+        line-height: 16px;
+        font-weight: 400;
+    }
+
+    .wrap-bigJackpot .instructions.my {
+        font-size: .7rem;
+    }
+
+    .wrap-bigJackpot .instructions.zh {
+        font-size: 1rem;
+        line-height: 15px;
+        padding: 2rem 1rem 1rem 1rem;
+    }
+
+    .wrap-bigJackpot .jackpotPass {
+        padding-right: 2rem;
+        font-size: 1rem;
+        line-height: 37px;
+        width: 170px;
+        height: 34px;
+        bottom: 3%;
+        right: 2%;
+    }
+
+    .wrap-bigJackpot .btn-service {
+        width: 50%;
+        bottom: 3%;
+    }
+
+    .mobile-lang .dropdown-toggle::after {
+        display: none;
+    }
+
+    .btn-float.angpow {
+        width: 35%;
+    }
+
+    .btn-spin {
+        width: 70px;
+        height: 70px;
+        margin: -38px 0 0 -35px !important;
+    }
+
+    .game-menu {
+        height: 4rem;
+        width: -webkit-calc(20% * 8);
+        width: calc(20% * 8);
+    }
+
+    .game-menu a > i {
+        max-width: 50px;
+    }
+
+    .promoSubject {
+        font-size: 1rem;
+    }
+
+    .wrap-float-widget {
+        bottom: 30%;
+    }
+
+    .wrap-float-widget .btn-float-content {
+        width: 60px;
+    }
+
+    .btn-profileWallet.cn .btn-sm {
+        padding: 0.15rem 0.5rem !important;
+        font-size: .8rem !important;
+    }
+
+    .regi-mobile-code {
+        font-size: 0.8rem;
+        max-width: 55%;
+    }
+
+    .btn-regis-login {
+        margin-bottom: 0rem
+    }
+}
+
+/* Landscape */
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape)
+{ 
+
+}
+
+/* ----------- iPhone 6+, 7+ and 8+ ----------- */
+
+/* Portrait */
+@media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait)
+{ 
+    ::-webkit-scrollbar { display: none; }
+    main{ margin-top: 0px; padding-bottom: 70px; }
+    footer { padding-bottom: 82px; }
+
+    .navbar-brand {
+        width: 26% !important;
+        margin-right: 0;
+    }
+
+    .announcementBar {
+        font-size: .8rem;
+        padding: 0;
+    }
+
+    .navbar-toggler i {
+        font-size: 2rem;
+    }
+
+    .outter {
+        padding: 0;
+    }
+
+    .btn-float-fw {
+        width: 20%;
+        height: 85px;
+    }
+
+    .btn-float-angpow {
+        width: 35%;
+        display: none;
+    }
+
+    .wrap-jackpot figure {
+        width: 100%;
+        padding-top: 1rem;
+    }
+
+    .wrap-jackpot .jackpotAmount {
+        font-size: 3rem;
+    }
+
+    .wrap-bigJackpot .img-default {
+        width: 100%;
+    }
+
+    .wrap-bigJackpot figure {
+        width: 100%
+    }
+
+    .wrap-bigJackpot .btn-close-bigPrize {
+        width: 15%;
+        top: 33%;
+        right: 3%;
+    }
+
+    .wrap-bigJackpot .jackpotAmount {
+        font-size: 2rem;
+    }
+
+    .wrap-bigJackpot .instructions {
+        height: 68px;
+        bottom: 17%;
+        padding: 1.5rem 1rem 1rem 1rem;
+        font-size: .8rem;
+        line-height: 16px;
+        font-weight: 400;
+    }
+
+    .wrap-bigJackpot .instructions.my {
+        font-size: .7rem;
+    }
+
+    .wrap-bigJackpot .instructions.zh {
+        font-size: 1rem;
+        line-height: 15px;
+        padding: 2rem 1rem 1rem 1rem;
+    }
+
+    .wrap-bigJackpot .jackpotPass {
+        padding-right: 2rem;
+        font-size: 1rem;
+        line-height: 37px;
+        width: 170px;
+        height: 34px;
+        bottom: 3%;
+        right: 2%;
+    }
+
+    .wrap-bigJackpot .btn-service {
+        width: 50%;
+        bottom: 3%;
+    }
+
+    .mobile-lang .dropdown-toggle::after {
+        display: none;
+    }
+
+    .btn-float.angpow {
+        width: 35%;
+    }
+
+    .btn-spin {
+        width: 70px;
+        height: 70px;
+        margin: -80px 0 0 -35px !important;
+    }
+
+    .game-menu {
+        height: 4rem;
+        width: -webkit-calc(20% * 8);
+        width: calc(20% * 8);
+    }
+
+    .game-menu a > i {
+        max-width: 50px;
+    }
+
+    .promoSubject {
+        font-size: 1rem;
+    }
+
+    .wrap-float-widget {
+        bottom: 30%;
+    }
+
+    .wrap-float-widget .btn-float-content {
+        width: 60px;
+    }
+
+    .btn-profileWallet.cn .btn-sm {
+        padding: 0.15rem 0.5rem !important;
+        font-size: .8rem !important;
+    }
+
+    .regi-mobile-code {
+        font-size: 0.8rem;
+        max-width: 55%;
+    }
+
+    .btn-regis-login {
+        margin-bottom: 0rem
+    }
+}
+
+/* Landscape */
+@media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape)
+{ 
+
+}
+
+/* ----------- iPhone X ----------- */
+
+/* Portrait */
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait)
+{
+    ::-webkit-scrollbar { display: none; }
+    main{ margin-top: 0px; padding-bottom: 70px; }
+    footer { padding-bottom: 82px; }
+
+    .navbar-brand {
+        width: 26% !important;
+        margin-right: 0;
+    }
+
+    .announcementBar {
+        font-size: .8rem;
+        padding: 0;
+    }
+
+    .navbar-toggler i {
+        font-size: 2rem;
+    }
+
+    .outter {
+        padding: 0;
+    }
+
+    .btn-float-fw {
+        width: 20%;
+        height: 85px;
+    }
+
+    .btn-float-angpow {
+        width: 35%;
+        display: none;
+    }
+
+    .wrap-jackpot figure {
+        width: 100%;
+        padding-top: 1rem;
+    }
+
+    .wrap-jackpot .jackpotAmount {
+        font-size: 3rem;
+    }
+
+    .wrap-bigJackpot .img-default {
+        width: 100%;
+    }
+
+    .wrap-bigJackpot figure {
+        width: 100%
+    }
+
+    .wrap-bigJackpot .btn-close-bigPrize {
+        width: 15%;
+        top: 33%;
+        right: 3%;
+    }
+
+    .wrap-bigJackpot .jackpotAmount {
+        font-size: 2rem;
+    }
+
+    .wrap-bigJackpot .instructions {
+        height: 68px;
+        bottom: 17%;
+        padding: 1.5rem 1rem 1rem 1rem;
+        font-size: .8rem;
+        line-height: 16px;
+        font-weight: 400;
+    }
+
+    .wrap-bigJackpot .instructions.my {
+        font-size: .7rem;
+    }
+
+    .wrap-bigJackpot .instructions.zh {
+        font-size: 1rem;
+        line-height: 15px;
+        padding: 2rem 1rem 1rem 1rem;
+    }
+
+    .wrap-bigJackpot .jackpotPass {
+        padding-right: 2rem;
+        font-size: 1rem;
+        line-height: 37px;
+        width: 170px;
+        height: 34px;
+        bottom: 3%;
+        right: 2%;
+    }
+
+    .wrap-bigJackpot .btn-service {
+        width: 50%;
+        bottom: 3%;
+    }
+
+    .mobile-lang .dropdown-toggle::after {
+        display: none;
+    }
+
+    .btn-float.angpow {
+        width: 35%;
+    }
+
+    .btn-spin {
+        width: 70px;
+        height: 70px;
+        margin: -38px 0 0 -35px !important;
+    }
+
+    .game-menu {
+        height: 4rem;
+        width: -webkit-calc(20% * 8);
+        width: calc(20% * 8);
+    }
+
+    .game-menu a > i {
+        max-width: 50px;
+    }
+
+    .promoSubject {
+        font-size: 1rem;
+    }
+
+    .wrap-float-widget {
+        bottom: 30%;
+    }
+
+    .wrap-float-widget .btn-float-content {
+        width: 60px;
+    }
+
+    .btn-profileWallet.cn .btn-sm {
+        padding: 0.15rem 0.5rem !important;
+        font-size: .8rem !important;
+    }
+
+    .regi-mobile-code {
+        font-size: 0.8rem;
+        max-width: 55%;
+    }
+
+    .btn-regis-login {
+        margin-bottom: 0rem
+    }
+}
+
+/* Landscape */
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape)
+{ 
+}

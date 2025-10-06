@@ -1,0 +1,14 @@
+CRITICAL - 2025-07-30 12:09:49 --> Undefined index: data
+in APPPATH/Controllers/Game_control.php on line 1032.
+ 1 APPPATH/Controllers/Game_control.php(1032): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH/CodeIgniter.php(898): App\Controllers\Game_control->slotList()
+ 3 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 4 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 5 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-07-30 12:15:13 --> Undefined index: data
+in APPPATH/Controllers/Game_control.php on line 1032.
+ 1 APPPATH/Controllers/Game_control.php(1032): CodeIgniter\Debug\Exceptions->errorHandler()
+ 2 SYSTEMPATH/CodeIgniter.php(898): App\Controllers\Game_control->slotList()
+ 3 SYSTEMPATH/CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController()
+ 4 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 5 FCPATH/index.php(67): CodeIgniter\CodeIgniter->run()
