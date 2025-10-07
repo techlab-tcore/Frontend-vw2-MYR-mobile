@@ -27,7 +27,7 @@
             
         </dd>
         <dd class="col-2 m-0 d-flex justify-content-center">
-            <a class="btn-customerservice nav-link liveChat" href="javascript:void(0);"></a>
+            <a target="_blank" class="btn-customerservice nav-link liveChat" href="javascript:void(0);"></a>
         </dd>
     </dl>
 </section>
