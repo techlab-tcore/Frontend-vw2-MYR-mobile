@@ -102,6 +102,10 @@ Copyright 2019
         display: none;
     }
 
+    #dropdownMenuLang {
+        padding: .5rem .5rem .5rem 1rem;
+    }
+
     .btn-float.angpow {
         width: 35%;
     }
@@ -250,6 +254,10 @@ Copyright 2019
 
     .mobile-lang .dropdown-toggle::after {
         display: none;
+    }
+
+    #dropdownMenuLang {
+        padding: .5rem .5rem .5rem 1rem;
     }
 
     .btn-float.angpow {
@@ -404,6 +412,10 @@ Copyright 2019
 
     .mobile-lang .dropdown-toggle::after {
         display: none;
+    }
+
+    #dropdownMenuLang {
+        padding: .5rem .5rem .5rem 1rem;
     }
 
     .btn-float.angpow {
@@ -561,6 +573,10 @@ Copyright 2019
         display: none;
     }
 
+    #dropdownMenuLang {
+        padding: .5rem .5rem .5rem 1rem;
+    }
+
     .btn-float.angpow {
         width: 35%;
     }
@@ -714,6 +730,10 @@ Copyright 2019
 
     .mobile-lang .dropdown-toggle::after {
         display: none;
+    }
+
+    #dropdownMenuLang {
+        padding: .5rem .5rem .5rem 1rem;
     }
 
     .btn-float.angpow {

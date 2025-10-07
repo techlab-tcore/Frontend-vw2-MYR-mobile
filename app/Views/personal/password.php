@@ -188,6 +188,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             var formObj = $(this).closest("form");
             $.each($(formObj).serializeArray(), function (index, value) {
                 params[value.name] = value.value;
+                params['userpwd'] = '<?=$_SESSION['session'];?>';
             });
 
             $.post('/user/login-password/modify', {

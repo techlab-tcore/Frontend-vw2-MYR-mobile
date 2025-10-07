@@ -84,12 +84,20 @@
     <div class="mobile-footer <?=$_SESSION['lang'];?>">
         <section class="container">
             <ul class="list-unstyled row gx-3 justify-content-md-center m-0">
+                <?php if( isset($_SESSION['logged_in']) ): ?>
                 <li class="col m-0" data-page="history"><a class="nav-link" href="<?=base_url('transaction/mindex');?>"><i></i></a></li>
+                <?php else: ?>
+                <li class="col m-0" data-page="history"><a class="nav-link" href="javascript:void(0);" onclick="alertToast('bg-light', '<?=lang('Validation.loginaccount')?>');"><i></i></a></li>
+                <?php endif; ?>
+
                 <li class="col m-0" data-page="promotion"><a class="nav-link" href="<?=base_url('promotions');?>"><i></i></a></li>
 
                 <li class="col m-0 position-relative" data-page="home"><a class="nav-link" href="<?=base_url();?>"><i></i></a></li>
-
+                <?php if( isset($_SESSION['logged_in']) ): ?>
                 <li class="col m-0" data-page="affiliate"><a class="nav-link" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target=".modal-affiliateQR"><i></i></a></li>
+                <?php else: ?>
+                <li class="col m-0" data-page="affiliate"><a class="nav-link" href="javascript:void(0);" onclick="alertToast('bg-light', '<?=lang('Validation.loginaccount')?>');"><i></i></a></li>
+                <?php endif; ?>
 
                 <?php if( isset($_SESSION['logged_in']) ): ?>
                 <!-- <li class="col m-0" data-page="share"><a class="nav-link" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target=".modal-affiliateQR"><i></i></a></li> -->

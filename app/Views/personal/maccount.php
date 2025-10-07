@@ -40,11 +40,11 @@
         </a>
 
         <!-- Commission Report -->
-        <a href="<?=base_url('affiliate-log');?>" class="list-group-item list-group-item-action d-flex align-items-center border-bottom">
+        <!--<a href="<?=base_url('affiliate-log');?>" class="list-group-item list-group-item-action d-flex align-items-center border-bottom">
             <i class="btn-commissionreport me-3" aria-hidden="true"></i>
             <?=lang('Label.comreport');?>
             <i class="bx bx-chevron-right ms-auto"></i>
-        </a>
+        </a>-->
 
         <!-- Message -->
         <a href="<?=base_url('message');?>" class="list-group-item list-group-item-action d-flex align-items-center border-bottom">

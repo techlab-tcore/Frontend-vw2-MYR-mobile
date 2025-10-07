@@ -2,7 +2,7 @@
 
     <div class="d-flex align-items-center">
                 <i class="bx bx-chevron-left d-xl-none d-lg-none d-md-none me-2" style="cursor: pointer;" onclick="history.back();"></i>
-                <h6 class="text-uppercase d-xl-none d-lg-none d-md-none d-block m-0"><?=lang('Label.ewallet');?></h6>
+                <h6 class="text-uppercase d-xl-none d-lg-none d-md-none d-block m-0"><?=lang('Label.mainwallet');?></h6>
             </div>
 
     <div class="card shadow">

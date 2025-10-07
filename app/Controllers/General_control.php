@@ -344,7 +344,7 @@ class General_control extends BaseController
 		
 		echo view('template/start');
 		echo view('template/header');
-        echo view('ewallet', $data);
+        echo view('transaction/wallet', $data);
 		echo view('template/footer', $data);
 		echo view('template/end');
 	}
