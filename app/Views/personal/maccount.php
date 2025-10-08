@@ -3,11 +3,13 @@
 <section class="row gx-3 bg-light p-3 d-flex align-items-stretch maccount">
     <figure class="col-2 m-0 p-0"><img class="w-100" src="<?=base_url('assets/img/avatar.png');?>"></figure>
     <div class="col-7">
-        <span class="d-block w-100 fw-semibold"><?=$_SESSION['username'];?></span>
+        <span class="userFullName d-block w-100 fw-semibold">---</span>
         <small class="badge bg-primary fw-normal"><?=lang('Label.cash');?><span class="ms-1 userCash">0.00</span></small><br>
         <small class="badge bg-primary fw-normal"><?=lang('Label.chip');?><span class="ms-1 userChip">0.00</span></small>
     </div>
-    <a class="col-3 d-flex align-items-center justify-content-center text-center text-decoration-none affQR" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target=".modal-affiliateQR"><i class="bx bx-qr-scan"></i></a>
+    <a class="col-3 d-flex align-items-center justify-content-center text-center text-decoration-none affQR" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target=".modal-affiliateQR">
+        <img class="w-75" src="<?=base_url('assets/img/icon/affiliate_btn.png');?>">
+    </a>
 </section>
 
 <section class="maccount-settings">
