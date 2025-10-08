@@ -15,7 +15,7 @@
             <!-- <span class="d-block"><i class='bx bxs-user text-primary me-1'></i><?//=$_SESSION['username'];?></span> -->
             <!-- <i class='bx bxs-coin-stack text-primary me-1'></i><span class="userBalance" onclick="refreshBalance();">---</span> -->
             <!--<span class="d-block"><i class='bx bx-money text-primary me-1' onclick="refreshBalance();"></i><span class="userCash">---</span></span>-->
-           <span class="d-block"><small class="me-1"><?=lang('Label.cash');?></small><span class="userCash fw-semibold float-end">---</span><a href="javascript:void(0);" class="ms-1" onclick="refreshBalance()"><i class='bx bx-refresh'></i></a></span>
+           <span class="d-block"><small class="me-1"><?=lang('Label.cash');?></small><span class="userCash fw-semibold float-end">---</span><a href="javascript:void(0);" class="ms-1" onclick="refreshAndWithdrawGame()"><i class='bx bx-refresh'></i></a></span>
             <small class="me-1"><?=lang('Label.chip');?></small><span class="userChip fw-semibold float-end">---</span>
             <!--<i class='bx bxs-coin-stack text-primary me-1'></i><span class="userChip">---</span>-->
         </dd>
