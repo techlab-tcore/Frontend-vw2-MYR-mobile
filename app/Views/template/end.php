@@ -157,7 +157,7 @@
                     <!-- <span class="fs-5 color-major"><?//=$_SESSION['username'];?></span> -->
                     <input type="text" class="form-control border-0 my-0 w-75 mx-auto bg-transparent text-warning text-center" placeholder="<?=lang('Validation.nickname');?>">
 
-                    <div class="bg-primary p-2 my-3">
+                    <div class="bg-qr p-2 my-3">
                         <span class="d-block">SCAN UNTUK DAFTAR</span>
                         <span class="d-block">SCAN TO REGISTER</span>
                         <span class="d-block">只需扫二维码即马上可注册</span>

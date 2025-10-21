@@ -238,6 +238,11 @@ Chat-Screen
 /*
 Color
 */
+.btn-qrreg, .getscreen {
+    color: #FFF !important;
+    background: transparent linear-gradient(180deg, #52E6CB 0%, #00615E 100%) 0% 0% no-repeat padding-box !important; 
+
+}
 
 .btn-primary {
     color: #FFF !important;
@@ -321,6 +326,11 @@ Color
 .bg-primary {
     color: #FFF;
     background-color: #03763F !important;
+}
+
+.bg-qr {
+    color: #FFF;
+    background-color: #01615F !important;
 }
 
 .text-primary {
