@@ -809,7 +809,7 @@ class General_control extends BaseController
 			$promoReadOnly = '';
 			foreach( $resReadOnly['data'] as $r ):
 				$verify = substr($r['contentId'],0,3);
-				if( $verify=='PRO' ):
+				if( $verify=='PRO' && $r['status']==true ):
 					$promoReadOnly .= '<li class="col-xl-12 col-lg-12 col-md-12 col-12">';
 					$promoReadOnly .= '<div class="container">';
 					$promoReadOnly .= '<article class="row g-0">';

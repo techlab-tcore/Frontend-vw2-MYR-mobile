@@ -238,7 +238,7 @@ Chat-Screen
 /*
 Color
 */
-.btn-qrreg, .getscreen {
+.btn-qrreg, .getscreen, .btn-gradient {
     color: #FFF !important;
     background: transparent linear-gradient(180deg, #52E6CB 0%, #00615E 100%) 0% 0% no-repeat padding-box !important; 
 

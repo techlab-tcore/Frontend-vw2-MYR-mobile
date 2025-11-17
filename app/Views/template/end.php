@@ -39,7 +39,7 @@
                     <!--<figure class="m-2 text-center"><img class="d-inline-block" src="<?=base_url('assets/img/logo/logo.png');?>" alt="<?=$_ENV['company'];?>" title="<?=$_ENV['company'];?>"></figure>-->
                 </div>
                 <div class="bg-major pb-4">
-                    <img class="mx-auto w-75 d-block" src="<?=base_url('assets/img/logo/logo.png');?>" alt="<?=$_ENV['company'];?>" title="<?=$_ENV['company'];?>">
+                    <img class="mx-auto w-75 d-block" src="<?=base_url('assets/img/logo/logoCurrency.png');?>" alt="<?=$_ENV['company'];?>" title="<?=$_ENV['company'];?>">
                     <!--<figure class="m-2 text-center"><img class="d-inline-block" src="<?=base_url('assets/img/logo/logo.png');?>" alt="<?=$_ENV['company'];?>" title="<?=$_ENV['company'];?>"></figure>-->
                 </div>
                 <?=form_open('', ['class'=>'form-validation customForm px-5 pb-5', 'novalidate'=>'novalidate']);?>
@@ -147,8 +147,8 @@
             </div>
             <div class="modal-body px-0 pb-3 text-center">
                 <div class="qrcard">
-                    <figure class="px-3 pt-2 pb-3 w-50 mx-auto my-0">
-                        <img class="w-100" src="<?=base_url('assets/img/logo/logo.png');?>" title="<?=$_ENV['company'];?>" alt="<?=$_ENV['company'];?>">
+                    <figure class="px-3 pt-2 pb-3 w-75 mx-auto my-0">
+                        <img class="w-100" src="<?=base_url('assets/img/logo/logoCurrency.png');?>" title="<?=$_ENV['company'];?>" alt="<?=$_ENV['company'];?>">
                     </figure>
                     <div class="text-center w-50 mx-auto p-2 bg-white rounded-3">
                         <figure id="qrcode" class="w-100 p-0 m-0"></figure>

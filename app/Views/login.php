@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 </script>
 
 <!--block inspect-->
-<script disable-devtool-auto src='<?=base_url('assets/vendors/block_inspect/block.js');?>' url='https://dl.topv2n.com/'></script>
+<!--<script disable-devtool-auto src='<?=base_url('assets/vendors/block_inspect/block.js');?>' url='https://dl.topv2n.com/'></script>
 <script>
 document.onkeydown = function(e) {
     if(event.keyCode == 123) {
@@ -87,7 +87,7 @@ document.onkeydown = function(e) {
         return false;
     }
 }
-</script>
+</script>-->
 <!--end block inspect-->
 
 <div class="outer-container home-page bg-second h-100" id="pMain">
@@ -111,7 +111,7 @@ document.onkeydown = function(e) {
                         </ul>
                     </nav>-->
                     <nav class="navbar dropdown mobile-lang d-inline-block d-flex pb-3">
-                        <a class="btn btn-primary btn-sm mt-4 rounded btn-regis-login" href="<?=$_ENV['download'];?>"><i class='bx bx-download'></i></a>
+                        <a class="btn btn-primary btn-sm mt-4 rounded btn-gradient btn-regis-login" href="<?=$_ENV['download'];?>"><i class='bx bx-download'></i></a>
                         <a class="btn-lang dropdown-toggle" href="#" role="button" id="dropdownMenuLang" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="<?=$_SESSION['lang'];?>"></i>
                         </a>
@@ -123,6 +123,10 @@ document.onkeydown = function(e) {
                             <li><a class="dropdown-item" href="javascript:void(0)" onclick="translation('vn')"><i></i>TIẾNG VIỆT</a></li>
                         </ul>
                     </nav>
+                    <div class="bg-major pb-4">
+                        <img class="mx-auto w-75 d-block" src="<?=base_url('assets/img/logo/logoCurrency.png');?>" alt="<?=$_ENV['company'];?>" title="<?=$_ENV['company'];?>">
+                        <!--<figure class="m-2 text-center"><img class="d-inline-block" src="<?=base_url('assets/img/logo/logo.png');?>" alt="<?=$_ENV['company'];?>" title="<?=$_ENV['company'];?>"></figure>-->
+                    </div>
                     <h2 class="text-center pb-3 text-uppercase"><?=$secTitle;?></h2>
                     <?=form_open('', ['class'=>'form-validation loginForm','novalidate'=>'novalidate']);?>
                     <div class="form-floating mb-3">
@@ -147,7 +151,7 @@ document.onkeydown = function(e) {
                         <label class="form-check-label" for="rememberMe"><?=lang('Label.rememberme');?></label>
                     </div>
                     <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary btn-lg shadow" onclick="isRememberMe();"><?=lang('Nav.login');?></button>
+                        <button type="submit" class="btn btn-primary btn-lg btn-gradient shadow" onclick="isRememberMe();"><?=lang('Nav.login');?></button>
                         <a target="_blank" class="btn btn-secondary whatsapp" href=""><i class='bx bxl-whatsapp'></i>Whatsapp</a>
                     </div>
                     <small class="d-block mt-3 text-center">
