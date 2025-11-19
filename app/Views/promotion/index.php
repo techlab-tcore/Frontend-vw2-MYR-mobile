@@ -3,8 +3,8 @@
 
         <div class="home-navBox mb-3">
             <nav class="promo-menu rounded-0" role="tablist">
-                <a class="nav-link text-uppercase rounded-0" data-bs-toggle="tab" data-bs-target="#promo-readonly" href="#"><?=lang('Nav.special');?></a>
-                <a class="nav-link text-uppercase rounded-0 active" data-bs-toggle="tab" data-bs-target="#promo-all" href="#"><?=lang('Nav.showall');?></a>
+                <a class="nav-link text-uppercase rounded-0 active" data-bs-toggle="tab" data-bs-target="#promo-readonly" href="#"><?=lang('Nav.special');?></a>
+                <a class="nav-link text-uppercase rounded-0" data-bs-toggle="tab" data-bs-target="#promo-all" href="#"><?=lang('Nav.showall');?></a>
                 <a class="nav-link text-uppercase rounded-0" data-bs-toggle="tab" data-bs-target="#promo-newmember" href="#"><?=lang('Nav.newmember');?></a>
                 <!-- <a class="nav-link text-uppercase rounded-0" data-bs-toggle="tab" data-bs-target="#promo-games" href="#"><?//=lang('Nav.games');?></a> -->
                 <a class="nav-link text-uppercase rounded-0" data-bs-toggle="tab" data-bs-target="#promo-sport" href="#"><?=lang('Label.sport');?></a>
@@ -13,10 +13,10 @@
             </nav>
         </div>
         <div class="tab-content promo-listing">
-            <div class="tab-pane fade" id="promo-readonly" role="tabpanel" aria-labelledby="promo-readonly-tab">
+            <div class="tab-pane fade show active" id="promo-readonly" role="tabpanel" aria-labelledby="promo-readonly-tab">
                 <ul class="list-unstyled row gy-3" id="grid-promo-readonly"><?=$promotionReadOnly;?></ul>
             </div>
-            <div class="tab-pane fade show active" id="promo-all" role="tabpanel" aria-labelledby="promo-all-tab">
+            <div class="tab-pane fade" id="promo-all" role="tabpanel" aria-labelledby="promo-all-tab">
                 <ul class="list-unstyled row gy-3" id="grid-promo-all"><?=$allPromo;?></ul>
             </div>
             <div class="tab-pane fade" id="promo-newmember" role="tabpanel" aria-labelledby="promo-newmember-tab">

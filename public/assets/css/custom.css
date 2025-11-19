@@ -1371,6 +1371,16 @@ Footer
     background-size: 100%;
 }
 
+.mobile-footer.en ul > li[data-page="support"] > a > i {
+    background: url('../../assets/img/en/support.png') no-repeat center center;
+    background-size: 100%;
+}
+
+.mobile-footer.en ul > li[data-page="support"] > a.active > i {
+    background: url('../../assets/img/en/support_h.png') no-repeat center center;
+    background-size: 100%;
+}
+
 /* my */
 .mobile-footer.my ul > li[data-page="history"] > a > i {
     background: url('../../assets/img/my/history.png') no-repeat center center;
@@ -1416,6 +1426,16 @@ Footer
 
 .mobile-footer.my ul > li[data-page="account"] > a.active > i {
     background: url('../../assets/img/my/account_h.png') no-repeat center center;
+    background-size: 100%;
+}
+
+.mobile-footer.my ul > li[data-page="support"] > a > i {
+    background: url('../../assets/img/my/support.png') no-repeat center center;
+    background-size: 100%;
+}
+
+.mobile-footer.my ul > li[data-page="support"] > a.active > i {
+    background: url('../../assets/img/my/support_h.png') no-repeat center center;
     background-size: 100%;
 }
 
@@ -1468,6 +1488,16 @@ Footer
     background-size: 100%;
 }
 
+.mobile-footer.cn ul > li[data-page="support"] > a > i {
+    background: url('../../assets/img/cn/support.png') no-repeat center center;
+    background-size: 100%;
+}
+
+.mobile-footer.cn ul > li[data-page="support"] > a.active > i {
+    background: url('../../assets/img/cn/support_h.png') no-repeat center center;
+    background-size: 100%;
+}
+
 /*TH*/
 .mobile-footer.th ul > li[data-page="history"] > a > i {
     background: url('../../assets/img/th/history.png') no-repeat center center;
@@ -1516,6 +1546,16 @@ Footer
     background-size: 100%;
 }
 
+.mobile-footer.th ul > li[data-page="support"] > a > i {
+    background: url('../../assets/img/th/support.png') no-repeat center center;
+    background-size: 100%;
+}
+
+.mobile-footer.th ul > li[data-page="support"] > a.active > i {
+    background: url('../../assets/img/th/support_h.png') no-repeat center center;
+    background-size: 100%;
+}
+
 /*VN*/
 .mobile-footer.vn ul > li[data-page="history"] > a > i {
     background: url('../../assets/img/vn/history.png') no-repeat center center;
@@ -1553,7 +1593,6 @@ Footer
     background-size: 100%;
 }
 
-
 .mobile-footer.vn ul > li[data-page="account"] > a > i {
     background: url('../../assets/img/vn/account.png') no-repeat center center;
     background-size: 100%;
@@ -1561,6 +1600,16 @@ Footer
 
 .mobile-footer.vn ul > li[data-page="account"] > a.active > i {
     background: url('../../assets/img/vn/account_h.png') no-repeat center center;
+    background-size: 100%;
+}
+
+.mobile-footer.vn ul > li[data-page="support"] > a > i {
+    background: url('../../assets/img/vn/support.png') no-repeat center center;
+    background-size: 100%;
+}
+
+.mobile-footer.vn ul > li[data-page="support"] > a.active > i {
+    background: url('../../assets/img/vn/support_h.png') no-repeat center center;
     background-size: 100%;
 }
 

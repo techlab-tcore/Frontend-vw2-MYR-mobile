@@ -13,6 +13,9 @@
                 <h6 class="text-uppercase d-xl-none d-lg-none d-md-none d-block m-0"><?=$secTitle;?></h>
             </div>
             <div class="card border-0 profileRight">
+                <div class="card-header profileWallet border-0 p-3 bg-dark rounded-4 text-light">
+                    <?=view('profile-wallet');?>
+                </div>
                 <section class="card-body p-xl-5 p-lg-5 p-md-5 p-3">
                     <?=form_open('',['class'=>'form-validation customForm filterForm pb-4','novalidate'=>'novalidate']);?>
                     <div class="row">

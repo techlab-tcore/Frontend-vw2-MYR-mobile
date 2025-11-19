@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 </script>
 
 <!--block inspect-->
-<script disable-devtool-auto src='<?=base_url('assets/vendors/block_inspect/block.js');?>' url='https://dl.vw2nw.com/'></script>
+<script disable-devtool-auto src='<?=base_url('assets/vendors/block_inspect/block.js');?>' url='https://dl.topv2m.com/'></script>
 <script>
 document.onkeydown = function(e) {
     if(event.keyCode == 123) {

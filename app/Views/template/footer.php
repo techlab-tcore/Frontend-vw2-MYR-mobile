@@ -104,7 +104,8 @@
                 
                 <li class="col m-0" data-page="account"><a class="nav-link" href="<?=base_url('user/account');?>"><i></i></a></li>
                 <?php else: ?>
-                <li class="col m-0" data-page="account"><a class="nav-link" href="javascript:void(0);" onclick="alertToast('bg-light', '<?=lang('Validation.loginaccount')?>');"><i></i></a></li>
+                <!-- <li class="col m-0" data-page="account"><a class="nav-link" href="javascript:void(0);" onclick="alertToast('bg-light', '<?//=lang('Validation.loginaccount')?>');"><i></i></a></li> -->
+                 <li class="col m-0" data-page="support"><a class="nav-link liveChat" target="_blank"><i></i></a></li>
                 <?php endif; ?>
             </ul>
         </section>
