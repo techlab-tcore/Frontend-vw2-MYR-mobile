@@ -18,16 +18,9 @@
         </a>
 
         <!-- 2nd Password -->
-        <a class="list-group-item list-group-item-action d-flex align-items-center border-bottom" href="<?=base_url('user-rstpassword');?>">
+        <a class="list-group-item list-group-item-action d-flex align-items-center" href="<?=base_url('user-rstpassword');?>">
             <i class="icn-scrpassword me-3" aria-hidden="true"></i>
             <?=lang('Label.scrPwd');?>
-            <i class="bx bx-chevron-right ms-auto"></i>
-        </a>
-
-        <!-- Log out -->
-        <a class="list-group-item list-group-item-action d-flex align-items-center" href="<?=base_url('user/logout');?>">
-            <i class="icn-logout me-3" aria-hidden="true"></i>    
-            <?=lang('Nav.logout');?>
             <i class="bx bx-chevron-right ms-auto"></i>
         </a>
 

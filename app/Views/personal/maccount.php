@@ -56,11 +56,19 @@
         </a>
 
         <!-- Settings -->
-        <a href="<?=base_url('settings');?>" class="list-group-item list-group-item-action d-flex align-items-center">
+        <a href="<?=base_url('settings');?>" class="list-group-item list-group-item-action d-flex align-items-center border-bottom">
             <i class="btn-settings me-3" aria-hidden="true"></i>
             <?=lang('Label.settings');?>
             <i class="bx bx-chevron-right ms-auto"></i>
         </a>
+
+        <!-- Log out -->
+        <a href="<?=base_url('user/logout');?>" class="list-group-item list-group-item-action d-flex align-items-center" >
+            <i class="icn-logout me-3" aria-hidden="true"></i>    
+            <?=lang('Nav.logout');?>
+            <i class="bx bx-chevron-right ms-auto"></i>
+        </a>
+
 
     </div>
   </div>

@@ -166,6 +166,7 @@
                 <div class="">
                     <a href="javascript:void(0);" class="btn btn-primary btn-qrreg"><?=lang('Nav.share');?></a>
                     <a href="javascript:void(0);" class="btn btn-primary getscreen" onclick="getScreen();"><?=lang('Nav.save');?></a>
+                    <a href="javascript:void(0);" class="btn btn-danger" data-bs-dismiss="modal"><?=lang('Nav.close');?></a>
                 </div>
             </div>
         </article>
