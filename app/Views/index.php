@@ -121,7 +121,7 @@
                 <ul class="list-unstyled row g-2 justify-content-center">
                     <li class="col-xl-2 col-lg-2 col-md-3 col-3">
                         <a class="d-block text-decoration-none" href="javascript:void(0);" onclick="callingPreLotto();">
-                            <img class="d-block w-100" src="<?=base_url('assets/img/prelotto.png');?>">
+                            <img class="d-block w-100" src="<?=$_ENV['lottoPrize'];?>/prelotto.png">
                         </a>
                     </li>
                 </ul>
