@@ -56,7 +56,7 @@
                                 <p><?=lang('Validation.wthpolicy');?></p>
                                 <p><?=lang('Validation.wthpolicy1',[100]);?></p>
                                 <p><?=lang('Validation.wthpolicy2',[1]);?></p>
-                                <p><?=lang('Validation.wthpolicy3',[3,3]);?></p>
+                                <p><?=lang('Validation.wthpolicy3',[1,3]);?></p>
                             </small>
                         </div>
                     </div>
