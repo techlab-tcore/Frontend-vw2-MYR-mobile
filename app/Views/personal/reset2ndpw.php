@@ -31,14 +31,14 @@
                             <div class="row mb-3">
                                 <label class="col-xl-4 col-lg-4 col-md-4 col-12 col-form-label text-dark position-relative required2"><?=lang('Input.new2ndpass');?></label>
                                 <div class="col-xl-8 col-lg-8 col-md-8 col-12">
-                                    <input type="text" class="form-control" pattern=".{6,}" name="new2ndpass" required>
+                                    <input type="text" class="form-control" pattern=".{6,}" id="new2ndpass" name="new2ndpass" required>
                                     <small class="invalid-feedback"><?=lang('Validation.new2ndpass',[6]);?></small>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-xl-4 col-lg-4 col-md-4 col-12 col-form-label text-dark position-relative required2"><?=lang('Input.confirm2ndpass');?></label>
                                 <div class="col-xl-8 col-lg-8 col-md-8 col-12">
-                                    <input type="text" class="form-control" pattern=".{6,}" name="cnew2ndpass" required>
+                                    <input type="text" class="form-control" pattern=".{6,}" id="cnew2ndpass" name="cnew2ndpass" required>
                                     <small class="invalid-feedback"><?=lang('Validation.match2ndpass');?></small>
                                 </div>
                             </div>
@@ -65,14 +65,14 @@
                             <div class="row mb-3">
                                 <label class="col-xl-4 col-lg-4 col-md-4 col-12 col-form-label text-dark position-relative required2"><?=lang('Input.new2ndpass');?></label>
                                 <div class="col-xl-8 col-lg-8 col-md-8 col-12">
-                                    <input type="text" class="form-control" pattern=".{6,}" name="reset2ndpass" required>
+                                    <input type="text" class="form-control" pattern=".{6,}" id="reset2ndpass" name="reset2ndpass" required>
                                     <small class="invalid-feedback"><?=lang('Validation.new2ndpass',[6]);?></small>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-xl-4 col-lg-4 col-md-4 col-12 col-form-label text-dark position-relative required2"><?=lang('Input.confirm2ndpass');?></label>
                                 <div class="col-xl-8 col-lg-8 col-md-8 col-12">
-                                    <input type="text" class="form-control" pattern=".{6,}" name="creset2ndpass" required>
+                                    <input type="text" class="form-control" pattern=".{6,}" id="creset2ndpass" name="creset2ndpass" required>
                                     <small class="invalid-feedback"><?=lang('Validation.match2ndpass');?></small>
                                 </div>
                             </div>
@@ -96,58 +96,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     $('.sideMainNav [data-page=password]').addClass("active");
     // document.getElementsByClassName("nav-profilePass")[0].classList.add("active");
 
-    $('.chgPassForm').on('submit', function(e) {
-        e.preventDefault();
-
-        if (this.checkValidity() !== false) {
-            swal.fire({
-                title: 'Processing...',
-                showConfirmButton: false,
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                customClass: {
-                    container: 'bg-major'
-                }
-            });
-
-            $('.chgPassForm [type=submit]').prop('disabled', true);
-
-            var params = {};
-            var formObj = $(this).closest("form");
-            $.each($(formObj).serializeArray(), function (index, value) {
-                params[value.name] = value.value;
-            });
-
-            $.post('/user/login-password/modify', {
-                params
-            }, function(data, status) {
-                $('.chgPassForm [type=submit]').prop('disabled', false);
-                const obj = JSON.parse(data);
-                if( obj.code==1 ) {
-                    swal.fire("Success!", obj.message, "success").then(() => {
-                        $('form').removeClass('was-validated');
-                        $('form').trigger('reset');
-                        $.get('/user/logout', function(data, status) {
-                            location.reload();
-                        });
-                    });
-                } else {
-                    swal.fire("Error!", obj.message + " (Code: "+obj.code+")", "error").then(() => {
-                        $('.chgPassForm [type=submit]').prop('disabled', false);
-                    });
-                }
-            })
-            .done(function() {
-                $('.chgPassForm [type=submit]').prop('disabled', false);
-            })
-            .fail(function() {
-                swal.fire("Error!", "Oopss! There are something wrong. Please try again later.", "error").then(()=>{
-                    $('.chgPassForm [type=submit]').prop('disabled', false);
-                });
-            });
-        }
-    });
-
     $('.chg2ndPassForm').on('submit', function(e) {
         e.preventDefault();
 
@@ -164,36 +112,45 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
             $('.chg2ndPassForm [type=submit]').prop('disabled', true);
 
-            var params = {};
-            var formObj = $(this).closest("form");
-            $.each($(formObj).serializeArray(), function (index, value) {
-                params[value.name] = value.value;
-            });
+            const pw1 = document.getElementById('new2ndpass').value;
+            const pw2 = document.getElementById('cnew2ndpass').value;
+            if( pw1!=pw2 ) {
+                swal.fire("Notification", "Passwords did not match", "warning").then(()=>{
+                    $('.chg2ndPassForm [type=submit]').prop('disabled', false);
+                    return false;
+                });
+            } else {
+                var params = {};
+                var formObj = $(this).closest("form");
+                $.each($(formObj).serializeArray(), function (index, value) {
+                    params[value.name] = value.value;
+                });
 
-            $.post('/user/secondary-password/modify', {
-                params
-            }, function(data, status) {
-                $('.chg2ndPassForm [type=submit]').prop('disabled', false);
-                const obj = JSON.parse(data);
-                if( obj.code==1 ) {
-                    swal.fire("Success!", obj.message, "success").then(() => {
-                        $('form').removeClass('was-validated');
-                        $('form').trigger('reset');
-                    });
-                } else {
-                    swal.fire("Error!", obj.message + " (Code: "+obj.code+")", "error").then(() => {
+                $.post('/user/secondary-password/modify', {
+                    params
+                }, function(data, status) {
+                    $('.chg2ndPassForm [type=submit]').prop('disabled', false);
+                    const obj = JSON.parse(data);
+                    if( obj.code==1 ) {
+                        swal.fire("Success!", obj.message, "success").then(() => {
+                            $('form').removeClass('was-validated');
+                            $('form').trigger('reset');
+                        });
+                    } else {
+                        swal.fire("Error!", obj.message + " (Code: "+obj.code+")", "error").then(() => {
+                            $('.chg2ndPassForm [type=submit]').prop('disabled', false);
+                        });
+                    }
+                })
+                .done(function() {
+                    $('.chg2ndPassForm [type=submit]').prop('disabled', false);
+                })
+                .fail(function() {
+                    swal.fire("Error!", "Oopss! There are something wrong. Please try again later.", "error").then(()=>{
                         $('.chg2ndPassForm [type=submit]').prop('disabled', false);
                     });
-                }
-            })
-            .done(function() {
-                $('.chg2ndPassForm [type=submit]').prop('disabled', false);
-            })
-            .fail(function() {
-                swal.fire("Error!", "Oopss! There are something wrong. Please try again later.", "error").then(()=>{
-                    $('.chg2ndPassForm [type=submit]').prop('disabled', false);
                 });
-            });
+            }
         }
     });
 
@@ -213,36 +170,45 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
             $('.reset2ndPassForm [type=submit]').prop('disabled', true);
 
-            var params = {};
-            var formObj = $(this).closest("form");
-            $.each($(formObj).serializeArray(), function (index, value) {
-                params[value.name] = value.value;
-            });
+            const pw1 = document.getElementById('reset2ndpass').value;
+            const pw2 = document.getElementById('creset2ndpass').value;
+            if( pw1!=pw2 ) {
+                swal.fire("Notification", "Passwords did not match", "warning").then(()=>{
+                    $('.reset2ndPassForm [type=submit]').prop('disabled', false);
+                    return false;
+                });
+            } else {
+                var params = {};
+                var formObj = $(this).closest("form");
+                $.each($(formObj).serializeArray(), function (index, value) {
+                    params[value.name] = value.value;
+                });
 
-            $.post('/user/secondary-password/reset', {
-                params
-            }, function(data, status) {
-                $('.reset2ndPassForm [type=submit]').prop('disabled', false);
-                const obj = JSON.parse(data);
-                if( obj.code==1 ) {
-                    swal.fire("Success!", obj.message, "success").then(() => {
-                        $('form').removeClass('was-validated');
-                        $('form').trigger('reset');
-                    });
-                } else {
-                    swal.fire("Error!", obj.message + " (Code: "+obj.code+")", "error").then(() => {
+                $.post('/user/secondary-password/reset', {
+                    params
+                }, function(data, status) {
+                    $('.reset2ndPassForm [type=submit]').prop('disabled', false);
+                    const obj = JSON.parse(data);
+                    if( obj.code==1 ) {
+                        swal.fire("Success!", obj.message, "success").then(() => {
+                            $('form').removeClass('was-validated');
+                            $('form').trigger('reset');
+                        });
+                    } else {
+                        swal.fire("Error!", obj.message + " (Code: "+obj.code+")", "error").then(() => {
+                            $('.reset2ndPassForm [type=submit]').prop('disabled', false);
+                        });
+                    }
+                })
+                .done(function() {
+                    $('.reset2ndPassForm [type=submit]').prop('disabled', false);
+                })
+                .fail(function() {
+                    swal.fire("Error!", "Oopss! There are something wrong. Please try again later.", "error").then(()=>{
                         $('.reset2ndPassForm [type=submit]').prop('disabled', false);
                     });
-                }
-            })
-            .done(function() {
-                $('.reset2ndPassForm [type=submit]').prop('disabled', false);
-            })
-            .fail(function() {
-                swal.fire("Error!", "Oopss! There are something wrong. Please try again later.", "error").then(()=>{
-                    $('.reset2ndPassForm [type=submit]').prop('disabled', false);
                 });
-            });
+            }
         }
     });
 });
