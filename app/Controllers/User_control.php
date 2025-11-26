@@ -293,7 +293,8 @@ class User_control extends BaseController
                     'session' => $res['sessionId'],
                     'uplinerole' => $res['uplineRole'],
                     'role' => $res['role'],
-                    'username' => strtolower($userBeforeLogin['data']['loginId']),
+                    //'username' => strtolower($userBeforeLogin['data']['loginId']),
+                    'username' => $userBeforeLogin['data']['loginId'],
                     'regioncode' => $regioncode,
                     'contact' => $username
                 ];
@@ -431,7 +432,7 @@ class User_control extends BaseController
                     endif;
                 endif;
             else:
-                unset($_SESSION['taccode']);
+                //unset($_SESSION['taccode']);
                 echo json_encode(['code'=>-1, 'message'=>lang('Validation.smstac')]);
             endif;
         //endif;
@@ -479,7 +480,7 @@ class User_control extends BaseController
                     echo json_encode($res);
                 endif;
             else:
-                unset($_SESSION['taccode']);
+                //unset($_SESSION['taccode']);
                 echo json_encode(['code'=>-1, 'message'=>lang('Validation.smstac')]);
             endif;
         //endif;
