@@ -662,7 +662,10 @@ async function getRadioPGatewayList(element)
                         if (item.bank == '6555fe133b4ec7d4620de8dd') {
                             var textNodeLabel = document.createTextNode(oderNo+') <?=lang('Input.gatduitnow');?> ('+item.currency+')');
                         } else if (item.bank == '6465e84e51613c192ccbcdc2') {
-                            var textNodeLabel = document.createTextNode(oderNo+') <?=lang('Input.gatewallet');?> ('+item.currency+')');
+                            //var textNodeLabel = document.createTextNode(oderNo+') <?//=lang('Input.gatewallet');?> ('+item.currency+')');
+                            var textNodeLabel = document.createTextNode(oderNo+') PAY ESSENCE E-WALLET ('+item.currency+')');
+                        } else if (item.bank == '6131f4080b2791e8cc7225ea') {
+                            var textNodeLabel = document.createTextNode(oderNo+') PAY ESSENCE ('+item.currency+')');
                         } else {
                             var textNodeLabel = document.createTextNode(oderNo+') <?=lang('Input.gatchannel');?> ('+item.currency+')');
                         }
