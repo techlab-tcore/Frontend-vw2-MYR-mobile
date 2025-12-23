@@ -90,7 +90,11 @@
                 <li class="col m-0" data-page="history"><a class="nav-link" href="javascript:void(0);" onclick="alertToast('bg-light', '<?=lang('Validation.loginaccount')?>');"><i></i></a></li>
                 <?php endif; ?>
 
+                <?php if( isset($_SESSION['logged_in']) ): ?>
+                <li class="col m-0" data-page="message"><a class="nav-link" href="<?=base_url('message');?>"><i></i><span class="badge-unread" id="badge-unread"></span></a></li>
+                <?php else: ?>
                 <li class="col m-0" data-page="promotion"><a class="nav-link" href="<?=base_url('promotions');?>"><i></i></a></li>
+                <?php endif; ?>
 
                 <li class="col m-0 position-relative" data-page="home"><a class="nav-link" href="<?=base_url();?>"><i></i></a></li>
                 <?php if( isset($_SESSION['logged_in']) ): ?>

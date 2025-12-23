@@ -135,6 +135,9 @@ $routes->post('user/vault/balance/transfer', 'Vault_control::transferVaultBalanc
 
 $routes->resource('Mail_control');
 $routes->get('list/mail/user', 'Mail_control::mailList', ['filter' => 'auth']);
+$routes->get('list/mailcheck/user', 'Mail_control::checkMailList', ['filter' => 'auth']);
+$routes->post('list/readMail', 'Mail_control::readMail', ['filter' => 'auth']);
+$routes->post('list/editMail', 'Mail_control::editMail2True', ['filter' => 'auth']);
 
 $routes->resource('Promotion_control');
 $routes->post('list/promotion/all-raw', 'Promotion_control::promotionRawList');

@@ -165,4 +165,5 @@ return [
     'scrPwd' => 'Kata Laluan Selamat',
     'reset' => 'Set Semula',
     'ewallet' => 'E-Dompet',
+    'action' => 'Tindakan',
 ];

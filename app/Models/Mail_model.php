@@ -7,7 +7,7 @@ class Mail_model extends Model
     protected $mailList = 'http://10.148.0.10:8961/mailbox/getmailboxlist';
     protected $mail = 'http://10.148.0.10:8961/mailbox/getmailbox';
     protected $addMail = 'http://10.148.0.10:8961/mailbox/addmailbox';
-    protected $editMail = 'http://10.148.0.10:8961/mailbox/editmail';
+    protected $editMail = 'http://10.148.0.10:8961/mailbox/editmailbox';
 
     public function __construct()
 	{

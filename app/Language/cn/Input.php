@@ -51,4 +51,6 @@ return [
     'gatchannel' => '充值通道',
     'gatduitnow' => 'DuitNow QR',
     'gatewallet' => '电子钱包',
+    'read' => '未读',
+    'readed' => '已读'
 ];

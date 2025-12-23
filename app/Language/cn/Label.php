@@ -166,4 +166,5 @@ return [
     'scrPwd' => '安全密码',
     'reset' => '重设',
     'ewallet' => '电子钱包',
+    'action' => '操作',
 ];

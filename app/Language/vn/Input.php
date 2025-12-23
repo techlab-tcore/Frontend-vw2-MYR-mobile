@@ -51,4 +51,6 @@ return [
     'gatchannel' => 'Kênh',
     'gatduitnow' => 'DuitNow QR',
     'gatewallet' => 'Ví điện tử',
+    'read' => 'đọc',
+    'readed' => 'đã đọc'
 ];

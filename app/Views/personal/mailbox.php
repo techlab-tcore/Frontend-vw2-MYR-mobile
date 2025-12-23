@@ -24,7 +24,7 @@
                                 <tr>
                                 <td><?=lang('Input.date');?></td>
                                 <td><?=lang('Input.title');?></td>
-                                <td><?=lang('Input.msg');?></td>
+                                <td><?=lang('Label.action');?></td>
                                 </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -43,6 +43,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', (event) => {
     $('.sideMainNav [data-page=message]').addClass("active");
+    $('.mobile-footer [data-page=message] a').addClass("active");
     // document.getElementsByClassName("nav-profileMsg")[0].classList.add("active");
 
     if( '<?=$_SESSION['lang']?>' == 'my' ) {
@@ -85,5 +86,53 @@ document.addEventListener('DOMContentLoaded', (event) => {
         stateSave: true,
         deferRender: true
     });
+
+    $('.modal-mailbox').on('hidden.bs.modal', function(e) {
+        msgTable.ajax.reload(null, false);
+        getMail();
+    });
 });
+
+function openMail(id){
+
+    var params = {};
+    params['mailid'] = id;
+
+    if (id !== ""){
+        generalLoading();
+        $.post('/list/readMail', {
+            params
+        }, function(data, status){
+            const obj = JSON.parse(data);
+            if (obj.code == 1){
+                swal.close();
+                document.getElementById("mailTitle").innerHTML = obj.data['title'];
+                document.getElementById("mailContent").innerHTML = obj.data['content'];
+                if (obj.data['read'] == false){
+                    $.post('/list/editMail', {
+                        params
+                    }, function(data, status){
+                        const obj = JSON.parse(data);
+                        console.log(obj)
+                    }
+                    ).done(function(){
+
+                    })
+                    .fail(function(){
+
+                    });
+                }
+            }
+            else{
+
+            }
+        })
+        .done(function(){
+
+        })
+        .fail(function(){
+
+        });
+    }
+}
 </script>

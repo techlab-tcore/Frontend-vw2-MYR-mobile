@@ -3,7 +3,7 @@
 
         <!--<button class="navbar-toggler border-0 p-0 me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#mainNavCanvas" aria-controls="mainNavCanvas" aria-expanded="false" aria-label="Toggle navigation"><i class='bx bx-menu'></i></button>-->
 
-        <a class="navbar-brand mx-xl-0 mx-lg-0 mx-md-0 me-auto d-xl-none d-lg-none d-md-none d-inline-block" href="<?=base_url();?>"><img class="w-100" src="<?=base_url('assets/img/logo/logo.png');?>" alt="<?=$_ENV['company'];?>" title="<?=$_ENV['company'];?>"></a>
+        <a class="navbar-brand mx-xl-0 mx-lg-0 mx-md-0 me-auto d-xl-none d-lg-none d-md-none d-inline-block" href="<?=base_url();?>"><img class="w-100" src="<?=base_url('assets/img/logo/logoCurrency.png');?>" alt="<?=$_ENV['company'];?>" title="<?=$_ENV['company'];?>"></a>
 
         <span class="visually-hidden maxLottoBonus"></span>
         <!-- Desktop -->

@@ -228,6 +228,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     tabnewsEvent.addEventListener('shown.bs.tab', function (event) {
         event.target // newly activated tab
         event.relatedTarget // previous active tab
+        getSEO();
         callingNews();
     });
 
@@ -238,6 +239,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     tabslotEvent.addEventListener('shown.bs.tab', function (event) {
         event.target // newly activated tab
         event.relatedTarget // previous active tab
+        removeSEO();
         callingSlot();
     });
 
@@ -248,6 +250,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     tabcasinoEvent.addEventListener('shown.bs.tab', function (event) {
         event.target // newly activated tab
         event.relatedTarget // previous active tab
+        removeSEO();
         callingCasino();
     });
 
@@ -258,6 +261,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     tabsportEvent.addEventListener('shown.bs.tab', function (event) {
         event.target // newly activated tab
         event.relatedTarget // previous active tab
+        removeSEO();
         callingSport();
     });
 
@@ -268,6 +272,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     tabkenoEvent.addEventListener('shown.bs.tab', function (event) {
         event.target // newly activated tab
         event.relatedTarget // previous active tab
+        removeSEO();
         callingKeno();
     });
 
@@ -288,6 +293,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     tablottoEvent.addEventListener('shown.bs.tab', function (event) {
         event.target // newly activated tab
         event.relatedTarget // previous active tab
+        removeSEO();
         // callingLotto();
     });
 
@@ -308,6 +314,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     tabotherEvent.addEventListener('shown.bs.tab', function (event) {
         event.target // newly activated tab
         event.relatedTarget // previous active tab
+        removeSEO();
         //callingOther();
     });
     // End Category
@@ -373,6 +380,7 @@ async function hotGamesShowCase(provider,element)
 async function exclusiveGamesShowCase(provider,element)
 {
 	generalLoading();
+    removeSEO();
 
 	var params = {};
 	params['provider'] = provider;

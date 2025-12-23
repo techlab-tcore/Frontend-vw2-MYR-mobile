@@ -117,7 +117,7 @@ document.onkeydown = function(e) {
             <div class="p-3">
 
                 <a class="d-block text-decoration" href="<?=base_url();?>">
-                    <img class="mx-auto px-1 mb-3 d-xl-block d-lg-block d-md-block d-none w-100" src="<?=base_url('assets/img/logo/logo.png');?>" alt="<?=$_ENV['company'];?>" title="<?=$_ENV['company'];?>">
+                    <img class="mx-auto px-1 mb-3 d-xl-block d-lg-block d-md-block d-none w-100" src="<?=base_url('assets/img/logo/logoCurrency.png');?>" alt="<?=$_ENV['company'];?>" title="<?=$_ENV['company'];?>">
                 </a>
 
                 <!-- ClientZone -->
@@ -157,7 +157,7 @@ document.onkeydown = function(e) {
                     <a data-page="scorelog" class="d-block mb-2 rounded shadow-sm" href="<?=base_url('score-log');?>"><img class="me-2" src="<?=base_url('assets/img/icon/game_log.png');?>"><?=lang('Nav.scorelog');?></a>
                     <a data-page="afflog" class="d-block mb-2 rounded shadow-sm" href="<?=base_url('affiliate-log');?>"><img class="me-2" src="<?=base_url('assets/img/icon/affiliate.png');?>"><?=lang('Nav.afflog');?></a>
                     <!--<a data-page="afflblog" class="d-block mb-2 rounded shadow-sm" href="<?//=base_url('affiliate-loss-rebate-log');?>"><?//=lang('Nav.afflossrebatelog');?></a>-->
-                    <a data-page="message" class="d-block mb-2 rounded shadow-sm" href="<?=base_url('message');?>"><img class="me-2" src="<?=base_url('assets/img/icon/message.png');?>"><?=lang('Nav.message');?></a>
+                    <a data-page="message" class="d-block mb-2 rounded shadow-sm" href="<?=base_url('message');?>"><img class="me-2" src="<?=base_url('assets/img/icon/message.png');?>"><?=lang('Nav.message');?><span class="badge rounded-pill bg-danger ms-1 fw-normal hbadge-unread" id="hbadge-unread">0</span></a>
                     <a class="d-block mb-2 rounded bg-danger text-white" href="<?=base_url('user/logout');?>"><img class="me-2" src="<?=base_url('assets/img/icon/logout.png');?>"><?=lang('Nav.logout');?></a>
                     <?php endif; ?>
                 </menu>

@@ -1299,6 +1299,27 @@ Promotion
 /*
 Footer
 */
+.badge-unread {
+    display: none;
+    position: absolute;
+    top: -4px;
+    /* adjust vertical position */
+    right: -4px;
+    /* adjust horizontal position */
+    background-color: rgb(236, 17, 17);
+    color: #fff;
+    font-size: 9px;
+    font-weight: bold;
+    line-height: 1;
+    padding: 3px 3px;
+    border-radius: 50%;
+    min-width: 16px;
+    text-align: center;
+}
+
+.hbadge-unread {
+    display: none;
+}
 
 .mobile-footer {
     background-color: #FFF;
@@ -1341,6 +1362,21 @@ Footer
 
 .mobile-footer.en ul > li[data-page="promotion"] > a.active > i {
     background: url('../../assets/img/en/promo_h.png') no-repeat center center;
+    background-size: 100%;
+}
+
+.mobile-footer.en ul>li[data-page="message"]>a {
+    position: relative;
+    /* make <a> the positioning context */
+}
+
+.mobile-footer.en ul > li[data-page="message"] > a > i {
+    background: url('../../assets/img/en/message.png') no-repeat center center;
+    background-size: 100%;
+}
+
+.mobile-footer.en ul > li[data-page="message"] > a.active > i {
+    background: url('../../assets/img/en/message_h.png') no-repeat center center;
     background-size: 100%;
 }
 
@@ -1399,6 +1435,16 @@ Footer
 
 .mobile-footer.my ul > li[data-page="promotion"] > a.active > i {
     background: url('../../assets/img/my/promo_h.png') no-repeat center center;
+    background-size: 100%;
+}
+
+.mobile-footer.my ul > li[data-page="message"] > a > i {
+    background: url('../../assets/img/en/message.png') no-repeat center center;
+    background-size: 100%;
+}
+
+.mobile-footer.my ul > li[data-page="message"] > a.active > i {
+    background: url('../../assets/img/en/message_h.png') no-repeat center center;
     background-size: 100%;
 }
 
@@ -1461,6 +1507,16 @@ Footer
     background-size: 100%;
 }
 
+.mobile-footer.cn ul > li[data-page="message"] > a > i {
+    background: url('../../assets/img/en/message.png') no-repeat center center;
+    background-size: 100%;
+}
+
+.mobile-footer.cn ul > li[data-page="message"] > a.active > i {
+    background: url('../../assets/img/en/message_h.png') no-repeat center center;
+    background-size: 100%;
+}
+
 .mobile-footer.cn ul > li[data-page="home"] > a > i {
     height: 95px !important;
     background: url('../../assets/img/cn/home_btn.png') no-repeat center center;
@@ -1519,6 +1575,16 @@ Footer
     background-size: 100%;
 }
 
+.mobile-footer.th ul > li[data-page="message"] > a > i {
+    background: url('../../assets/img/en/message.png') no-repeat center center;
+    background-size: 100%;
+}
+
+.mobile-footer.th ul > li[data-page="message"] > a.active > i {
+    background: url('../../assets/img/en/message_h.png') no-repeat center center;
+    background-size: 100%;
+}
+
 .mobile-footer.th ul > li[data-page="home"] > a > i {
     height: 95px !important;
     background: url('../../assets/img/th/home_btn.png') no-repeat center center;
@@ -1574,6 +1640,16 @@ Footer
 
 .mobile-footer.vn ul > li[data-page="promotion"] > a.active > i {
     background: url('../../assets/img/vn/promo_h.png') no-repeat center center;
+    background-size: 100%;
+}
+
+.mobile-footer.vn ul > li[data-page="message"] > a > i {
+    background: url('../../assets/img/en/message.png') no-repeat center center;
+    background-size: 100%;
+}
+
+.mobile-footer.vn ul > li[data-page="message"] > a.active > i {
+    background: url('../../assets/img/en/message_h.png') no-repeat center center;
     background-size: 100%;
 }
 

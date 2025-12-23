@@ -51,4 +51,6 @@ return [
     'gatchannel' => 'Channel',
     'gatduitnow' => 'DuitNow QR',
     'gatewallet' => 'E-Wallet',
+    'read' => 'baca',
+    'readed' => 'dibaca'
 ];

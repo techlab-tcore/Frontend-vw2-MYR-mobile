@@ -166,4 +166,5 @@ return [
     'scrPwd' => 'Secure Password',
     'reset' => 'Reset',
     'ewallet' => 'E-Wallet',
+    'action' => 'Action',
 ];

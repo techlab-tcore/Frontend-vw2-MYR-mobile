@@ -473,6 +473,23 @@
 </section>
 <!-- End AV News -->
 
+<!-- Mailbox Content Display -->
+ <section class="modal fade modal-mailbox" id="modal-mailbox" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-mailbox" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<article class="modal-content border-0">
+			<div class="modal-header">
+				<h5 class="modal-title fs-4 fw-normal" id="mailTitle">---</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+            <div class="modal-body">
+                <h3 class="modal-content fs-5 p-2" id="mailContent"></h3>
+
+            </div>
+		</article>
+	</div>
+</section>
+<!-- End Mailbox Content Display -->
+
 <!--- ByPassBlockPopUp --->
 <section class="modal fade modal-byPassPopUp" id="modal-byPassPopUp" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-byPassPopUp" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
@@ -632,6 +649,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         // refreshBalance();
         announcementList();
         getProfile();
+        getMail();
         //loginCheckExist2ndPass(); //login check 2nd password
         //triggerPendinglist(); //membertransfer
 
@@ -2907,6 +2925,12 @@ function getSEO()
     .fail(function() {
     });
 }
+
+function removeSEO()
+{
+    $('.seoTitle').html('');
+    $('.seoContent').html('');
+}
 // End SEO
 
 function getProfile()
@@ -2929,6 +2953,42 @@ function getProfile()
     // })
     // .fail(function() {
     // });
+}
+
+function getMail()
+{
+    generalLoading();
+    $.get('/list/mailcheck/user', function(data, status){
+        swal.close();
+        var unreadCount = 0;
+        var unreadBadge = document.getElementById("badge-unread");
+        var hunreadBadge = document.getElementById("hbadge-unread");
+        const obj = JSON.parse(data);
+        if(obj.code == 1){
+            if(obj.data !='') {
+                const mail = obj.data;
+                mail.forEach((item) => {
+                    if (item.read === false) {
+                        unreadCount++;
+                    }
+                })
+            }
+        }
+
+        unreadBadge.textContent = unreadCount;
+        hunreadBadge.textContent = unreadCount;
+        if (unreadCount > 0){
+            unreadBadge.style.display = "block";
+            hunreadBadge.style.display = "inline-block";
+        } else {
+            unreadBadge.style.display = "none";
+            hunreadBadge.style.display = "none";
+        }
+    })
+    .done(function() {
+    })
+    .fail(function() {
+    });
 }
 
 function announcementList()

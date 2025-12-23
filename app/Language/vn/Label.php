@@ -166,4 +166,5 @@ return [
     'scrPwd' => 'Mật khẩu an toàn',
     'reset' => 'Cài lại',
     'ewallet' => 'ví điện tử',
+    'action' => 'Hoạt động',
 ];
