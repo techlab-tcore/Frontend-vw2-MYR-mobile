@@ -71,7 +71,9 @@
                         <td><?=lang('Input.status');?></td>
                         <td><?=lang('Input.types');?></td>
                         <td><?=lang('Input.remark');?></td>
+                        <td><?=lang('Input.beforeamount');?></td>
                         <td><?=lang('Input.amount');?></td>
+                        <td><?=lang('Input.afteramount');?></td>
                         </tr>
                         </thead>
                         <tbody></tbody>
@@ -229,7 +231,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             });
         },
         aoColumnDefs: [{
-            aTargets: [4],
+            aTargets: [4,5,6],
             render: function ( data, type, row ) {
                 return parseFloat(data).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
             }

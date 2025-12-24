@@ -9,6 +9,8 @@ return [
     'fullname' => 'Nama Penuh',
     'mobileno' => 'Nombor Telefon Bimbit',
     'amount' => 'Jumlah',
+    'beforeamount' => 'Jumlah Sebelum',
+    'afteramount' => 'Jumlah Selepas',
     'vaultpin' => 'Pin Peti Keselamatan',
     'confirmpin' => 'Sahkan Pin Peti Keselamatan',
     'currentpin' => 'Pin Peti Keselamatan Semasa',

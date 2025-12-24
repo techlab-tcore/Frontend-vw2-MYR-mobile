@@ -9,6 +9,8 @@ return [
     'fullname' => 'Full Name',
     'mobileno' => 'Mobile No.',
     'amount' => 'Amount',
+    'beforeamount' => 'Before Amount',
+    'afteramount' => 'After Amount',
     'vaultpin' => 'Vault Pin',
     'confirmpin' => 'Confirm Pin',
     'currentpin' => 'Current Pin',

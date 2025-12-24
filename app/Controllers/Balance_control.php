@@ -294,7 +294,9 @@ class Balance_control extends BaseController
                 $row[] = $status;
                 $row[] = '<span class="badge bg-dark fw-normal me-1">'.$type.'</span>'.$method;
                 $row[] = $remark;
+                $row[] = $ph['beforeBalance'];
                 $row[] = $ph['amount'];
+                $row[] = $ph['afterBalance'];
                 $data[] = $row;
             endforeach;
             echo json_encode(['data'=>$data, 'code'=>1, 'pageIndex'=>$payload['pageIndex'], 'rowPerPage'=>$payload['rowPerPage'], 'totalPage'=>$payload['totalPage'], 'totalRecord'=>$payload['totalRecord']]);

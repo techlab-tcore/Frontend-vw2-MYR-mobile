@@ -930,7 +930,9 @@ class Game_control extends BaseController
                 $row[] = $status;
                 $row[] = $h['gameProviderName'];
                 $row[] = $type;
+                $row[] = $h['beforeAmount'];
                 $row[] = $h['amount'];
+                $row[] = $h['afterAmount'];
                 $data[] = $row;
             endforeach;
             echo json_encode(['data'=>$data, 'code'=>1, 'pageIndex'=>$payload['pageIndex'], 'rowPerPage'=>$payload['rowPerPage'], 'totalPage'=>$payload['totalPage'], 'totalRecord'=>$payload['totalRecord']]);

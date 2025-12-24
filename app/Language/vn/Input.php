@@ -9,6 +9,8 @@ return [
     'fullname' => 'Họ và tên',
     'mobileno' => 'Số điện thoại di động',
     'amount' => 'Số tiền',
+    'beforeamount' => 'Số tiền trước',
+    'afteramount' => 'Số tiền sau',
     'vaultpin' => 'Mã Vault',
     'confirmpin' => 'Xác nhận mã PIN',
     'currentpin' => 'Mã PIN hiện tại',

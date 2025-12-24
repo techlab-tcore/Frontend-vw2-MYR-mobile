@@ -9,6 +9,8 @@ return [
     'fullname' => 'ชื่อเต็ม',
     'mobileno' => 'หมายเลขมือถือ',
     'amount' => 'จำนวน',
+    'beforeamount' => 'จำนวนก่อนหน้า',
+    'afteramount' => 'จำนวนหลังจาก',
     'vaultpin' => 'พินห้องนิรภัย',
     'confirmpin' => 'ยืนยันการปักหมุด',
     'currentpin' => 'พินปัจจุบัน',
