@@ -43,6 +43,8 @@ return [
     'depoption' => 'Deposit Option',
     'depchannel' => 'Deposit Channel',
     'depamount' => 'Deposit Amount',
+    'exchamount' => 'Exchange Amount',
+    'bankexchamount' => 'Exchange Amount',
     'withamount' => 'Withdrawal Amount',
     'level' => 'Level',
     'dateby' => 'By Date',

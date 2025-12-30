@@ -38,6 +38,12 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row mb-3 d-none">
+                                <label class="col-xl-4 col-lg-4 col-md-4 col-12 col-form-label color-55vp3"><?=lang('Input.exchamount');?> <span class="text-danger">*</span></label>
+                                <div class="col-xl-8 col-lg-8 col-md-8 col-12">
+                                    <input type="text" step="any" class="form-control" name="exchamount" readonly>
+                                </div>
+                            </div>
                             <div class="row mb-3">
                                 <label class="col-xl-4 col-lg-4 col-md-4 col-12 col-form-label color-55vp3"><?=lang('Input.depamount');?> <span class="text-danger">*</span></label>
                                 <div class="col-xl-8 col-lg-8 col-md-8 col-12">
@@ -90,6 +96,12 @@
                                         <input type="text" class="form-control" name="accno" readonly>
                                         <button class="btn btn-dark btn-copy-accno" type="button"><?=lang('Nav.copy');?></button>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3 d-none">
+                                <label class="col-xl-4 col-lg-4 col-md-4 col-12 col-form-label color-55vp3"><?=lang('Input.exchamount');?></label>
+                                <div class="col-xl-8 col-lg-8 col-md-8 col-12">
+                                    <input type="text" step="any" class="form-control" name="bankexchamount" readonly>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -153,6 +165,11 @@
 </section>
 
 <script>
+const GLOBAL = {
+    currencyTag: "",
+    currencyRate: 0
+};
+
 document.addEventListener('DOMContentLoaded', (event) => {
     $('.sideNav-profile [data-page=deposit]').addClass('active');
     $('.sideMainNav [data-page=deposit]').addClass("active");
@@ -169,6 +186,34 @@ document.addEventListener('DOMContentLoaded', (event) => {
         $('.pgatewayForm [name=amount]').prop('disabled',true);
         $('.pgatewayForm [type=submit]').prop('disabled', true);
     }
+
+    $('.pgatewayForm [name=amount]').change(function () {
+        let amount = parseFloat($(this).val()) || 0;
+
+        if (amount == 0) {
+            const defaultemsg = 1 + " " + GLOBAL.currencyTag + " = " + (1*GLOBAL.currencyRate).toFixed(2) + " " + "<?= $_ENV['currency']; ?>";
+            $('.pgatewayForm [name=exchamount]').val(defaultemsg);
+        }else {
+            let exch = amount * GLOBAL.currencyRate;
+            let msg = amount +  " " + GLOBAL.currencyTag + " = " + exch.toFixed(2) + " " + "<?= $_ENV['currency']; ?>";
+            $('[name=exchamount]').val(msg);
+        }  
+       
+    });
+
+    $('.bankTransferForm [name=amount]').change(function () {
+        let amount = parseFloat($(this).val()) || 0;
+
+        if (amount == 0) {
+            const defaultemsg = 1 + " " + GLOBAL.currencyTag + " = " + (1*GLOBAL.currencyRate).toFixed(2) + " " + "<?= $_ENV['currency']; ?>";
+            $('.bankTransferForm [name=bankexchamount]').val(defaultemsg);
+        }else {
+            let exch = amount * GLOBAL.currencyRate;
+            let msg = amount +  " " + GLOBAL.currencyTag + " = " + exch.toFixed(2) + " " + "<?= $_ENV['currency']; ?>";
+            $('.bankTransferForm [name=bankexchamount]').val(msg);
+        }  
+       
+    });
 
     $('.bankTransferForm .btn-copy-holder').on('click', function() {
         const copytext = $('.bankTransferForm [name=accholder]');
@@ -219,6 +264,44 @@ document.addEventListener('DOMContentLoaded', (event) => {
         $('.bankTransferForm [name=amount]').attr('placeholder', "Min: "+minDep+" / "+"Max: "+maxDep);
         $('.bankMinDeposit').html(minDep);
         $('.bankMaxDeposit').html(maxDep);
+
+        params = {};
+        params['userid'] = '<?=$_SESSION['token']?>';
+        params['code'] = currency;
+        const amount = $('.bankTransferForm [name=amount]').val();
+
+        if (currency!='' && currency!=null)
+        {
+            $.post('/currency/get', {
+                params
+            }, function(data, status) {
+                const obj = JSON.parse(data);
+                if( obj.code==1 ) {
+                    
+                    GLOBAL.currencyTag = currency;
+                    GLOBAL.currencyRate = parseFloat(obj.data['depositRate']);
+
+                    if (amount == 0 || amount == '' ) {
+                        const defaultemsg = 1 + " " + currency + " = " + (1*obj.data['depositRate']).toFixed(2) + " " + "<?= $_ENV['currency']; ?>";
+                        $('.bankTransferForm [name=bankexchamount]').val(defaultemsg);
+                    } else {
+                        let exch = amount * parseFloat(obj.data['depositRate']);
+                        let msg = amount +  " " + currency + " = " + exch.toFixed(2) + " " + "<?= $_ENV['currency']; ?>";
+                        $('.bankTransferForm [name=bankexchamount]').val(msg);
+                    }
+
+                    $('[name="bankexchamount"]').closest('.row').removeClass('d-none');
+                    
+                }
+            })
+            .done(function() {
+                swal.close();
+            })
+            .fail(function() {
+                swal.fire("Error!", "Oopss! There are something wrong. Please try again later.", "error").then(()=>{
+                });
+            });
+        }
     });
 
     $('#depositChannel-list').off().on('change', function(e) {
@@ -244,6 +327,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     const tabInstantEvent = document.querySelector('[data-bs-target="#nav-instant"]');
     tabInstantEvent.addEventListener('hidden.bs.tab', function (event) {
+        $('[name="exchamount"]').closest('.row').addClass('d-none');
+        GLOBAL.currencyTag = "";
+        GLOBAL.currencyRate = 0;
         $('#nav-instant').find('form').trigger('reset');
         $('#nav-instant #promo-list').html(' ');
     });
@@ -255,6 +341,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     const tabBankEvent = document.querySelector('[data-bs-target="#nav-bank"]');
     tabBankEvent.addEventListener('hidden.bs.tab', function (event) {
+        $('[name="bankexchamount"]').closest('.row').addClass('d-none');
+        GLOBAL.currencyTag = "";
+        GLOBAL.currencyRate = 0;
         $('#nav-bank').find('form').trigger('reset');
         $('#nav-bank #bankPromo-list').html(' ');
     });
@@ -631,6 +720,38 @@ function getPgChannel(element,pgid,merchant,currency)
         }
     })
     .done(function() {
+        params = {};
+        params['userid'] = '<?=$_SESSION['token']?>';
+        params['code'] = currency;
+        const amount = $('.pgatewayForm [name=amount]').val();
+
+        if (currency!='' && currency!=null)
+        {
+            $.post('/currency/get', {
+                params
+            }, function(data, status) {
+                const obj = JSON.parse(data);
+                if( obj.code==1 ) {
+                    
+                    GLOBAL.currencyTag = currency;
+                    GLOBAL.currencyRate = parseFloat(obj.data['depositRate']);
+
+                    $('[name="exchamount"]').closest('.row').removeClass('d-none');
+                    const rate = parseFloat(obj.data['depositRate']);
+                    const ratemsg = amount + " " + currency + " = " + (amount*rate).toFixed(2) + " " + "<?= $_ENV['currency']; ?>";
+                    console.log(ratemsg);
+                    $('.pgatewayForm [name=exchamount]').val(ratemsg);
+                    
+                }
+            })
+            .done(function() {
+                swal.close();
+            })
+            .fail(function() {
+                swal.fire("Error!", "Oopss! There are something wrong. Please try again later.", "error").then(()=>{
+                });
+            });
+        }
     })
     .fail(function() {
         swal.fire("", "Please try again later.", "error");
@@ -662,10 +783,7 @@ async function getRadioPGatewayList(element)
                         if (item.bank == '6555fe133b4ec7d4620de8dd') {
                             var textNodeLabel = document.createTextNode(oderNo+') <?=lang('Input.gatduitnow');?> ('+item.currency+')');
                         } else if (item.bank == '6465e84e51613c192ccbcdc2') {
-                            //var textNodeLabel = document.createTextNode(oderNo+') <?//=lang('Input.gatewallet');?> ('+item.currency+')');
-                            var textNodeLabel = document.createTextNode(oderNo+') PAY ESSENCE E-WALLET ('+item.currency+')');
-                        } else if (item.bank == '6131f4080b2791e8cc7225ea') {
-                            var textNodeLabel = document.createTextNode(oderNo+') PAY ESSENCE ('+item.currency+')');
+                            var textNodeLabel = document.createTextNode(oderNo+') <?=lang('Input.gatewallet');?> ('+item.currency+')');
                         } else {
                             var textNodeLabel = document.createTextNode(oderNo+') <?=lang('Input.gatchannel');?> ('+item.currency+')');
                         }

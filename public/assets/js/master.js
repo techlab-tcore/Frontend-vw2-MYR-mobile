@@ -122,12 +122,14 @@ function refreshBalance()
 
                 var cash = document.getElementsByClassName("userCash");
                 if( !!cash ) {
-                    $('.userCash').html(parseFloat(obj.cash).toFixed(2));
+                    var formattedCash = parseFloat(obj.cash).toFixed(2);
+                    $('.userCash').html(' <small class="Ecurrency">MYR </small>' + formattedCash);
                 }
 
                 var chip = document.getElementsByClassName("userChip");
                 if( !!chip ) {
-                    $('.userChip').html(parseFloat(obj.chip).toFixed(2));
+                    var formattedChip = parseFloat(obj.chip).toFixed(2);
+                    $('.userChip').html(' <small class="Ecurrency">MYR </small>' + formattedChip);
                 }
 
                 var cashLotto = document.getElementsByClassName("maxLottoBonus");

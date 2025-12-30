@@ -203,6 +203,10 @@ $routes->get('content/affiliate-share-reward', 'Content_control::contentAffiliat
 $routes->get('content/affiliate-loss-rebate', 'Content_control::contentAffiliateLossRebate');
 $routes->get('content/seo', 'Content_control::contentSeo');
 
+$routes->resource('Currency_control');
+$routes->get('list/currency', 'Currency_control::currencyList', ['filter' => 'auth']);
+$routes->post('currency/get', 'Currency_control::getCurrency', ['filter' => 'auth']);
+
 $routes->resource('Afflossrebate_control');
 $routes->post('list/affiliate/loss-rebate/history', 'Afflossrebate_control::affLossRebateHistory', ['filter' => 'auth']);
 $routes->get('affiliate/loss-rebate/listing', 'Afflossrebate_control::affLossRebateList', ['filter' => 'auth']);

@@ -43,6 +43,8 @@ return [
     'depoption' => 'Tùy chọn gửi tiền',
     'depchannel' => 'Kênh gửi tiền',
     'depamount' => 'Số tiền gửi',
+    'exchamount' => 'Số tiền trao đổi',
+    'bankexchamount' => 'Số tiền trao đổi',
     'withamount' => 'Số tiền rút',
     'level' => 'Mức độ',
     'dateby' => 'Theo ngày',

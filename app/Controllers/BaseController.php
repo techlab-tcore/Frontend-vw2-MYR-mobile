@@ -29,6 +29,7 @@ use App\Models\Sms_model;
 use App\Models\Support_model;
 use App\Models\Livechat_model;
 use App\Models\Content_model;
+use App\Models\Currency_model;
 use App\Models\Afflossrebate_model;
 
 /**
@@ -101,6 +102,7 @@ class BaseController extends Controller
         $this->support_model = new support_model();
         $this->livechat_model = new livechat_model();
         $this->content_model = new content_model();
+        $this->currency_model = new currency_model();
         $this->afflossrebate_model = new afflossrebate_model();
 
         // Global Usage

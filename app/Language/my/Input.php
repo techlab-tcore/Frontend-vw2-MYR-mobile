@@ -43,6 +43,8 @@ return [
     'depoption' => 'Pilihan Deposit',
     'depchannel' => 'Saluran Deposit',
     'depamount' => 'Jumlah Deposit',
+    'exchamount' => 'Jumlah Pertukaran',
+    'bankexchamount' => 'Jumlah Pertukaran',
     'withamount' => 'Jumlah Pengeluaran',
     'level' => 'Tahap',
     'dateby' => 'Mengikut Tarikh',

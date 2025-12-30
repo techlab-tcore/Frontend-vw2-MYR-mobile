@@ -1453,6 +1453,38 @@ function newsReview(id)
     });
 }
 
+function callingAll()
+{
+    generalLoading();
+
+    // Fire all requests in parallel
+    var slotReq     = $.post('/list/slot/games',     { params: { type: 1 } });
+    var liveReq     = $.post('/list/live-casino/games', { params: { type: 2 } });
+    var sportReq    = $.post('/list/sportbook/games',   { params: { type: 3 } });
+    var kenoReq     = $.post('/list/keno/games',        { params: { type: 4 } });
+
+    // Wait until ALL are done
+    $.when(slotReq, liveReq, sportReq, kenoReq)
+        .done(function(slotData, liveData, sportData, kenoData) {
+            // Each argument is [data, status, jqXHR]
+            var combinedHtml = slotData[0] + liveData[0] + sportData[0] + kenoData[0];
+
+            combinedHtml += `<li class="col-xl-2 col-lg-2 col-md-3 col-3">
+                                <a class="d-block text-decoration-none" href="javascript:void(0);" onclick="callingPreLotto();">
+                                    <img class="d-block w-100" src="<?=base_url('assets/img/prelotto.png');?>">
+                                </a>
+                            </li>`
+
+            // Inject once
+            $("#grid-all").html(combinedHtml);
+
+            swal.close();
+        })
+        .fail(function() {
+            swal.fire("Error!", "Oopss! There are something wrong. Please try again later.", "error");
+        });
+}
+
 function callingAppGames()
 {
     generalLoading();
@@ -3084,6 +3116,7 @@ function getCompanyCDM(element) {
                 var textnode = document.createTextNode(item.name);
                 node.setAttribute("value", item.bank);
                 node.setAttribute("data-html", true);
+                node.setAttribute("data-currency", item.currency);
                 node.setAttribute("data-cardno", item.cardno);
                 node.setAttribute("data-accno", item.accno);
                 node.setAttribute("data-holder", item.holder);

@@ -43,6 +43,8 @@ return [
     'depoption' => '充值选项',
     'depchannel' => '充值渠道',
     'depamount' => '充值金额',
+    'exchamount' => '兑换金额',
+    'bankexchamount' => '兑换金额',
     'withamount' => '提款金额',
     'level' => '代数',
     'dateby' => '按日期',

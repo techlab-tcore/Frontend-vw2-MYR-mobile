@@ -338,33 +338,26 @@ Home
 }
 
 .clientZone {
-    padding: 0 0 1rem 0;
+    padding: 0 0 0.5rem 0;
     border-bottom: 1px solid #01DC66;
     margin-top: .5rem;
+    margin-bottom: 0rem !important;
 }
 
-.clientZone dl > dd:nth-child(2) a.btn-wallet{
+.clientZone dl > dd:nth-child(1) a.btn-wallet{
     width: 100%;
     display: inline-block;
     text-decoration: none;
     background: url('../../assets/img/buttons/en/ewallet.png') no-repeat center center transparent;
     background-size: contain;
-    transform: scale(1.3); /* Increase size by 20% */
-    transform-origin: center; /* Ensure scaling is centered */
 }
 
-.clientZone.cn dl > dd:nth-child(3) a{
-    text-align: center;
-}
-
-.clientZone dl > dd:nth-child(4) a.btn-customerservice {
+.clientZone dl > dd:nth-child(3) a.btn-customerservice {
     width: 100%;
     display: inline-block;
     text-decoration: none;
     background: url('../../assets/img/buttons/en/support.png') no-repeat center center transparent;
     background-size: contain;
-    transform: scale(1.3); /* Increase size by 20% */
-    transform-origin: center; /* Ensure scaling is centered */
 }
 /* Settings */
 .btn-bankaccount {
@@ -1299,6 +1292,7 @@ Promotion
 /*
 Footer
 */
+
 .badge-unread {
     display: none;
     position: absolute;
@@ -1380,6 +1374,7 @@ Footer
     background-size: 100%;
 }
 
+
 .mobile-footer.en ul > li[data-page="home"] > a > i {
     height: 95px !important;
     background: url('../../assets/img/en/home_btn.png') no-repeat center center;
@@ -1438,13 +1433,18 @@ Footer
     background-size: 100%;
 }
 
+.mobile-footer.my ul>li[data-page="message"]>a {
+    position: relative;
+    /* make <a> the positioning context */
+}
+
 .mobile-footer.my ul > li[data-page="message"] > a > i {
-    background: url('../../assets/img/en/message.png') no-repeat center center;
+    background: url('../../assets/img/my/message.png') no-repeat center center;
     background-size: 100%;
 }
 
 .mobile-footer.my ul > li[data-page="message"] > a.active > i {
-    background: url('../../assets/img/en/message_h.png') no-repeat center center;
+    background: url('../../assets/img/my/message_h.png') no-repeat center center;
     background-size: 100%;
 }
 
@@ -1507,13 +1507,18 @@ Footer
     background-size: 100%;
 }
 
+.mobile-footer.cn ul>li[data-page="message"]>a {
+    position: relative;
+    /* make <a> the positioning context */
+}
+
 .mobile-footer.cn ul > li[data-page="message"] > a > i {
-    background: url('../../assets/img/en/message.png') no-repeat center center;
+    background: url('../../assets/img/cn/message.png') no-repeat center center;
     background-size: 100%;
 }
 
 .mobile-footer.cn ul > li[data-page="message"] > a.active > i {
-    background: url('../../assets/img/en/message_h.png') no-repeat center center;
+    background: url('../../assets/img/cn/message_h.png') no-repeat center center;
     background-size: 100%;
 }
 
@@ -1575,13 +1580,18 @@ Footer
     background-size: 100%;
 }
 
+.mobile-footer.th ul>li[data-page="message"]>a {
+    position: relative;
+    /* make <a> the positioning context */
+}
+
 .mobile-footer.th ul > li[data-page="message"] > a > i {
-    background: url('../../assets/img/en/message.png') no-repeat center center;
+    background: url('../../assets/img/th/message.png') no-repeat center center;
     background-size: 100%;
 }
 
 .mobile-footer.th ul > li[data-page="message"] > a.active > i {
-    background: url('../../assets/img/en/message_h.png') no-repeat center center;
+    background: url('../../assets/img/th/message_h.png') no-repeat center center;
     background-size: 100%;
 }
 
@@ -1643,13 +1653,18 @@ Footer
     background-size: 100%;
 }
 
+.mobile-footer.vn ul>li[data-page="message"]>a {
+    position: relative;
+    /* make <a> the positioning context */
+}
+
 .mobile-footer.vn ul > li[data-page="message"] > a > i {
-    background: url('../../assets/img/en/message.png') no-repeat center center;
+    background: url('../../assets/img/vn/message.png') no-repeat center center;
     background-size: 100%;
 }
 
 .mobile-footer.vn ul > li[data-page="message"] > a.active > i {
-    background: url('../../assets/img/en/message_h.png') no-repeat center center;
+    background: url('../../assets/img/vn/message_h.png') no-repeat center center;
     background-size: 100%;
 }
 
@@ -1783,4 +1798,23 @@ Bank account
     color: #666;
     margin-bottom: 5px;
     font-weight: 500;
+}
+
+#tabScrollContainer { 
+    flex-wrap: wrap; /* allow wrapping */ 
+    overflow-x: hidden; /* prevent horizontal overflow */ 
+} 
+    
+#tabScrollContainer a.badge.nav-pill { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    text-align: center; 
+    white-space: normal; /* allow text to wrap if too long */ 
+    font-size: 10px !important;
+}
+
+.Ecurrency{
+    font-size: .8em;
+    color: grey;
 }

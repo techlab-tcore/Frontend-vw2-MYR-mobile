@@ -9,23 +9,28 @@
 <!-- Mobile -->
 <!-- User Account -->
 <?php if( isset($_SESSION['logged_in']) ): ?>
-<section class="bg-major clientZone wallet-wrapper my-2 <?=$_SESSION['lang'];?> d-xl-none d-lg-none d-md-none">
+<section class="bg-major clientZone wallet-wrapper <?=$_SESSION['lang'];?> d-xl-none d-lg-none d-md-none">
     <dl class="row m-0">
-        <dd class="col-5 m-0 text-truncate border-end">
+<dd class="col-2 m-0 d-flex justify-content-center border-end">
+            <a class="btn-wallet" href="<?=base_url('user-account/ewallet');?>"></a>
+        </dd>
+
+        <dd class="col-8 m-0 text-truncate border-end">
             <!-- <span class="d-block"><i class='bx bxs-user text-primary me-1'></i><?//=$_SESSION['username'];?></span> -->
             <!-- <i class='bx bxs-coin-stack text-primary me-1'></i><span class="userBalance" onclick="refreshBalance();">---</span> -->
             <!--<span class="d-block"><i class='bx bx-money text-primary me-1' onclick="refreshBalance();"></i><span class="userCash">---</span></span>-->
-           <span class="d-block"><small class="me-1"><?=lang('Label.cash');?></small><span class="userCash fw-semibold float-end">---</span><a href="javascript:void(0);" class="ms-1" onclick="refreshAndWithdrawGame()"><i class='bx bx-refresh'></i></a></span>
-            <small class="me-1"><?=lang('Label.chip');?></small><span class="userChip fw-semibold float-end">---</span>
+            <span class="d-flex justify-content-between align-items-center">
+                <small><?=lang('Label.cash');?><a href="javascript:void(0);" onclick="refreshAndWithdrawGame()"><i class='bx bx-refresh'></i></a></small>
+                <span class="userCash fw-semibold float-end">---</span>
+            </span>
+
+            <span class="d-flex justify-content-between align-items-center">
+                <small class="me-1"><?=lang('Label.chip');?></small>
+                <span class="userChip fw-semibold float-end">---</span>
+            </span>
             <!--<i class='bx bxs-coin-stack text-primary me-1'></i><span class="userChip">---</span>-->
         </dd>
-        <dd class="col-2 m-0 d-flex justify-content-center">
-            <a class="btn-wallet" href="<?=base_url('user-account/ewallet');?>"></a>
-        </dd>
-        <dd class="col-3 m-0 d-flex justify-content-center align-items-center border-start">
-             <span><small><?=lang('Label.customerService');?></small></span>
-            
-        </dd>
+
         <dd class="col-2 m-0 d-flex justify-content-center">
             <a target="_blank" class="btn-customerservice nav-link liveChat" href="javascript:void(0);"></a>
         </dd>
@@ -35,16 +40,14 @@
 <!-- End User Account -->
 <!-- End Mobile -->
 
-<section class="home-navBox d-flex align-items-center">
-    <!-- Scroll Left Button -->
-    <i class="cursor-left bx bx-chevron-left py-2 d-xl-none d-lg-none d-md-none" onclick="scrollTabs('left')"></i>
-
-    <!-- Scrollable Tab Container -->
+<!-- H5 Game Bar -->
+<section class="home-navBox d-xl-block d-lg-block d-md-block d-none d-flex align-items-center">
     <div class="game-menu btn-gameprovider flex-grow-1 overflow-hidden">
         <nav class="d-flex overflow-auto w-100" id="tabScrollContainer" role="tablist" style="scroll-behavior: smooth; white-space: nowrap;">
             <a class="badge rounded-pill fw-semibold px-3 py-2 d-flex justify-content-center align-items-center" data-bs-toggle="tab" data-bs-target="#news" href="#"><?=lang('Label.news');?></a>
             <a class="badge rounded-pill fw-semibold px-3 py-2 d-flex justify-content-center align-items-center" data-bs-toggle="tab" data-bs-target="#exclusive" href="#"><?=lang('Label.exclusive');?></a>
-            <a class="active badge rounded-pill fw-semibold px-3 py-2 d-flex justify-content-center align-items-center" data-bs-toggle="tab" data-bs-target="#slot" href="#"><?=lang('Label.slot');?></a>
+            <a class="active badge rounded-pill fw-semibold px-3 py-2 d-flex justify-content-center align-items-center" data-bs-toggle="tab" data-bs-target="#all" href="#"><?=lang('Label.allgames');?></a>
+            <a class="badge rounded-pill fw-semibold px-3 py-2 d-flex justify-content-center align-items-center" data-bs-toggle="tab" data-bs-target="#slot" href="#"><?=lang('Label.slot');?></a>
             <a class="badge rounded-pill fw-semibold px-3 py-2 d-flex justify-content-center align-items-center" data-bs-toggle="tab" data-bs-target="#casino" href="#"><?=lang('Label.casino');?></a>
             <a class="badge rounded-pill fw-semibold px-3 py-2 d-flex justify-content-center align-items-center" data-bs-toggle="tab" data-bs-target="#sport" href="#"><?=lang('Label.sport');?></a>
             <a class="badge rounded-pill fw-semibold px-3 py-2 d-flex justify-content-center align-items-center" data-bs-toggle="tab" data-bs-target="#keno" href="#"><?=lang('Label.keno');?></a>
@@ -52,10 +55,46 @@
             <a class="badge rounded-pill fw-semibold px-3 py-2 d-flex justify-content-center align-items-center" data-bs-toggle="tab" data-bs-target="#other" href="#"><?=lang('Label.other');?></a>
         </nav>
     </div>
-
-    <!-- Scroll Right Button -->
-    <i class="cursor-right bx bx-chevron-right py-2 d-xl-none d-lg-none d-md-none" onclick="scrollTabs('right')"></i>
 </section>
+<!-- End H5 Game Bar -->
+
+<!-- Mobile Game Bar -->
+<section class="home-navBox  d-xl-none d-lg-none d-md-none d-block d-flex align-items-center" id="mobileGameBar">
+    <div class="game-menu btn-gameprovider flex-grow-1">
+        <nav class="row gy-1 gx-0" id="tabScrollContainer" role="tablist">
+            <div class="col-3">
+                <a class="badge nav-pill px-1 py-1 fw-semibold" data-bs-toggle="tab" data-bs-target="#news" href="#" role="tab"><?=lang('Label.news');?></a>
+            </div>
+            <div class="col-3">
+                <a class="badge nav-pill px-1 py-1 fw-semibold" data-bs-toggle="tab" data-bs-target="#exclusive" href="#" role="tab"><?=lang('Label.exclusive');?></a>
+            </div>
+            <div class="col-3">
+                <a class="badge nav-pill px-1 py-1 fw-semibold" data-bs-toggle="tab" data-bs-target="#slot" href="#" role="tab"><?=lang('Label.slot');?></a>
+            </div>
+            <div class="col-3">
+                <a class="badge nav-pill px-1 py-1 fw-semibold" data-bs-toggle="tab" data-bs-target="#casino" href="#" role="tab"><?=lang('Label.casino');?></a>
+            </div>
+            <div class="col-3">
+                <a class="badge nav-pill px-1 py-1 fw-semibold" data-bs-toggle="tab" data-bs-target="#sport" href="#" role="tab"><?=lang('Label.sport');?></a>
+            </div>
+            <div class="col-3">
+                <a class="badge nav-pill px-1 py-1 fw-semibold" data-bs-toggle="tab" data-bs-target="#lottery" href="#" role="tab"><?=lang('Label.lottery');?></a>
+            </div>
+            <div class="col-3">
+                <a class="badge nav-pill px-1 py-1 fw-semibold" data-bs-toggle="tab" data-bs-target="#keno" href="#" role="tab"><?=lang('Label.keno');?></a>
+            </div>
+            <div class="col-3">
+                <a class="badge nav-pill px-1 py-1 fw-semibold" data-bs-toggle="tab" data-bs-target="#other" href="#" role="tab"><?=lang('Label.other');?></a>
+            </div>
+            <!-- Last one full width -->
+            <div class="col-12">
+                <a class="active badge nav-pill px-1 py-1 fw-semibold" data-bs-toggle="tab" data-bs-target="#all" href="#" role="tab"><?=lang('Label.allgames');?></a>
+            </div>
+        </nav>
+    </div>
+</section>
+<!-- End Mobile Game Bar -->
+
 
 <section class="container">
     <div class="tab-content game-standard">
@@ -86,6 +125,11 @@
         <div class="tab-pane fade" id="exclusive" role="tabpanel" aria-labelledby="exclusive-tab">
             <data class="d-block grid-item">
                 <ul class="list-unstyled row g-2 justify-content-center" id="grid-exclusive"></ul>
+            </data>
+        </div>
+        <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="slot-all">
+            <data class="d-block grid-item">
+                <ul class="list-unstyled row g-2 justify-content-center" id="grid-all"></ul>
             </data>
         </div>
         <div class="tab-pane fade show active" id="slot" role="tabpanel" aria-labelledby="slot-tab">
@@ -121,7 +165,7 @@
                 <ul class="list-unstyled row g-2 justify-content-center">
                     <li class="col-xl-2 col-lg-2 col-md-3 col-3">
                         <a class="d-block text-decoration-none" href="javascript:void(0);" onclick="callingPreLotto();">
-                            <img class="d-block w-100" src="<?=$_ENV['lottoPrize'];?>/prelotto.png">
+                            <img class="d-block w-100" src="<?=base_url('assets/img/prelotto.png');?>">
                         </a>
                     </li>
                 </ul>
@@ -187,8 +231,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         checkIfEmptyBankAccount(2);
     }
 
-    getSEO();
-    callingSlot();
+    callingAll();
     //hotGamesShowCase('<?=$_ENV['hotGames'];?>','grid-hot');
     //exclusiveGamesShowCase('<?=$_ENV['exclusiveGames'];?>','grid-exclusive');
 
@@ -228,8 +271,41 @@ document.addEventListener('DOMContentLoaded', (event) => {
     tabnewsEvent.addEventListener('shown.bs.tab', function (event) {
         event.target // newly activated tab
         event.relatedTarget // previous active tab
+        removeSEO();
+        callingNews();
+    });
+
+    const tabnewsEvent2 = document.querySelector('#mobileGameBar a[data-bs-target="#news"]');
+    tabnewsEvent2.addEventListener('hidden.bs.tab', function (event) {
+        document.getElementById("grid-news").innerHTML = '';
+    });
+    tabnewsEvent2.addEventListener('shown.bs.tab', function (event) {
+        event.target // newly activated tab
+        event.relatedTarget // previous active tab
         getSEO();
         callingNews();
+    });
+
+    const taballEvent = document.querySelector('a[data-bs-target="#all"]');
+    taballEvent.addEventListener('hidden.bs.tab', function (event) {
+        document.getElementById("grid-all").innerHTML = '';
+    });
+    taballEvent.addEventListener('shown.bs.tab', function (event) {
+        event.target // newly activated tab
+        event.relatedTarget // previous active tab
+        removeSEO();
+        callingAll();
+    });
+
+    const taballEvent2 = document.querySelector('#mobileGameBar a[data-bs-target="#all"]');
+    taballEvent2.addEventListener('hidden.bs.tab', function (event) {
+        document.getElementById("grid-all").innerHTML = '';
+    });
+    taballEvent2.addEventListener('shown.bs.tab', function (event) {
+        event.target // newly activated tab
+        event.relatedTarget // previous active tab
+        removeSEO();
+        callingAll();
     });
 
     const tabslotEvent = document.querySelector('a[data-bs-target="#slot"]');
@@ -237,6 +313,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
         document.getElementById("grid-slot").innerHTML = '';
     });
     tabslotEvent.addEventListener('shown.bs.tab', function (event) {
+        event.target // newly activated tab
+        event.relatedTarget // previous active tab
+        removeSEO();
+        callingSlot();
+    });
+
+    const tabslotEvent2 = document.querySelector('#mobileGameBar a[data-bs-target="#slot"]');
+    tabslotEvent2.addEventListener('hidden.bs.tab', function (event) {
+        document.getElementById("grid-slot").innerHTML = '';
+    });
+    tabslotEvent2.addEventListener('shown.bs.tab', function (event) {
         event.target // newly activated tab
         event.relatedTarget // previous active tab
         removeSEO();
@@ -254,11 +341,33 @@ document.addEventListener('DOMContentLoaded', (event) => {
         callingCasino();
     });
 
+    const tabcasinoEvent2 = document.querySelector('#mobileGameBar a[data-bs-target="#casino"]');
+    tabcasinoEvent2.addEventListener('hidden.bs.tab', function (event) {
+        document.getElementById("grid-casino").innerHTML = '';
+    });
+    tabcasinoEvent2.addEventListener('shown.bs.tab', function (event) {
+        event.target // newly activated tab
+        event.relatedTarget // previous active tab
+        removeSEO();
+        callingCasino();
+    });
+
     const tabsportEvent = document.querySelector('a[data-bs-target="#sport"]');
     tabsportEvent.addEventListener('hidden.bs.tab', function (event) {
         document.getElementById("grid-sport").innerHTML = '';
     });
     tabsportEvent.addEventListener('shown.bs.tab', function (event) {
+        event.target // newly activated tab
+        event.relatedTarget // previous active tab
+        removeSEO();
+        callingSport();
+    });
+
+    const tabsportEvent2 = document.querySelector('#mobileGameBar a[data-bs-target="#sport"]');
+    tabsportEvent2.addEventListener('hidden.bs.tab', function (event) {
+        document.getElementById("grid-sport").innerHTML = '';
+    });
+    tabsportEvent2.addEventListener('shown.bs.tab', function (event) {
         event.target // newly activated tab
         event.relatedTarget // previous active tab
         removeSEO();
@@ -274,6 +383,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
         event.relatedTarget // previous active tab
         removeSEO();
         callingKeno();
+    });
+
+    const tabkenoEvent2 = document.querySelector('#mobileGameBar a[data-bs-target="#keno"]');
+    tabkenoEvent2.addEventListener('hidden.bs.tab', function (event) {
+        document.getElementById("grid-sport").innerHTML = '';
+    });
+    tabkenoEvent2.addEventListener('shown.bs.tab', function (event) {
+        event.target // newly activated tab
+        event.relatedTarget // previous active tab
+        removeSEO();
+        callingSport();
     });
 
     // const tabesportEvent = document.querySelector('a[data-bs-target="#esport"]');
@@ -297,6 +417,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
         // callingLotto();
     });
 
+    const tablottoEvent2 = document.querySelector('#mobileGameBar a[data-bs-target="#lottery"]');
+    tablottoEvent2.addEventListener('hidden.bs.tab', function (event) {
+        document.getElementById("grid-lottery").innerHTML = '';
+    });
+    tablottoEvent2.addEventListener('shown.bs.tab', function (event) {
+        event.target // newly activated tab
+        event.relatedTarget // previous active tab
+        removeSEO();
+        // callingLotto();
+    });
+
     // const tabappgameEvent = document.querySelector('a[data-bs-target="#appgame"]');
     // tabappgameEvent.addEventListener('hidden.bs.tab', function (event) {
     //     document.getElementById("grid-appgame").innerHTML = '';
@@ -312,6 +443,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
         document.getElementById("grid-other").innerHTML = '';
     });
     tabotherEvent.addEventListener('shown.bs.tab', function (event) {
+        event.target // newly activated tab
+        event.relatedTarget // previous active tab
+        removeSEO();
+        //callingOther();
+    });
+
+    const tabotherEvent2 = document.querySelector('#mobileGameBar a[data-bs-target="#other"]');
+    tabotherEvent2.addEventListener('hidden.bs.tab', function (event) {
+        document.getElementById("grid-other").innerHTML = '';
+    });
+    tabotherEvent2.addEventListener('shown.bs.tab', function (event) {
         event.target // newly activated tab
         event.relatedTarget // previous active tab
         removeSEO();
