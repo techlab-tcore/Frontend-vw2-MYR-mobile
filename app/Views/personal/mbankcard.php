@@ -58,7 +58,7 @@ function renderBankAccounts(accounts) {
 
                 <div class="detail-item ms-auto">
                     <div class="detail-value">
-                        ${account.cardno}
+                        ${account.accno}
                         ${isDefault ? '✅' : ''}
                     </div>
                 </div>
