@@ -271,7 +271,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     tabnewsEvent.addEventListener('shown.bs.tab', function (event) {
         event.target // newly activated tab
         event.relatedTarget // previous active tab
-        removeSEO();
+        getSEO();
         callingNews();
     });
 
