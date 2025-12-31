@@ -651,7 +651,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         getProfile();
         getMail();
         //loginCheckExist2ndPass(); //login check 2nd password
-        //triggerPendinglist(); //membertransfer
+        triggerPendinglist(); //membertransfer
 
         const affiliateQREvent = document.getElementById('modal-affiliateQR');
         affiliateQREvent.addEventListener('shown.bs.modal', function (event) {
