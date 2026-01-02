@@ -1102,7 +1102,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 });
 
                 //block lotto credit-in
-                if ( params['provider'] == 'GD8' || params['provider'] == 'GDS' || params['provider'] == 'GD' ) 
+                if ( params['provider'] == 'GD8' || params['provider'] == 'GDS' ) 
                 {
                     $.post('/game/lobby/openlotto', {
                         params
