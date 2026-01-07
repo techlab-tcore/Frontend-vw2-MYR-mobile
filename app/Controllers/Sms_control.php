@@ -50,6 +50,35 @@ class Sms_control extends BaseController
         endif;
     }
     
+    public function insertWhatsappMass()
+    {
+        if($this->request->getpost('params')['regioncode'] == 'MYR') {
+            $regionCode = '60';
+        } else {
+            $regionCode = '65';
+        }
+
+        $length_of_string = 6;
+        $str_result = '0123456789';
+        $veritac = substr(str_shuffle($str_result), 0, $length_of_string);
+
+        $contactno = $regionCode . $this->request->getpost('params')['contact'];
+        $payload = [
+            'to' => $contactno,
+            'veritac' => $veritac
+        ];
+
+        $res = $this->sms_model->insertSendWhatsapp($payload);
+
+        if ($res['code'] == 0):
+            $session = session();
+            // $session->set('taccode', $this->request->getpost('params')['veritac']);
+            $session->set('taccode', $veritac);
+        endif;
+
+        echo json_encode($res);
+    }
+
     public function sendSMS()
     {
         $length = strlen($this->request->getpost('params')['contact']);

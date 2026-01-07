@@ -8,6 +8,8 @@ class Sms_model extends Model
 
     protected $whatsapp = 'https://verifyme.asia/api/create-message';
 
+    protected $sendwhatsapp = 'http://190.92.217.78:8001/sms/api/sendMessageMass';
+
     public function __construct()
 	{
 		$this->db = db_connect();
@@ -57,6 +59,46 @@ class Sms_model extends Model
             'Content-Length: ' . strlen($payload))
         );
         $response = curl_exec($ch);
+        $err = curl_error($ch);
+        curl_close($ch);
+
+        return json_decode($response, true);
+    }
+
+    public function insertSendWhatsapp($where)
+    {
+        $username = "VWorldWAOTP";
+        $password = md5("LxTZMExIblCn");
+        $tacode = $where['veritac'];
+
+        $timestamp = (int)(microtime(true) * 1000);
+
+        $sign = md5($username . $timestamp . $password);
+
+        $data = [
+            "userName" => $username,
+            "content" => $tacode,
+            "phoneList" => [$where['to']],
+            "timestamp" => $timestamp,
+            "sign" => $sign,
+
+        ];
+
+        $payload = json_encode($data);
+
+        $ch = curl_init($this->sendwhatsapp);
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            "Content-Type: application/json; charset=utf-8"
+        ]);
+
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+
+        $response = curl_exec($ch);
+        
         $err = curl_error($ch);
         curl_close($ch);
 

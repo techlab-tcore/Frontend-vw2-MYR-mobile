@@ -117,6 +117,13 @@ document.onkeydown = function(e) {
                         <small class="w-100 form-text"><?=lang('Validation.mobile');?></small>
                     </div>
                     <div class="input-group mb-3">
+                        <span class="input-group-text bg-white"><i class="bx bx-mobile"></i></span>
+                        <select class="form-select" id="tacmethod" name="tacmethod" required>   
+                            <option value="sms">SMS</option>
+                            <option value="whatsapp">WhatsApp</option>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
                         <span class="input-group-text bg-white"><i class="bx bx-barcode-reader"></i></span>
                         <input type="text" class="form-control" id="floatingTAC" name="veritac" placeholder="<?=lang('Input.smstac');?>" required>
                         <button type="button" class="btn btn-primary btn-tac" id="timer" onclick="requestSmsTac('forgotPassForm');"><?=lang('Nav.gettac');?></button>
@@ -261,22 +268,29 @@ function requestSmsTac(dom)
 {
     const contact = $('.'+dom+' [name=mobile]').val();
     const regioncode = $('.'+dom+' [name=regionCode]').val();
+    const tacmethod = document.getElementById('tacmethod').value;
 
     if( contact=='' ) {
-        swal.fire("Error!", "<?=lang('Validation.mobile');?>", "warning");
+        swal.fire("Error!", "<?=lang('Validation.username');?>", "warning");
         return false;
-    } else {
-        $('.forgotPassForm [name=mobile').prop('readonly', true);
-        var pass = Math.floor(100 + Math.random() * 900000);
-
+    } else { 
         //Disable Get Tac Button
         $('.btn-tac').prop('disabled', true);
 
-        //if (mobilecode == 'MYR') {
-            sms(contact,pass,regioncode);
-        //} else {
-            //whatsappTAC(contact,pass, mobilecode);
-        //}
+        if( tacmethod==="whatsapp" && contact!==''  ) {
+
+            whatsappTAC2(contact, regioncode);
+        }
+        else if (tacmethod === 'sms' && contact !== '') {
+
+            var pass = Math.floor(100 + Math.random() * 900000);
+            sms(contact, pass, regioncode);
+
+        } else if( obj.code==39 ) {
+                forceUserLogout();
+        } else {
+            swal.fire("Error!", obj.message + " (Code: "+obj.code+")", "error");
+        }
     }
 }
 
@@ -361,6 +375,30 @@ function whatsappTAC(contact,pass,mobilecode)
             forceUserLogout();
         } else {
             swal.fire("Error!", obj.message + " (Code: "+obj.code+")", "error");
+        }
+    });
+}
+
+function whatsappTAC2(contact,mobilecode)
+{
+
+    var params = {};
+    params['contact'] = contact;
+    params['regioncode'] = mobilecode;
+
+    $.post('/whatsapp/send-tac-mass', {
+        params
+    }, function(data, status) {
+        const obj = JSON.parse(data);
+        if( obj.code==0 ) {
+            swal.close();
+            timer();
+        } else if( obj.code==39 ) {
+            forceUserLogout();
+        } else {
+            swal.fire("Error!", obj.message + " (Code: "+obj.code+")", "error");
+            $('.btn-tac').prop('disabled', false);
+            $('.affRegisForm [name=mobile').prop('readonly', false);
         }
     });
 }

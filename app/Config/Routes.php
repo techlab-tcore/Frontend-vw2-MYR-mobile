@@ -42,6 +42,7 @@ $routes->resource('Sms_control');
 $routes->get('secondpassword/sms/send', 'Sms_control::sendSecondPassSMS');
 $routes->post('sms/send', 'Sms_control::sendSMS');
 $routes->post('whatsapp/send-tac', 'Sms_control::sendWhatsapp');
+$routes->post('whatsapp/send-tac-mass', 'Sms_control::insertWhatsappMass');
 
 $routes->resource('Support_control');
 $routes->get('list/whatsapp/register', 'Support_control::wsRegisterList');
