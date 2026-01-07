@@ -55,6 +55,7 @@ return [
     'gatchannel' => 'ช่องทาง',
     'gatduitnow' => 'ชำระตอนนี้ QR',
     'gatewallet' => 'กระเป๋าเงินอิเล็กทรอนิกส์',
+    'tacoption' => 'วิธีการรับ TAC',
     'read' => 'อ่าน',
     'readed' => 'อ่านแล้ว'
 ];

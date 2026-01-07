@@ -81,6 +81,15 @@
                         <section class="tab-pane fade p-xl-5 p-lg-5 p-md-3 p-3" id="resetpass-secondary">
                             <?=form_open('',['class'=>'form-validation customForm reset2ndPassForm','novalidate'=>'novalidate']);?>
                             <div class="row mb-3">
+                                <label class="col-xl-4 col-lg-4 col-md-4 col-12 col-form-label text-dark position-relative required2"><?=lang('Input.tacoption');?></label>
+                                <div class="col-xl-8 col-lg-8 col-md-8 col-12">
+                                    <select class="form-select" id="tacmethod" name="tacmethod" required>    
+                                        <option value="sms">SMS</option>
+                                        <option value="whatsapp">WhatsApp</option>
+                                    </select>
+                                </div>
+                            </div> 
+                            <div class="row mb-3">
                                 <label class="col-xl-4 col-lg-4 col-md-4 col-12 col-form-label text-dark position-relative required2"><?=lang('Input.smstac');?></label>
                                 <div class="col-xl-8 col-lg-8 col-md-8 col-12">
                                     <div class="input-group">
@@ -351,18 +360,53 @@ function requestSecondpwdSmsTac()
 {
     //Disable Get Tac Button
     $('.btn-2nd-tac').prop('disabled', true);
+    var contact = '<?=$_SESSION['contact']?>';
+    const tacmethod = document.getElementById('tacmethod').value;
 
-    $.get('secondpassword/sms/send', function(data, status) {
-        const obj = JSON.parse(data);
-        if( obj.code==1 ) {
-            secondpasstimer();
-        } else if( obj.code==39 ) {
-            forceUserLogout();
+    if( contact=='' ) {
+        swal.fire("Error!", "<?=lang('Validation.username');?>", "warning");
+        return false;
+    } else { 
+        //Disable Get Tac Button
+        $('.btn-tac').prop('disabled', true);
+
+        if( tacmethod==="whatsapp" && contact!==''  ) {
+
+            var params = {};
+            params['contact'] = '<?=$_SESSION['contact']?>';
+            params['regioncode'] = '<?=$_SESSION['regioncode']?>';
+
+            $.post('whatsapp/send-tac-mass', {
+                params
+            }, function(data, status) {
+                const obj = JSON.parse(data);
+                if( obj.code==0 ) {
+                    secondpasstimer();
+                } else {
+                    swal.fire("Error!", obj.message + " (Code: "+obj.code+")", "error");
+                    $('.btn-2nd-tac').prop('disabled', false);
+                }
+            });
+        }
+        else if (tacmethod === 'sms' && contact !== '') {
+
+            $.get('secondpassword/sms/send', function(data, status) {
+                const obj = JSON.parse(data);
+                if( obj.code==1 ) {
+                    secondpasstimer();
+                } else if( obj.code==39 ) {
+                    forceUserLogout();
+                } else {
+                    swal.fire("Error!", obj.message + " (Code: "+obj.code+")", "error");
+                    $('.btn-2nd-tac').prop('disabled', false);
+                }
+            });
+
         } else {
             swal.fire("Error!", obj.message + " (Code: "+obj.code+")", "error");
             $('.btn-2nd-tac').prop('disabled', false);
         }
-    });
+    }
 }
 
 function secondpasstimer()

@@ -55,6 +55,7 @@ return [
     'gatchannel' => 'Kênh',
     'gatduitnow' => 'DuitNow QR',
     'gatewallet' => 'Ví điện tử',
+    'tacoption' => 'Phương pháp nhận TAC',
     'read' => 'đọc',
     'readed' => 'đã đọc'
 ];

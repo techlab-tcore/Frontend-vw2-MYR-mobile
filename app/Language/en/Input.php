@@ -55,6 +55,7 @@ return [
     'gatchannel' => 'Channel',
     'gatduitnow' => 'DuitNow QR',
     'gatewallet' => 'E-Wallet',
+    'tacoption' => 'TAC Receive Method',
     'read' => 'read',
     'readed' => 'readed'
 ];
