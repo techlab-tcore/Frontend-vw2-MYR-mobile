@@ -1067,92 +1067,92 @@ class Game_control extends BaseController
         $game = '';
 
         //PEG BONUS
-        if( $data['session']==true ):
-            //MCLP
-            $peg_game .= '<li class="col-12">';
-            $peg_game .= '<a class="d-block text-decoration-none" href="javascript:void(0);" onclick="expressgameRules(\'2\', \'Legends Slot Free Credit\', \'MCLP\');">';
-            $peg_game .= '<img class="d-block w-100 rounded-4" src="'.$_ENV['exGameRules'].'/MCLP_'.$lng.'.png" title="Legends Slot Free Credit" alt="Legends Slot Free Credit">';
-            $peg_game .= '</a>';
-            $peg_game .= '</li>';
-            //MAVT
-            $peg_game .= '<li class="col-12">';
-            $peg_game .= '<a class="d-block text-decoration-none" href="javascript:void(0);" onclick="expressgameRules(\'2\', \'Avatar Free Credit\', \'MAVT\');">';
-            $peg_game .= '<img class="d-block w-100 rounded-4" src="'.$_ENV['exGameRules'].'/MAVT_'.$lng.'.png" title="Avatar Free Credit" alt="Avatar Free Credit">';
-            $peg_game .= '</a>';
-            $peg_game .= '</li>';
-            //MVP
-            $peg_game .= '<li class="col-12">';
-            $peg_game .= '<a class="d-block text-decoration-none" href="javascript:void(0);" onclick="expressgameRules(\'2\', \'Vpower Free Credit\', \'MVP\');">';
-            $peg_game .= '<img class="d-block w-100 rounded-4" src="'.$_ENV['exGameRules'].'/MVP_'.$lng.'.png" title="Vpower Free Credit" alt="Vpower Free Credit">';
-            $peg_game .= '</a>';
-            $peg_game .= '</li>';
-            //PEG Tournament
-            //$peg_game .= '<li class="col-12">';
-            ///$peg_game .= '<a class="d-block text-decoration-none" href="javascript:void(0);" onclick="gameLandingExpress(\'2\', \'Pegasus Slot\', \'PEG\');">';
-            //$peg_game .= '<a class="d-block text-decoration-none" href="javascript:void(0);" onclick="expressgameRules(\'2\', \'Pegasus Slot\', \'PEG\');">';
-            //$peg_game .= '<img class="d-block w-100 rounded-4" src="'.$_ENV['exGameRules'].'/PEG_'.$lng.'.png" title="Pegasus Slot" alt="Pegasus Slot">';
-            //$peg_game .= '</a>';
-            //$peg_game .= '</li>';
-        else:
-            //MCLP
-            $peg_game .= '<li class="col-12">';
-            $peg_game .= '<a class="d-block text-decoration-none overflow-hidden" href="javascript:void(0);" onclick="alertToast(\'bg-light\', \''.lang('Validation.loginaccount').'\');">';
-            $peg_game .= '<img class="d-block w-100 rounded-4" src="'.$_ENV['exGameRules'].'/MCLP_'.$lng.'.png" title="Legends Slot Free Credit" alt="Legends Slot Free Credit">';
-            $peg_game .= '</a>';
-            $peg_game .= '</li>';
-            //MAVT
-            $peg_game .= '<li class="col-12">';
-            $peg_game .= '<a class="d-block text-decoration-none overflow-hidden" href="javascript:void(0);" onclick="alertToast(\'bg-light\', \''.lang('Validation.loginaccount').'\');">';
-            $peg_game .= '<img class="d-block w-100 rounded-4" src="'.$_ENV['exGameRules'].'/MAVT_'.$lng.'.png" title="Avatar Free Credit" alt="Avatar Free Credit">';
-            $peg_game .= '</a>';
-            $peg_game .= '</li>';
-            //MVP
-            $peg_game .= '<li class="col-12">';
-            $peg_game .= '<a class="d-block text-decoration-none overflow-hidden" href="javascript:void(0);" onclick="alertToast(\'bg-light\', \''.lang('Validation.loginaccount').'\');">';
-            $peg_game .= '<img class="d-block w-100 rounded-4" src="'.$_ENV['exGameRules'].'/MVP_'.$lng.'.png" title="Vpower Free Credit" alt="Vpower Free Credit">';
-            $peg_game .= '</a>';
-            $peg_game .= '</li>';
-            //PEG Tourament
-            //$peg_game .= '<li class="col-12">';
-            //$peg_game .= '<a class="d-block text-decoration-none overflow-hidden" href="javascript:void(0);" onclick="alertToast(\'bg-light\', \''.lang('Validation.loginaccount').'\');">';
-            //$peg_game .= '<img class="d-block w-100 rounded-4" src="'.$_ENV['exGameRules'].'/PEG_'.$lng.'.png">';
-            //$peg_game .= '</a>';
-            //$peg_game .= '</li>';
-        endif;
+        // if( $data['session']==true ):
+        //     //MCLP
+        //     $peg_game .= '<li class="col-12">';
+        //     $peg_game .= '<a class="d-block text-decoration-none" href="javascript:void(0);" onclick="expressgameRules(\'2\', \'Legends Slot Free Credit\', \'MCLP\');">';
+        //     $peg_game .= '<img class="d-block w-100 rounded-4" src="'.$_ENV['exGameRules'].'/MCLP_'.$lng.'.png" title="Legends Slot Free Credit" alt="Legends Slot Free Credit">';
+        //     $peg_game .= '</a>';
+        //     $peg_game .= '</li>';
+        //     //MAVT
+        //     $peg_game .= '<li class="col-12">';
+        //     $peg_game .= '<a class="d-block text-decoration-none" href="javascript:void(0);" onclick="expressgameRules(\'2\', \'Avatar Free Credit\', \'MAVT\');">';
+        //     $peg_game .= '<img class="d-block w-100 rounded-4" src="'.$_ENV['exGameRules'].'/MAVT_'.$lng.'.png" title="Avatar Free Credit" alt="Avatar Free Credit">';
+        //     $peg_game .= '</a>';
+        //     $peg_game .= '</li>';
+        //     //MVP
+        //     $peg_game .= '<li class="col-12">';
+        //     $peg_game .= '<a class="d-block text-decoration-none" href="javascript:void(0);" onclick="expressgameRules(\'2\', \'Vpower Free Credit\', \'MVP\');">';
+        //     $peg_game .= '<img class="d-block w-100 rounded-4" src="'.$_ENV['exGameRules'].'/MVP_'.$lng.'.png" title="Vpower Free Credit" alt="Vpower Free Credit">';
+        //     $peg_game .= '</a>';
+        //     $peg_game .= '</li>';
+        //     //PEG Tournament
+        //     //$peg_game .= '<li class="col-12">';
+        //     ///$peg_game .= '<a class="d-block text-decoration-none" href="javascript:void(0);" onclick="gameLandingExpress(\'2\', \'Pegasus Slot\', \'PEG\');">';
+        //     //$peg_game .= '<a class="d-block text-decoration-none" href="javascript:void(0);" onclick="expressgameRules(\'2\', \'Pegasus Slot\', \'PEG\');">';
+        //     //$peg_game .= '<img class="d-block w-100 rounded-4" src="'.$_ENV['exGameRules'].'/PEG_'.$lng.'.png" title="Pegasus Slot" alt="Pegasus Slot">';
+        //     //$peg_game .= '</a>';
+        //     //$peg_game .= '</li>';
+        // else:
+        //     //MCLP
+        //     $peg_game .= '<li class="col-12">';
+        //     $peg_game .= '<a class="d-block text-decoration-none overflow-hidden" href="javascript:void(0);" onclick="alertToast(\'bg-light\', \''.lang('Validation.loginaccount').'\');">';
+        //     $peg_game .= '<img class="d-block w-100 rounded-4" src="'.$_ENV['exGameRules'].'/MCLP_'.$lng.'.png" title="Legends Slot Free Credit" alt="Legends Slot Free Credit">';
+        //     $peg_game .= '</a>';
+        //     $peg_game .= '</li>';
+        //     //MAVT
+        //     $peg_game .= '<li class="col-12">';
+        //     $peg_game .= '<a class="d-block text-decoration-none overflow-hidden" href="javascript:void(0);" onclick="alertToast(\'bg-light\', \''.lang('Validation.loginaccount').'\');">';
+        //     $peg_game .= '<img class="d-block w-100 rounded-4" src="'.$_ENV['exGameRules'].'/MAVT_'.$lng.'.png" title="Avatar Free Credit" alt="Avatar Free Credit">';
+        //     $peg_game .= '</a>';
+        //     $peg_game .= '</li>';
+        //     //MVP
+        //     $peg_game .= '<li class="col-12">';
+        //     $peg_game .= '<a class="d-block text-decoration-none overflow-hidden" href="javascript:void(0);" onclick="alertToast(\'bg-light\', \''.lang('Validation.loginaccount').'\');">';
+        //     $peg_game .= '<img class="d-block w-100 rounded-4" src="'.$_ENV['exGameRules'].'/MVP_'.$lng.'.png" title="Vpower Free Credit" alt="Vpower Free Credit">';
+        //     $peg_game .= '</a>';
+        //     $peg_game .= '</li>';
+        //     //PEG Tourament
+        //     //$peg_game .= '<li class="col-12">';
+        //     //$peg_game .= '<a class="d-block text-decoration-none overflow-hidden" href="javascript:void(0);" onclick="alertToast(\'bg-light\', \''.lang('Validation.loginaccount').'\');">';
+        //     //$peg_game .= '<img class="d-block w-100 rounded-4" src="'.$_ENV['exGameRules'].'/PEG_'.$lng.'.png">';
+        //     //$peg_game .= '</a>';
+        //     //$peg_game .= '</li>';
+        // endif;
 
-		if( $res['code']==1 && $res['data']!=[] ):
-			foreach( $res['data'] as $g ):
-                if( $g['code'] == 'legend-slot-musashi' || $g['code'] == 'legend-slot-onimaru' ){
-                    if( $g['status']==1 ):
-                        if( $data['session']==true ):
-                            $game .= '<li class="col-xl-2 col-lg-2 col-md-3 col-6">';
+		// if( $res['code']==1 && $res['data']!=[] ):
+		// 	foreach( $res['data'] as $g ):
+        //         if( $g['code'] == 'legend-slot-musashi' || $g['code'] == 'legend-slot-onimaru' ){
+        //             if( $g['status']==1 ):
+        //                 if( $data['session']==true ):
+        //                     $game .= '<li class="col-xl-2 col-lg-2 col-md-3 col-6">';
 
-                            // Original
-                            // $game .= '<a class="d-block text-decoration-none overflow-hidden rounded-3" href="javascript:void(0);" onclick="singleGame(\''.$g['name'][$lng].'\',\''.$g['code'].'\',\''.$provider.'\');">';
+        //                     // Original
+        //                     // $game .= '<a class="d-block text-decoration-none overflow-hidden rounded-3" href="javascript:void(0);" onclick="singleGame(\''.$g['name'][$lng].'\',\''.$g['code'].'\',\''.$provider.'\');">';
 
-                            // Instant Float Lobby
-                            //$game .= '<a class="d-block text-decoration-none" href="javascript:void(0);" onclick="exclusiveLanding(\'2\', \''.$g['name'][$lng].'\', \''.$provider.'\',\''.$g['code'].'\', \''.$lng.'\');">';
-                            $game .= '<a class="d-block text-decoration-none" href="javascript:void(0);" onclick="exclusivegameRules(\'2\', \''.$g['name'][$lng].'\', \''.$provider.'\',\''.$g['code'].'\', \''.$lng.'\');">';
-                            $game .= '<img class="w-100 rounded-4" src="'.$_ENV['gamecard'].'/'.$provider.'/'.$g['code'].'.png">';
-                            $game .= '</a>';
-                            $game .= '</li>';
-                        else:
-                            $game .= '<li class="col-xl-2 col-lg-2 col-md-3 col-6">';
-                            $game .= '<a class="d-block text-decoration-none overflow-hidden" href="javascript:void(0);" onclick="alertToast(\'bg-light\', \''.lang('Validation.loginaccount').'\');">';
-                            $game .= '<img class="w-100 rounded-4" src="'.$_ENV['gamecard'].'/'.$provider.'/'.$g['code'].'.png">';
-                            $game .= '</a>';
-                            $game .= '</li>';
-                        endif;
-                    elseif( $g['status']==2 ):
-                        $game .= '<li class="col-xl-2 col-lg-2 col-md-3 col-6 maintenance">';
-                        $game .= '<a class="d-block text-decoration-none overflow-hidden" href="javascript:void(0);">';
-                        $game .= '<img class="w-100 rounded-4" src="'.$_ENV['gamecard'].'/'.$provider.'/'.$g['code'].'.png">';
-                        $game .= '</a>';
-                        $game .= '</li>';
-                    endif;
-                }
-			endforeach;
-		endif;
+        //                     // Instant Float Lobby
+        //                     //$game .= '<a class="d-block text-decoration-none" href="javascript:void(0);" onclick="exclusiveLanding(\'2\', \''.$g['name'][$lng].'\', \''.$provider.'\',\''.$g['code'].'\', \''.$lng.'\');">';
+        //                     $game .= '<a class="d-block text-decoration-none" href="javascript:void(0);" onclick="exclusivegameRules(\'2\', \''.$g['name'][$lng].'\', \''.$provider.'\',\''.$g['code'].'\', \''.$lng.'\');">';
+        //                     $game .= '<img class="w-100 rounded-4" src="'.$_ENV['gamecard'].'/'.$provider.'/'.$g['code'].'.png">';
+        //                     $game .= '</a>';
+        //                     $game .= '</li>';
+        //                 else:
+        //                     $game .= '<li class="col-xl-2 col-lg-2 col-md-3 col-6">';
+        //                     $game .= '<a class="d-block text-decoration-none overflow-hidden" href="javascript:void(0);" onclick="alertToast(\'bg-light\', \''.lang('Validation.loginaccount').'\');">';
+        //                     $game .= '<img class="w-100 rounded-4" src="'.$_ENV['gamecard'].'/'.$provider.'/'.$g['code'].'.png">';
+        //                     $game .= '</a>';
+        //                     $game .= '</li>';
+        //                 endif;
+        //             elseif( $g['status']==2 ):
+        //                 $game .= '<li class="col-xl-2 col-lg-2 col-md-3 col-6 maintenance">';
+        //                 $game .= '<a class="d-block text-decoration-none overflow-hidden" href="javascript:void(0);">';
+        //                 $game .= '<img class="w-100 rounded-4" src="'.$_ENV['gamecard'].'/'.$provider.'/'.$g['code'].'.png">';
+        //                 $game .= '</a>';
+        //                 $game .= '</li>';
+        //             endif;
+        //         }
+		// 	endforeach;
+		// endif;
 
         $peg_game .= $game;
 		echo $peg_game;
