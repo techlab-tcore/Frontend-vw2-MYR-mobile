@@ -1818,3 +1818,16 @@ Bank account
     font-size: .8em;
     color: grey;
 }
+
+.detail-value { 
+    white-space: normal; /* allow wrapping */ 
+    word-break: break-word; /* break long words if needed */ 
+    overflow-wrap: break-word; /* modern equivalent */ 
+}
+
+.default-account { 
+    border: 2px solid #01DC66; /* green border */ 
+    border-radius: 6px; /* optional: rounded corners */ 
+    padding: 8px; /* spacing inside */ 
+    background-color: #dffff4;
+}

@@ -276,7 +276,7 @@ class Balance_control extends BaseController
                     case 1: $method = lang('Nav.banktransfer'); break;
                     case 2: $method = lang('Nav.pgateway'); break;
                     case 3: $method = lang('Nav.topupcode'); break;
-                    default: $method = '---';
+                    default: $method = lang('Label.others');
                 endswitch;
 
                 $date = Time::parse(date('Y-m-d H:i:s', strtotime($ph['createDate'])));

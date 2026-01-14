@@ -47,19 +47,17 @@ function renderBankAccounts(accounts) {
         const isDefault = account.isDefault === 1;
 
         const accountCard = document.createElement('div');
-        accountCard.className = `account-card px-2 py-2`;
+        isDefault ? accountCard.className = `account-card px-2 py-2 default-account` : accountCard.className = `account-card px-2 py-2`;
 
         accountCard.innerHTML = `
-            <div class="d-flex align-items-center justify-content-center">
-                <div class="detail-item">
-                    <div class="detail-value fw-semibold">${account.holder}</div>
-                    <div class="detail-value fw-light">${account.name}</div>
+            <div class="detail-item"> 
+                <div class="d-flex align-items-center justify-content-center fw-semibold">
+                    ${account.holder} <span class="ms-auto fw-light">${account.name}</span>
                 </div>
 
-                <div class="detail-item ms-auto">
+                <div class="detail-value fw-light">
                     <div class="detail-value">
                         ${account.accno}
-                        ${isDefault ? '✅' : ''}
                     </div>
                 </div>
             </div>
