@@ -100,6 +100,9 @@
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-primary btn-lg fw-bold"><?=lang('Nav.submit');?></button>
                 </div>
+                <small class="d-block mt-3 text-center">
+                    <a id="forgotPassLink" class="d-inline-block text-decoration-none"><i class='bx bxs-lock me-1'></i><?=lang('Nav.forgotpass');?></a>
+                </small>
                 <?=form_close();?>
             </div>
         </article>
@@ -609,6 +612,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     $.get('/device/check', function(data, status) {
         const obj = JSON.parse(data);
         if( obj.mobile==true ) {
+            forgotPassLink.href = "<?=base_url('user-rstpassword');?>";
+
             $('.btn-sideToggle').off().on('click', function(e) {
                 e.preventDefault();
                 const sideToggle = document.querySelector('.btn-sideToggle');
@@ -620,6 +625,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 }
             });
         } else {
+            forgotPassLink.href = "<?=base_url('user-password');?>";
             // if( logged )
             // {
             //     var $draggable = $('.draggable').draggabilly({
