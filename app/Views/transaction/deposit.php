@@ -921,7 +921,7 @@ function beforePGDeposit(params)
 {
     $.get('/refresh-credit/all', function(data, status) {
         const obj = JSON.parse(data);
-        if( obj.code==1 ) {
+        if( obj.code==1 || obj.code==48 ) {
             submitPGatetway(params);
         } else {
             swal.fire("", obj.message + " (Code: "+obj.code+")", "error");
@@ -943,7 +943,7 @@ function beforeBTDeposit(params, imgSource)
     
     $.get('/refresh-credit/all', function(data, status) {
         const obj = JSON.parse(data);
-        if( obj.code==1 ) {
+        if( obj.code==1 || obj.code==48 ) {
             submitBankTransfer(params, imgSource);
         } else {
             swal.fire("", obj.message + " (Code: "+obj.code+")", "error");
