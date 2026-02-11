@@ -169,7 +169,7 @@ class Balance_control extends BaseController
             'amount' => (float)$this->request->getPost('params')['amount'],
             'depositdate' => date('c', strtotime($now)),
             'ip' => $_SESSION['ip'],
-            'adminbankid' => base64_decode($this->request->getPost('params')['bank']),
+            'adminbankid' => base64_decode($this->request->getPost('params')['bankid']),
             'admincardno' => $this->request->getPost('params')['card'],
             'adminaccountno' => $this->request->getPost('params')['accno'],
             'slipname' => $this->request->getPost('params')['slip'],

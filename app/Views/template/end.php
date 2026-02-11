@@ -608,6 +608,63 @@
 
 <script>
 const logged = '<?=$session;?>';
+const bankImages = {
+    MBB: "<?=base_url('assets/img/bankicon/mbf.png');?>",
+    "MayBank": "<?=base_url('assets/img/bankicon/mbf.png');?>",
+    AFIN: "<?=base_url('assets/img/bankicon/affin.png');?>",
+    "5f2e5a70b673ec0a1c151daa": "<?=base_url('assets/img/bankicon/affin.png');?>",
+    ALL: "<?=base_url('assets/img/bankicon/all.png');?>",
+    "5f083be9574a951b10c50beb": "<?=base_url('assets/img/bankicon/all.png');?>",
+    AMB: "<?=base_url('assets/img/bankicon/am.png');?>",
+    "5f2e5a80b673ec0a1c151dab": "<?=base_url('assets/img/bankicon/am.png');?>",
+    AMERICA: "<?=base_url('assets/img/bankicon/america.png');?>",
+    "64e6d399c67433661e79bc25": "<?=base_url('assets/img/bankicon/america.png');?>",
+    BANKRAKYAT: "<?=base_url('assets/img/bankicon/bankrayat.png');?>",
+    "5f2e5ad5b673ec0a1c151db0": "<?=base_url('assets/img/bankicon/bankrayat.png');?>",
+    BIS: "<?=base_url('assets/img/bankicon/bis.png');?>",
+    "5f36212ee541ed27c4f050e5": "<?=base_url('assets/img/bankicon/bis.png');?>",
+    BOOST: "<?=base_url('assets/img/bankicon/boost.png');?>",
+    "682efb184662cf7611dc0974": "<?=base_url('assets/img/bankicon/boost.png');?>",
+    BSN: "<?=base_url('assets/img/bankicon/bsn.png');?>",
+    "5f083906574a951b10c50be9": "<?=base_url('assets/img/bankicon/bsn.png');?>",
+    CIMB: "<?=base_url('assets/img/bankicon/cimb.png');?>",
+    "5f08387e574a951b10c50be6": "<?=base_url('assets/img/bankicon/cimb.png');?>",
+    DBS: "<?=base_url('assets/img/bankicon/dbs.png');?>",
+    DUI: "<?=base_url('assets/img/bankicon/duitnow.png');?>",
+    GX: "<?=base_url('assets/img/bankicon/gx.png');?>",
+    "660f8ec5f62f20727f6691ab": "<?=base_url('assets/img/bankicon/gx.png');?>",
+    HLB: "<?=base_url('assets/img/bankicon/hlb.png');?>",
+    "5f279eed09831e1e80d88636": "<?=base_url('assets/img/bankicon/hlb.png');?>",
+    HSBC: "<?=base_url('assets/img/bankicon/hsbc.png');?>",
+    "5f2e5a8db673ec0a1c151dac": "<?=base_url('assets/img/bankicon/hsbc.png');?>",
+    MBF: "<?=base_url('assets/img/bankicon/mbf.png');?>",
+    "5f083864574a951b10c50be5": "<?=base_url('assets/img/bankicon/mbf.png');?>",
+    MBSB: "<?=base_url('assets/img/bankicon/mbsb.png');?>",
+    "6780d28d8077499a8c3cac43": "<?=base_url('assets/img/bankicon/mbsb.png');?>",
+    MERCHANTTRADE: "<?=base_url('assets/img/bankicon/merchantTrade.png');?>",
+    "654b6bf8072aae8409f49919": "<?=base_url('assets/img/bankicon/merchantTrade.png');?>",
+    MUAMALAT: "<?=base_url('assets/img/bankicon/muamalat.png');?>",
+    "65f334cbc824fbae8b41f037": "<?=base_url('assets/img/bankicon/muamalat.png');?>",
+    OCBC: "<?=base_url('assets/img/bankicon/ocbc.png');?>",
+    "64478acc367ccdab715fdf57": "<?=base_url('assets/img/bankicon/ocbc.png');?>",
+    PBE: "<?=base_url('assets/img/bankicon/pbe.png');?>",
+    PBB: "<?=base_url('assets/img/bankicon/pbe.png');?>",
+    PBBB: "<?=base_url('assets/img/bankicon/pbe.png');?>",
+    "5f083893574a951b10c50be7": "<?=base_url('assets/img/bankicon/pbe.png');?>",
+    RHB: "<?=base_url('assets/img/bankicon/rhb.png');?>",
+    "5f0838d2574a951b10c50be8": "<?=base_url('assets/img/bankicon/rhb.png');?>",
+    SC: "<?=base_url('assets/img/bankicon/sc.png');?>",
+    "5f2e5ab2b673ec0a1c151dae": "<?=base_url('assets/img/bankicon/sc.png');?>",
+    TNG: "<?=base_url('assets/img/bankicon/tng.png');?>",
+    TNGQR: "<?=base_url('assets/img/bankicon/tng.png');?>",
+    "6131f8aa0b2791e8cc72263d": "<?=base_url('assets/img/bankicon/tng.png');?>",
+    UOB: "<?=base_url('assets/img/bankicon/uob.png');?>",
+    "64e6c3eec67433661e79bbf0": "<?=base_url('assets/img/bankicon/default.png');?>",
+    TNGC: "<?=base_url('assets/img/bankchannel/tng.png');?>",
+    DUIN: "<?=base_url('assets/img/bankchannel/dui.png');?>",
+    PYG: "<?=base_url('assets/img/bankchannel/pyg.png');?>",
+
+}
 document.addEventListener('DOMContentLoaded', (event) => {
     $.get('/device/check', function(data, status) {
         const obj = JSON.parse(data);
@@ -3145,6 +3202,60 @@ function getCompanyCDM(element) {
     });
 }
 
+function getCompanyCDMverM(element) {
+    generalLoading();
+
+    $.get('/list/bank-account/company', function(data, status) {
+        const obj = JSON.parse(data);
+        if( obj.data=='' ) {
+            document.getElementById("deposit-CDM").innerHTML = '';
+        }
+
+        if( obj.code==1 && obj.data!='' ) {
+            const bankCard = obj.data;;
+
+            bankCard.forEach(function(item, index) {
+
+                var node = document.createElement("input");
+                var nodeLabel = document.createElement("label");
+                var textnode = document.createTextNode(item.name);
+                var img = document.createElement("img");
+                img.src = getBankImg(atob(item.bank));
+
+                node.setAttribute("type", 'radio');
+                node.setAttribute("name", 'bankid');
+                node.setAttribute("id", 'bank-'+index);
+                node.setAttribute("value", item.bank);
+                node.setAttribute("data-html", true);
+                node.setAttribute("data-currency", item.currency);
+                node.setAttribute("data-cardno", item.cardno);
+                node.setAttribute("data-accno", item.accno);
+                node.setAttribute("data-holder", item.holder);
+                node.setAttribute("data-remark", item.remark);
+                node.setAttribute("data-mindep", item.minDeposit);
+                node.setAttribute("data-maxdep", item.maxDeposit);
+                node.classList.add('btn-check');
+                
+                nodeLabel.setAttribute("for", 'bank-'+index);
+                nodeLabel.classList.add('btn','custom-bank-button', 'd-flex', 'flex-column', 'mb-1', 'me-1', 'align-items-center', 'text-wrap');
+
+                nodeLabel.appendChild(img);
+                nodeLabel.appendChild(textnode);
+                document.getElementById(element).appendChild(node);
+                document.getElementById(element).appendChild(nodeLabel);
+            });
+        } else {
+            // swal.fire("<?//=lang('Label.error');?>!", obj.message + " (Code: "+obj.code+")", "error");
+        }
+    })
+    .done(function() {
+        swal.close();
+    })
+    .fail(function() {
+        // swal.fire("Error!", "Oopss! There are something wrong. Please try again later.", "error");
+    });
+}
+
 function getBankList(element)
 {
     $.get('/list/bank', function(data, status) {
@@ -3385,4 +3496,9 @@ function expressLobbySportgameRules(name, provider) {
 }
 
 //End Game Rules
+
+//Get Bank icon
+function getBankImg(code) {
+    return bankImages[code] || "<?=base_url('assets/img/bankicon/default.png');?>";
+}
 </script>

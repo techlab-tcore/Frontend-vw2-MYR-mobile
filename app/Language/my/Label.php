@@ -99,6 +99,7 @@ return [
     'fortunetoken' => 'Token Nasib',
     'lossrebate' => 'Rebat Kerugian',
     'selectbank' => 'Pilih Bank',
+    'selectpg' => 'Pilih Gerbang Pembayaran',
     'from' => 'Daripada',
     'to' => 'Ke',
     'createdate' => 'Tarikh Dicipta',
@@ -166,4 +167,5 @@ return [
     'reset' => 'Set Semula',
     'ewallet' => 'E-Dompet',
     'action' => 'Tindakan',
+    'chgAcc' => 'Tukar Akaun',
 ];

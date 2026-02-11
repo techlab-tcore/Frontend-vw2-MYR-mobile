@@ -622,6 +622,10 @@ Copyright 2019
     .btn-regis-login {
         margin-bottom: 0rem
     }
+
+    .custom-pg-button, .custom-bank-button{
+        width: 109px;
+    }
 }
 
 /* Landscape */
@@ -780,6 +784,10 @@ Copyright 2019
 
     .btn-regis-login {
         margin-bottom: 0rem
+    }
+
+    .custom-pg-button, .custom-bank-button{
+        width: 97px;
     }
 }
 

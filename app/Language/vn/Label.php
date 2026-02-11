@@ -99,6 +99,7 @@ return [
     'fortunetoken' => 'Mã thông báo may mắn',
     'lossrebate' => 'Hoàn tiền lỗ',
     'selectbank' => 'Chọn Ngân hàng',
+    'selectpg' => 'chọn phương thức thanh toán',
     'from' => 'Từ',
     'to' => 'Đến',
     'createdate' => 'Ngày tạo',
@@ -167,4 +168,5 @@ return [
     'reset' => 'Cài lại',
     'ewallet' => 'ví điện tử',
     'action' => 'Hoạt động',
+    'chgAcc' => 'Thay đổi tài khoản',   
 ];
