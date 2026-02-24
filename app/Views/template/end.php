@@ -3334,6 +3334,29 @@ function expressgameRules(species, name, provider) {
     });
 }
 
+function expresscasinoRules(species, name, provider) {  
+    swal.fire({
+        backdrop: true,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        padding: '0.5rem',
+        title: '<?=lang('Validation.casinogamerulestitle');?>',
+        html: '<?=lang('Validation.casinogamerulescontent');?>',
+        customClass: {
+	 		container: 'gamerules-content'
+	 	},
+        showDenyButton: true,
+        confirmButtonText: '<?=lang('Nav.entergame');?>',
+        denyButtonText: '<?=lang('Nav.cancel');?>',
+    }).then( (result) => {
+        if( result.isConfirmed ) {
+            gameLandingExpress(species, name, provider);
+        } else if ( result.isDenied ) {
+            swal.close();
+        }
+    });
+}
+
 function expressSportRules(species, name, provider) {  
     swal.fire({
         backdrop: true,

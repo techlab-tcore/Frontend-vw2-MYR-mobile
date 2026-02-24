@@ -1290,10 +1290,10 @@ class Game_control extends BaseController
                         // Instant Float Lobby
                         if( $s['code']=='PT2' || $s['code']=='PRG2' ):
                             //$game .= '<a class="d-block text-decoration-none" href="javascript:void(0);" onclick="gameLandingExpress(\'2\', \''.$s['name'].'\', \''.$s['code'].'\');">';
-                            $game .= '<a class="d-block text-decoration-none" href="javascript:void(0);" onclick="expressgameRules(\'2\', \''.$s['name'].'\', \''.$s['code'].'\');">';
+                            $game .= '<a class="d-block text-decoration-none" href="javascript:void(0);" onclick="expresscasinoRules(\'2\', \''.$s['name'].'\', \''.$s['code'].'\');">';
                         else:
                             //$game .= '<a class="d-block text-decoration-none" href="javascript:void(0);" onclick="gameLandingExpress(\'1\', \''.$s['name'].'\', \''.$s['code'].'\');">';
-                            $game .= '<a class="d-block text-decoration-none" href="javascript:void(0);" onclick="expressgameRules(\'1\', \''.$s['name'].'\', \''.$s['code'].'\');">';
+                            $game .= '<a class="d-block text-decoration-none" href="javascript:void(0);" onclick="expresscasinoRules(\'1\', \''.$s['name'].'\', \''.$s['code'].'\');">';
                         endif;
 
 						$game .= '<img class="d-block w-100" src="'.$_ENV['gameProviderCard'].'/casino/'.$s['code'].'.png" title="'.$s['name'].'" alt="'.$s['name'].'">';
