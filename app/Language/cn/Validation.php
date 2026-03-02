@@ -50,7 +50,7 @@ return [
     'deposit' => '最低: {0} / 最高: {1}',
     'withdrawal' => '最低: {0}',
     'rusure' => '是否确定？',
-    'nopromotion' => '您没有申请任何促销活动',
+    'nopromotion' => '存款申请将会被处理',
     'noafflossrebate' => '目前没有任何回扣',
 
     'payoption' => '渠道: {0}',

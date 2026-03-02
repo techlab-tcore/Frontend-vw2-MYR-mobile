@@ -26,7 +26,7 @@
 
                     <dl class="tab-content" id="nav-tabContent">
                         <dd class="tab-pane fade show active" id="nav-instant" role="tabpanel" aria-labelledby="nav-instant-tab" tabindex="0">
-                            <?=form_open('',['class'=>'form-validation pgatewayForm','novalidate'=>'novalidate'],['channel'=>'','currency'=>'']);?>
+                            <?=form_open('',['class'=>'form-validation pgatewayForm','novalidate'=>'novalidate'],['channel'=>'','currency'=>'','bankid'=>'','merchant'=>'']);?>
                             <div class="row mb-3">
                                 <label class="col-xl-4 col-lg-4 col-md-4 col-12 col-form-label color-55vp3"><?=lang('Input.pgateway');?> <span class="text-danger">*</span></label>
                                 <div class="col-xl-8 col-lg-8 col-md-8 col-12">
@@ -66,12 +66,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mb-3">
+                            <!-- <div class="row mb-3">
                                 <label class="col-xl-4 col-lg-4 col-md-4 col-12 col-form-label color-55vp3"><?=lang('Label.promotion');?></label>
                                 <div class="col-xl-8 col-lg-8 col-md-8 col-12">
                                     <select class="form-select" name="promotion" id="promo-list"></select>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="row mb-3">
                                 <div class="col-xl-8 col-lg-8 col-md-8 col-12 ms-auto">
                                     <button type="submit" class="btn btn-primary"><?=lang('Nav.submit');?></button>
@@ -142,12 +142,12 @@
                                     <input class="form-control" type="file" id="receipt" name="receipt" required>
                                 </div>
                             </div>
-                            <div class="row mb-3">
+                            <!-- <div class="row mb-3">
                                 <label class="col-xl-4 col-lg-4 col-md-4 col-12 col-form-label color-55vp3"><?=lang('Label.promotion');?></label>
                                 <div class="col-xl-8 col-lg-8 col-md-8 col-12">
                                     <select class="form-select" name="promotion" id="bankPromo-list"></select>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="row mb-3">
                                 <div class="col-xl-8 col-lg-8 col-md-8 col-12 ms-auto">
                                     <button type="submit" class="btn btn-primary"><?=lang('Nav.submit');?></button>
@@ -329,24 +329,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
-    $('#depositChannel-list').off().on('change', function(e) {
-        generalLoading();
+    $('#depositChannel-list').on('click', 'a.dropdown-item', function(e) {
+        e.preventDefault();
         $('#depositPayGatewayBank-list').html('');
-        this.options[0].remove();
-        const idx = this.options.selectedIndex;
 
-        const pgid = this.options[idx].value;
-        const currency = this.options[idx].dataset.currency;
-        const merchant = this.options[idx].dataset.merchant;
+        const pgid = $(this).attr('value');
+        const currency = $(this).data('currency');
+        const merchant = $(this).data('merchant');
 
-        if( pgid!=null )
-        {
-            $('.pgatewayForm [name=amount]').prop('disabled',false);
-            $('.pgatewayForm [type=submit]').prop('disabled', false);
-        } else {
-            $('.pgatewayForm [name=amount]').prop('disabled',true);
-            $('.pgatewayForm [type=submit]').prop('disabled', true);
-        }
+        $('.pgatewayForm [name=merchant]').val(merchant);
+        $('.pgatewayForm [name=bankid]').val(pgid);
+
 
         getPgChannel('depositPayGatewayBank-list',pgid,merchant,currency);
     });
@@ -375,7 +368,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         GLOBAL.currencyTag = "";
         GLOBAL.currencyRate = 0;
         $('#nav-instant').find('form').trigger('reset');
-        $('#nav-instant #promo-list').html(' ');
+        // $('#nav-instant #promo-list').html(' ');
     });
     tabInstantEvent.addEventListener('shown.bs.tab', function (event) {
         event.target // newly activated tab
@@ -390,12 +383,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
         GLOBAL.currencyTag = "";
         GLOBAL.currencyRate = 0;
         $('#nav-bank').find('form').trigger('reset');
-        $('#nav-bank #bankPromo-list').html(' ');
+        // $('#nav-bank #bankPromo-list').html(' ');
     });
     tabBankEvent.addEventListener('shown.bs.tab', function (event) {
         event.target // newly activated tab
         event.relatedTarget // previous active tab
-        getPromoList('bankPromo-list');
+        // getPromoList('bankPromo-list');
     });
 
     $('.pgatewayForm').on('submit', function(e) {
@@ -405,15 +398,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
             generalLoading();
             $('.pgatewayForm [type=submit]').prop('disabled', true);
 
-            const bankid = $('.pgatewayForm [name=pgid]').data('pgid');
-            const merchant = $('.pgatewayForm [name=pgid]').data('merchant');
-
             var params = {};
             var formObj = $(this).closest("form");
             $.each($(formObj).serializeArray(), function (index, value) {
                 params[value.name] = value.value;
-                params['bankid'] = bankid;
-                params['merchant'] = merchant;
             });
 
             const channelExist = $('#depositChannel-list').html();
@@ -424,12 +412,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 return false;
             }
 
-            const promoExist = $('.pgatewayForm #promo-list').html();
+            // const promoExist = $('.pgatewayForm #promo-list').html();
             // alert(promoExist.length);
-            if( promoExist.length>0 )
-            {
-                if( params['promotion']=='' )
-                {
+            // if( promoExist.length>0 )
+            // {
+                // if( params['promotion']=='' )
+                // {
                     swal.fire({
                         backdrop: true,
                         allowOutsideClick: false,
@@ -450,14 +438,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         }
                     });
                     return false;
-                } else {
-                    beforePGDeposit(params);
-                    //submitPGatetway(params);
-                }
-            } else {
-                beforePGDeposit(params);
-                //submitPGatetway(params);
-            }
+                // } else {
+                //     beforePGDeposit(params);
+                //     //submitPGatetway(params);
+                // }
+            // } else {
+            //     beforePGDeposit(params);
+            //     //submitPGatetway(params);
+            // }
         }
     });
 
@@ -490,11 +478,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 return false;
             }
             
-            const promoExist = $('.bankTransferForm #bankPromo-list').html();
-            if( promoExist.length>0 )
-            {
-                if( params['promotion']=='' )
-                {
+            // const promoExist = $('.bankTransferForm #bankPromo-list').html();
+            // if( promoExist.length>0 )
+            // {
+            //     if( params['promotion']=='' )
+            //     {
                     swal.fire({
                         title: '<?=lang('Validation.rusure');?>',
                         text: '<?=lang('Validation.nopromotion');?>',
@@ -510,14 +498,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             $('.bankTransferForm [type=submit]').prop('disabled', false);
                         }
                     });
-                } else {
-                    beforeBTDeposit(params, imgSource);
-                    //submitBankTransfer(params, imgSource);
-                }
-            } else {
-                beforeBTDeposit(params, imgSource);
-                //submitBankTransfer(params, imgSource);
-            }
+            //     } else {
+            //         beforeBTDeposit(params, imgSource);
+            //         //submitBankTransfer(params, imgSource);
+            //     }
+            // } else {
+            //     beforeBTDeposit(params, imgSource);
+            //     //submitBankTransfer(params, imgSource);
+            // }
         }
     });
 });
@@ -596,7 +584,7 @@ function submitPGatetway(params)
                     // win.document.write(data);
                     // win.document.close();
 
-                    if( obj.paymentGatewayParams.channelcode!='USDT' && params['bankid']!=btoa('<?=$_ENV['payessence'];?>') && params['bankid']!=btoa('<?=$_ENV['peEwallet'];?>') && params['bankid']!=btoa('<?=$_ENV['bigpay'];?>') && params['bankid']!=btoa('<?=$_ENV['epicpayFPX'];?>') )
+                    if( obj.paymentGatewayParams.channelcode!='USDT' && params['bankid']!=btoa('<?=$_ENV['payessence'];?>') && params['bankid']!=btoa('<?=$_ENV['peEwallet'];?>') && params['bankid']!=btoa('<?=$_ENV['bigpay'];?>') && params['bankid']!=btoa('<?=$_ENV['epicpay'];?>') )
                     {
                         $('.modal-depositFrame').modal('show');
                         var node = document.createElement('iframe');
@@ -747,7 +735,7 @@ function getPgChannel(element,pgid,merchant,currency)
                         document.getElementById(element).appendChild(nodeLabel);
 
                         node.addEventListener('change', function() {
-                            //$('.pgatewayForm [name=currency]').val(currency);
+                            $('.pgatewayForm [name=currency]').val(currency);
                             $('.pgatewayForm [name=channel]').val(item.code);
                             $('.pgatewayForm [name=amount]').val(item.minDeposit); 
                             $('.pgatewayForm [name=amount]').attr('min', item.minDeposit); 
@@ -821,7 +809,7 @@ async function getRadioPGatewayList(element)
     $.get('/list/payment-gateway/company', function(data, status) {
         const obj = JSON.parse(data);
         if( obj.code==1 ) {
-            // swal.close();
+            swal.close();
             const pg = obj.data;
             if (pg.length == 0){
                 var nodeLast = document.createElement("label");
@@ -848,11 +836,10 @@ async function getRadioPGatewayList(element)
                         var nodeWrapped = document.createElement("li");
                         var node = document.createElement("a");
                         var img = document.createElement("img");
-                        console.log(item.name.slice(-3));
                         if(item.name.slice(-3) == "TNG"){
                             img.src = getBankImg('TNGC');
                         }else if(item.name.slice(-3) == "DUI"){
-                            img.src = getBankImg('DUIN');
+                            img.src = getBankImg('DUI');
                         }else{
                             img.src = getBankImg('PYG');
                         }
@@ -882,7 +869,6 @@ async function getRadioPGatewayList(element)
                             document.querySelector("#dropdownMenuPG").setAttribute("name", 'pgid');
                             document.querySelector("#dropdownMenuPG").setAttribute("data-pgid", btoa(item.bank));
                             document.querySelector("#dropdownMenuPG").setAttribute("data-merchant", item.merchant);
-                            getPgChannel('depositPayGatewayBank-list', btoa(item.bank),item.merchant,item.currency);
 
                         };
 
@@ -959,7 +945,7 @@ async function getRadioPGatewayList(element)
                     }
                 });*/
                 
-                getPromoList('promo-list');
+                // getPromoList('promo-list');
             } else {
                 swal.close();
                 $('.pgatewayForm [type=submit]').prop('disabled', true);

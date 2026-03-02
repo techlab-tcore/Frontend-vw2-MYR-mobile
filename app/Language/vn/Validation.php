@@ -51,7 +51,7 @@ return [
     'deposit' => 'Tối thiểu: {0} / Tối đa: {1}',
     'withdrawal' => 'Tối thiểu: {0}',
     'rusure' => 'Bạn có chắc không?',
-    'nopromotion' => 'Bạn chưa yêu cầu bất kỳ chương trình khuyến mãi nào',
+    'nopromotion' => 'Yêu cầu đặt cọc sẽ được xử lý ',
     'noafflossrebate' => 'Không có khoản hoàn tiền nào tại thời điểm này',
 
     'payoption' => 'Tùy chọn: {0}',

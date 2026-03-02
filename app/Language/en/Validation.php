@@ -50,7 +50,7 @@ return [
     'deposit' => 'Min: {0} / Max: {1}',
     'withdrawal' => 'Min: {0}',
     'rusure' => 'Are you sure?',
-    'nopromotion' => 'You had not claimed any promotions',
+    'nopromotion' => 'The deposit request will be proceeded',
     'noafflossrebate' => 'No Rebate at the moment',
 
     'payoption' => 'Option: {0}',

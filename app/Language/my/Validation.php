@@ -50,7 +50,7 @@ return [
     'deposit' => 'Min: {0} / Max: {1}',
     'withdrawal' => 'Min: {0}',
     'rusure' => 'Adakah awak pasti?',
-    'nopromotion' => 'Anda tidak menuntut sebarang promosi',
+    'nopromotion' => 'Permintaan deposit akan diteruskan',
     'noafflossrebate' => 'Tiada Rebat buat masa ini',
 
     'payoption' => 'Pilihan: {0}',
