@@ -584,7 +584,7 @@ function submitPGatetway(params)
                     // win.document.write(data);
                     // win.document.close();
 
-                    if( obj.paymentGatewayParams.channelcode!='USDT' && params['bankid']!=btoa('<?=$_ENV['payessence'];?>') && params['bankid']!=btoa('<?=$_ENV['peEwallet'];?>') && params['bankid']!=btoa('<?=$_ENV['bigpay'];?>') && params['bankid']!=btoa('<?=$_ENV['epicpay'];?>') )
+                    if( obj.paymentGatewayParams.channelcode!='USDT' && params['bankid']!=btoa('<?=$_ENV['payessence'];?>') && params['bankid']!=btoa('<?=$_ENV['peEwallet'];?>') && params['bankid']!=btoa('<?=$_ENV['bigpay'];?>') && params['bankid']!=btoa('<?=$_ENV['epicpayFPX'];?>') )
                     {
                         $('.modal-depositFrame').modal('show');
                         var node = document.createElement('iframe');

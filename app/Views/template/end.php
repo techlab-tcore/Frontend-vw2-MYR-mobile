@@ -562,11 +562,69 @@
 </section>
 <!--End Permission to responde credit withdrawal -->
 
+<!-- Score Display -->
+<section class="modal fade modal-gamescore" id="modal-gamescore" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-gamescore" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<article class="modal-content border-0">
+			<div class="modal-header">
+				<h5 class="modal-title fs-4 fw-normal" id="scoreTitle">---</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+            <div class="modal-body">
+                <section class="card-body p-xl-3 p-lg-3 p-md-3 p-3">
+                    <?=form_open('', ['class'=>'row row-cols-lg-auto g-3 align-items-center filterForm pb-2', 'novalidate'=>'novalidate']);?>
+                    <div class="col-xl-auto col-lg-auto col-md-auto col-12">
+                        <div class="input-group">
+                            <span class="input-group-text"><?=lang('Input.startdate');?></span>
+                            <input type="text" class="form-control bg-white" name="start" value="<?=date('Y-m-d');?>" readonly>
+                        </div>
+                    </div>
+                    <div class="col-xl-auto col-lg-auto col-md-auto col-12">
+                        <div class="input-group">
+                            <span class="input-group-text"><?=lang('Input.enddate');?></span>
+                            <input type="text" class="form-control bg-white" name="end" value="<?=date('Y-m-d');?>" readonly>
+                        </div>
+                    </div>
+                    <div class="col-xl-auto col-lg-auto col-md-auto col-12">
+                        <button type="submit" class="btn btn-primary w-100"><?=lang('Nav.submit');?></button>
+                    </div>
+                    <?=form_close();?>
+
+                    <table id="paymentTable" class="w-100 nowrap table table-sm table-bordered table-hover">
+                        <thead class="table-style">
+                        <tr>
+                        <th><?=lang('Input.date');?></th>
+                        <th><?=lang('Input.game');?></th>
+                        <th><?=lang('Label.roundid');?></th>
+                        <th><?=lang('Label.turnover');?></th>
+                        <th><?=lang('Label.win');?></th>
+                        <th><?=lang('Label.winlose');?></th>
+                        </tr>
+                        </thead>
+                        <tfoot class="table-style">
+                        <tr>
+                        <th colspan="3" class="text-end"><?=lang('Label.total');?>:</th>
+                        <th class="text-end">&nbsp;</th>
+                        <th class="text-end">&nbsp;</th>
+                        <th class="text-end">&nbsp;</th>
+                        </tr>
+                        </tfoot>
+                        <tbody></tbody>
+                    </table>
+                </section>
+            </div>
+		</article>
+	</div>
+</section>
+<!-- End Score Display -->
+
 <script src="<?=base_url('assets/vendors/bootstrap/js/bootstrap.bundle.min.js');?>"></script>
 <script src="<?=base_url('assets/vendors/sweetalert2/sweetalert2.min.js');?>"></script>
 <script src="<?=base_url('assets/vendors/airdatepicker/js/datepicker.min.js');?>"></script>
 <script src="<?=base_url('assets/vendors/airdatepicker/js/i18n/datepicker.en.js');?>"></script>
 <script src="<?=base_url('assets/vendors/airdatepicker/js/i18n/datepicker.zh.js');?>"></script>
+<script src="<?=base_url('assets/vendors/datatable/datatables.min.js');?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/js/table_lang.js');?>"></script>
 <script src="<?=base_url('assets/js/master.js?v='.rand());?>"></script>
 <script src="<?=base_url('assets/js/add2home.js?v='.rand());?>"></script>
 <script src="<?=base_url('assets/vendors/html2canvas/html2canvas.js');?>"></script>
@@ -3325,6 +3383,141 @@ function expressgameRules(species, name, provider) {
         showDenyButton: true,
         confirmButtonText: '<?=lang('Nav.entergame');?>',
         denyButtonText: '<?=lang('Nav.cancel');?>',
+        didRender: () => { 
+            const actions = Swal.getActions(); 
+            const btn = document.createElement('button'); 
+            btn.textContent = '<?=lang('Nav.betlog');?>'; 
+            btn.className = 'gamelog-btn'; 
+            btn.onclick = () => 
+            {
+                swal.close();
+                const ntitle = '<?=lang('Nav.betlog');?> - ' + name;
+                document.getElementById('scoreTitle').textContent = ntitle;
+                const modal = new bootstrap.Modal(document.getElementById('modal-gamescore'));
+                modal.show();
+            if (!$.fn.DataTable.isDataTable('#scoreTable')) {
+                if( '<?=$_SESSION['lang']?>' == 'my' ) {
+                    langs = malay;
+                } else if( '<?=$_SESSION['lang']?>' == 'cn' ) {
+                    langs = chinese;
+                } else if( '<?=$_SESSION['lang']?>' == 'zh' ) {
+                    langs = tradchinese;
+                } else if( '<?=$_SESSION['lang']?>' == 'th' ) {
+                    langs = thai;
+                } else if( '<?=$_SESSION['lang']?>' == 'vn' ) {
+                    langs = viet;
+                } else {
+                    langs = english;
+                }
+
+                airdatepicker();
+
+                <?php if( isset($_SESSION['logged_in']) ): ?>
+                var pageindex = 1, debug = false;
+                const paymentTable = $('#paymentTable').DataTable({
+                    dom: "<'row'<'col-12 overflow-auto'tr>>" + "<'row mt-3'<'col-xl-6 col-lg-6 col-md-6 col-12'i><'col-xl-6 col-lg-6 col-md-6 col-12'p>>",
+                    language: langs,
+                    ordering: false,
+                    deferRender: true,
+                    serverSide: true,
+                    processing: true,
+                    destroy: true,
+                    ajax: function(data, callback, settings) {
+                    if (settings._iRecordsTotal == 0) {
+                        pageindex = 1;
+                    } else {
+                        var pageindex = settings._iDisplayStart/settings._iDisplayLength + 1;
+                    }
+
+                    const fromdate = $('.filterForm [name=start]').val();
+                    const todate = $('.filterForm [name=end]').val();
+                    const gp = provider;
+                    const text = '<?=$_SESSION['token'];?>'; 
+                    const encoded = btoa(text);
+            
+                    var payload = JSON.stringify({
+                        pageindex: pageindex,
+                        rowperpage: data.length,
+                        start: fromdate,
+                        end: todate,
+                        parent: encoded,
+                        provider: gp
+                });
+            $.ajax({
+                url: '/list/game/bet-log',
+                type: 'post',
+                data: payload,
+                contentType:"application/json; charset=utf-8",
+                dataType:"json",
+                success: function(res){
+                    if (res.code !== 1) {
+                        // alert(res.message);
+                        callback({
+                            recordsTotal: 0,
+                            recordsFiltered: 0,
+                            data: []
+                        });
+
+                        return;
+                    } else {
+                        callback({
+                            recordsTotal: res.totalRecord,
+                            recordsFiltered: res.totalRecord,
+                            data: res.data
+                        });
+                    }
+                    return;
+                }
+            });
+        },
+        footerCallback: function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+            var intVal = function(i){ return typeof i === 'string' ? i.replace(/[\$,]/g, '')*1 : typeof i === 'number' ? i : 0; };
+
+            // var grandtotal = api.column(17).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            // var totalOverPage = api.column(4, {page: 'current'}).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+
+            var totalOverPage = api.column(4).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate = parseFloat(totalOverPage).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum = parseFloat(truncate) < 0 ? '<span class="text-danger">'+truncate+'</span>' : truncate;
+            $(api.column(4).footer()).html(sum);
+
+            var totalOverPage2 = api.column(5).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate2 = parseFloat(totalOverPage2).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum2 = parseFloat(truncate2) < 0 ? '<span class="text-danger">'+truncate2+'</span>' : truncate2;
+            $(api.column(5).footer()).html(sum2);
+
+            var totalOverPage3 = api.column(3).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate3 = parseFloat(totalOverPage3).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum3 = parseFloat(truncate3) < 0 ? '<span class="text-danger">'+truncate3+'</span>' : truncate3;
+            $(api.column(3).footer()).html(sum3);
+        },
+        drawCallback: function(oSettings, json) {
+            $('#paymentTable tbody tr td.dataTables_empty').removeClass('text-end');
+            $('#paymentTable tbody tr').find('td').not('td:first-child,td:nth-child(2),td:nth-child(3),td:nth-child(4)').addClass('text-end');
+        },
+        aoColumnDefs: [{
+            aTargets: [3,4,5],
+            render: function ( data, type, row ) {
+                return parseFloat(data).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            },
+            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                parseFloat(sData) < 0 ? $(nTd).addClass('text-danger') : '';
+            }
+        }]
+    });
+    $('.filterForm').off().on('submit', function(e) {
+        e.preventDefault();
+
+        if (this.checkValidity() !== false) {
+            paymentTable.draw();
+        }
+    });
+    <?php endif; ?>
+            }
+            }; 
+            actions.insertBefore(btn, actions.querySelector('.swal2-confirm')); 
+        }        
     }).then( (result) => {
         if( result.isConfirmed ) {
             gameLandingExpress(species, name, provider);
@@ -3348,6 +3541,141 @@ function expresscasinoRules(species, name, provider) {
         showDenyButton: true,
         confirmButtonText: '<?=lang('Nav.entergame');?>',
         denyButtonText: '<?=lang('Nav.cancel');?>',
+        didRender: () => { 
+            const actions = Swal.getActions(); 
+            const btn = document.createElement('button'); 
+            btn.textContent = '<?=lang('Nav.betlog');?>'; 
+            btn.className = 'gamelog-btn'; 
+            btn.onclick = () => 
+            {
+                swal.close();
+                const ntitle = '<?=lang('Nav.betlog');?> - ' + name;
+                document.getElementById('scoreTitle').textContent = ntitle;
+                const modal = new bootstrap.Modal(document.getElementById('modal-gamescore'));
+                modal.show();
+            if (!$.fn.DataTable.isDataTable('#scoreTable')) {
+                if( '<?=$_SESSION['lang']?>' == 'my' ) {
+                    langs = malay;
+                } else if( '<?=$_SESSION['lang']?>' == 'cn' ) {
+                    langs = chinese;
+                } else if( '<?=$_SESSION['lang']?>' == 'zh' ) {
+                    langs = tradchinese;
+                } else if( '<?=$_SESSION['lang']?>' == 'th' ) {
+                    langs = thai;
+                } else if( '<?=$_SESSION['lang']?>' == 'vn' ) {
+                    langs = viet;
+                } else {
+                    langs = english;
+                }
+
+                airdatepicker();
+
+                <?php if( isset($_SESSION['logged_in']) ): ?>
+                var pageindex = 1, debug = false;
+                const paymentTable = $('#paymentTable').DataTable({
+                    dom: "<'row'<'col-12 overflow-auto'tr>>" + "<'row mt-3'<'col-xl-6 col-lg-6 col-md-6 col-12'i><'col-xl-6 col-lg-6 col-md-6 col-12'p>>",
+                    language: langs,
+                    ordering: false,
+                    deferRender: true,
+                    serverSide: true,
+                    processing: true,
+                    destroy: true,
+                    ajax: function(data, callback, settings) {
+                    if (settings._iRecordsTotal == 0) {
+                        pageindex = 1;
+                    } else {
+                        var pageindex = settings._iDisplayStart/settings._iDisplayLength + 1;
+                    }
+
+                    const fromdate = $('.filterForm [name=start]').val();
+                    const todate = $('.filterForm [name=end]').val();
+                    const gp = provider;
+                    const text = '<?=$_SESSION['token'];?>'; 
+                    const encoded = btoa(text);
+            
+                    var payload = JSON.stringify({
+                        pageindex: pageindex,
+                        rowperpage: data.length,
+                        start: fromdate,
+                        end: todate,
+                        parent: encoded,
+                        provider: gp
+                });
+            $.ajax({
+                url: '/list/game/bet-log',
+                type: 'post',
+                data: payload,
+                contentType:"application/json; charset=utf-8",
+                dataType:"json",
+                success: function(res){
+                    if (res.code !== 1) {
+                        // alert(res.message);
+                        callback({
+                            recordsTotal: 0,
+                            recordsFiltered: 0,
+                            data: []
+                        });
+
+                        return;
+                    } else {
+                        callback({
+                            recordsTotal: res.totalRecord,
+                            recordsFiltered: res.totalRecord,
+                            data: res.data
+                        });
+                    }
+                    return;
+                }
+            });
+        },
+        footerCallback: function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+            var intVal = function(i){ return typeof i === 'string' ? i.replace(/[\$,]/g, '')*1 : typeof i === 'number' ? i : 0; };
+
+            // var grandtotal = api.column(17).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            // var totalOverPage = api.column(4, {page: 'current'}).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+
+            var totalOverPage = api.column(4).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate = parseFloat(totalOverPage).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum = parseFloat(truncate) < 0 ? '<span class="text-danger">'+truncate+'</span>' : truncate;
+            $(api.column(4).footer()).html(sum);
+
+            var totalOverPage2 = api.column(5).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate2 = parseFloat(totalOverPage2).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum2 = parseFloat(truncate2) < 0 ? '<span class="text-danger">'+truncate2+'</span>' : truncate2;
+            $(api.column(5).footer()).html(sum2);
+
+            var totalOverPage3 = api.column(3).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate3 = parseFloat(totalOverPage3).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum3 = parseFloat(truncate3) < 0 ? '<span class="text-danger">'+truncate3+'</span>' : truncate3;
+            $(api.column(3).footer()).html(sum3);
+        },
+        drawCallback: function(oSettings, json) {
+            $('#paymentTable tbody tr td.dataTables_empty').removeClass('text-end');
+            $('#paymentTable tbody tr').find('td').not('td:first-child,td:nth-child(2),td:nth-child(3),td:nth-child(4)').addClass('text-end');
+        },
+        aoColumnDefs: [{
+            aTargets: [3,4,5],
+            render: function ( data, type, row ) {
+                return parseFloat(data).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            },
+            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                parseFloat(sData) < 0 ? $(nTd).addClass('text-danger') : '';
+            }
+        }]
+    });
+    $('.filterForm').off().on('submit', function(e) {
+        e.preventDefault();
+
+        if (this.checkValidity() !== false) {
+            paymentTable.draw();
+        }
+    });
+    <?php endif; ?>
+            }
+            }; 
+            actions.insertBefore(btn, actions.querySelector('.swal2-confirm')); 
+        }
     }).then( (result) => {
         if( result.isConfirmed ) {
             gameLandingExpress(species, name, provider);
@@ -3371,6 +3699,141 @@ function expressSportRules(species, name, provider) {
         showDenyButton: true,
         confirmButtonText: '<?=lang('Nav.entergame');?>',
         denyButtonText: '<?=lang('Nav.cancel');?>',
+        didRender: () => { 
+            const actions = Swal.getActions(); 
+            const btn = document.createElement('button'); 
+            btn.textContent = '<?=lang('Nav.betlog');?>'; 
+            btn.className = 'gamelog-btn'; 
+            btn.onclick = () => 
+            {
+                swal.close();
+                const ntitle = '<?=lang('Nav.betlog');?> - ' + name;
+                document.getElementById('scoreTitle').textContent = ntitle;
+                const modal = new bootstrap.Modal(document.getElementById('modal-gamescore'));
+                modal.show();
+            if (!$.fn.DataTable.isDataTable('#scoreTable')) {
+                if( '<?=$_SESSION['lang']?>' == 'my' ) {
+                    langs = malay;
+                } else if( '<?=$_SESSION['lang']?>' == 'cn' ) {
+                    langs = chinese;
+                } else if( '<?=$_SESSION['lang']?>' == 'zh' ) {
+                    langs = tradchinese;
+                } else if( '<?=$_SESSION['lang']?>' == 'th' ) {
+                    langs = thai;
+                } else if( '<?=$_SESSION['lang']?>' == 'vn' ) {
+                    langs = viet;
+                } else {
+                    langs = english;
+                }
+
+                airdatepicker();
+
+                <?php if( isset($_SESSION['logged_in']) ): ?>
+                var pageindex = 1, debug = false;
+                const paymentTable = $('#paymentTable').DataTable({
+                    dom: "<'row'<'col-12 overflow-auto'tr>>" + "<'row mt-3'<'col-xl-6 col-lg-6 col-md-6 col-12'i><'col-xl-6 col-lg-6 col-md-6 col-12'p>>",
+                    language: langs,
+                    ordering: false,
+                    deferRender: true,
+                    serverSide: true,
+                    processing: true,
+                    destroy: true,
+                    ajax: function(data, callback, settings) {
+                    if (settings._iRecordsTotal == 0) {
+                        pageindex = 1;
+                    } else {
+                        var pageindex = settings._iDisplayStart/settings._iDisplayLength + 1;
+                    }
+
+                    const fromdate = $('.filterForm [name=start]').val();
+                    const todate = $('.filterForm [name=end]').val();
+                    const gp = provider;
+                    const text = '<?=$_SESSION['token'];?>'; 
+                    const encoded = btoa(text);
+            
+                    var payload = JSON.stringify({
+                        pageindex: pageindex,
+                        rowperpage: data.length,
+                        start: fromdate,
+                        end: todate,
+                        parent: encoded,
+                        provider: gp
+                });
+            $.ajax({
+                url: '/list/game/bet-log',
+                type: 'post',
+                data: payload,
+                contentType:"application/json; charset=utf-8",
+                dataType:"json",
+                success: function(res){
+                    if (res.code !== 1) {
+                        // alert(res.message);
+                        callback({
+                            recordsTotal: 0,
+                            recordsFiltered: 0,
+                            data: []
+                        });
+
+                        return;
+                    } else {
+                        callback({
+                            recordsTotal: res.totalRecord,
+                            recordsFiltered: res.totalRecord,
+                            data: res.data
+                        });
+                    }
+                    return;
+                }
+            });
+        },
+        footerCallback: function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+            var intVal = function(i){ return typeof i === 'string' ? i.replace(/[\$,]/g, '')*1 : typeof i === 'number' ? i : 0; };
+
+            // var grandtotal = api.column(17).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            // var totalOverPage = api.column(4, {page: 'current'}).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+
+            var totalOverPage = api.column(4).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate = parseFloat(totalOverPage).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum = parseFloat(truncate) < 0 ? '<span class="text-danger">'+truncate+'</span>' : truncate;
+            $(api.column(4).footer()).html(sum);
+
+            var totalOverPage2 = api.column(5).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate2 = parseFloat(totalOverPage2).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum2 = parseFloat(truncate2) < 0 ? '<span class="text-danger">'+truncate2+'</span>' : truncate2;
+            $(api.column(5).footer()).html(sum2);
+
+            var totalOverPage3 = api.column(3).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate3 = parseFloat(totalOverPage3).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum3 = parseFloat(truncate3) < 0 ? '<span class="text-danger">'+truncate3+'</span>' : truncate3;
+            $(api.column(3).footer()).html(sum3);
+        },
+        drawCallback: function(oSettings, json) {
+            $('#paymentTable tbody tr td.dataTables_empty').removeClass('text-end');
+            $('#paymentTable tbody tr').find('td').not('td:first-child,td:nth-child(2),td:nth-child(3),td:nth-child(4)').addClass('text-end');
+        },
+        aoColumnDefs: [{
+            aTargets: [3,4,5],
+            render: function ( data, type, row ) {
+                return parseFloat(data).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            },
+            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                parseFloat(sData) < 0 ? $(nTd).addClass('text-danger') : '';
+            }
+        }]
+    });
+    $('.filterForm').off().on('submit', function(e) {
+        e.preventDefault();
+
+        if (this.checkValidity() !== false) {
+            paymentTable.draw();
+        }
+    });
+    <?php endif; ?>
+            }
+            }; 
+            actions.insertBefore(btn, actions.querySelector('.swal2-confirm')); 
+        }
     }).then( (result) => {
         if( result.isConfirmed ) {
             gameLandingExpress(species, name, provider);
@@ -3394,6 +3857,141 @@ function appgameRules(species, name, provider) {
         showDenyButton: true,
         confirmButtonText: '<?=lang('Nav.entergame');?>',
         denyButtonText: '<?=lang('Nav.cancel');?>',
+        didRender: () => { 
+            const actions = Swal.getActions(); 
+            const btn = document.createElement('button'); 
+            btn.textContent = '<?=lang('Nav.betlog');?>'; 
+            btn.className = 'gamelog-btn'; 
+            btn.onclick = () => 
+            {
+                swal.close();
+                const ntitle = '<?=lang('Nav.betlog');?> - ' + name;
+                document.getElementById('scoreTitle').textContent = ntitle;
+                const modal = new bootstrap.Modal(document.getElementById('modal-gamescore'));
+                modal.show();
+            if (!$.fn.DataTable.isDataTable('#scoreTable')) {
+                if( '<?=$_SESSION['lang']?>' == 'my' ) {
+                    langs = malay;
+                } else if( '<?=$_SESSION['lang']?>' == 'cn' ) {
+                    langs = chinese;
+                } else if( '<?=$_SESSION['lang']?>' == 'zh' ) {
+                    langs = tradchinese;
+                } else if( '<?=$_SESSION['lang']?>' == 'th' ) {
+                    langs = thai;
+                } else if( '<?=$_SESSION['lang']?>' == 'vn' ) {
+                    langs = viet;
+                } else {
+                    langs = english;
+                }
+
+                airdatepicker();
+
+                <?php if( isset($_SESSION['logged_in']) ): ?>
+                var pageindex = 1, debug = false;
+                const paymentTable = $('#paymentTable').DataTable({
+                    dom: "<'row'<'col-12 overflow-auto'tr>>" + "<'row mt-3'<'col-xl-6 col-lg-6 col-md-6 col-12'i><'col-xl-6 col-lg-6 col-md-6 col-12'p>>",
+                    language: langs,
+                    ordering: false,
+                    deferRender: true,
+                    serverSide: true,
+                    processing: true,
+                    destroy: true,
+                    ajax: function(data, callback, settings) {
+                    if (settings._iRecordsTotal == 0) {
+                        pageindex = 1;
+                    } else {
+                        var pageindex = settings._iDisplayStart/settings._iDisplayLength + 1;
+                    }
+
+                    const fromdate = $('.filterForm [name=start]').val();
+                    const todate = $('.filterForm [name=end]').val();
+                    const gp = provider;
+                    const text = '<?=$_SESSION['token'];?>'; 
+                    const encoded = btoa(text);
+            
+                    var payload = JSON.stringify({
+                        pageindex: pageindex,
+                        rowperpage: data.length,
+                        start: fromdate,
+                        end: todate,
+                        parent: encoded,
+                        provider: gp
+                });
+            $.ajax({
+                url: '/list/game/bet-log',
+                type: 'post',
+                data: payload,
+                contentType:"application/json; charset=utf-8",
+                dataType:"json",
+                success: function(res){
+                    if (res.code !== 1) {
+                        // alert(res.message);
+                        callback({
+                            recordsTotal: 0,
+                            recordsFiltered: 0,
+                            data: []
+                        });
+
+                        return;
+                    } else {
+                        callback({
+                            recordsTotal: res.totalRecord,
+                            recordsFiltered: res.totalRecord,
+                            data: res.data
+                        });
+                    }
+                    return;
+                }
+            });
+        },
+        footerCallback: function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+            var intVal = function(i){ return typeof i === 'string' ? i.replace(/[\$,]/g, '')*1 : typeof i === 'number' ? i : 0; };
+
+            // var grandtotal = api.column(17).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            // var totalOverPage = api.column(4, {page: 'current'}).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+
+            var totalOverPage = api.column(4).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate = parseFloat(totalOverPage).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum = parseFloat(truncate) < 0 ? '<span class="text-danger">'+truncate+'</span>' : truncate;
+            $(api.column(4).footer()).html(sum);
+
+            var totalOverPage2 = api.column(5).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate2 = parseFloat(totalOverPage2).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum2 = parseFloat(truncate2) < 0 ? '<span class="text-danger">'+truncate2+'</span>' : truncate2;
+            $(api.column(5).footer()).html(sum2);
+
+            var totalOverPage3 = api.column(3).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate3 = parseFloat(totalOverPage3).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum3 = parseFloat(truncate3) < 0 ? '<span class="text-danger">'+truncate3+'</span>' : truncate3;
+            $(api.column(3).footer()).html(sum3);
+        },
+        drawCallback: function(oSettings, json) {
+            $('#paymentTable tbody tr td.dataTables_empty').removeClass('text-end');
+            $('#paymentTable tbody tr').find('td').not('td:first-child,td:nth-child(2),td:nth-child(3),td:nth-child(4)').addClass('text-end');
+        },
+        aoColumnDefs: [{
+            aTargets: [3,4,5],
+            render: function ( data, type, row ) {
+                return parseFloat(data).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            },
+            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                parseFloat(sData) < 0 ? $(nTd).addClass('text-danger') : '';
+            }
+        }]
+    });
+    $('.filterForm').off().on('submit', function(e) {
+        e.preventDefault();
+
+        if (this.checkValidity() !== false) {
+            paymentTable.draw();
+        }
+    });
+    <?php endif; ?>
+            }
+            }; 
+            actions.insertBefore(btn, actions.querySelector('.swal2-confirm')); 
+        }
     }).then( (result) => {
         if( result.isConfirmed ) {
             appLanding(species, name, provider);
@@ -3523,5 +4121,29 @@ function expressLobbySportgameRules(name, provider) {
 //Get Bank icon
 function getBankImg(code) {
     return bankImages[code] || "<?=base_url('assets/img/bankicon/default.png');?>";
+}
+
+function airdatepicker()
+{
+    $('[name=start]').datepicker({
+        autoClose: true,
+        changeMonth: true,
+        changeYear: true,
+        language: '<?=$_SESSION['lang']=='cn' || $_SESSION['lang']=='zh' ? 'zh' : 'en'?>',
+        dateFormat: 'yyyy-mm-dd',
+        maxDate: new Date(),
+        todayButton: new Date(),
+        clearButton: true
+    });
+    $('[name=end]').datepicker({
+        autoClose: true,
+        changeMonth: true,
+        changeYear: true,
+        language: '<?=$_SESSION['lang']=='cn' || $_SESSION['lang']=='zh' ? 'zh' : 'en'?>',
+        dateFormat: 'yyyy-mm-dd',
+        maxDate: new Date(),
+        todayButton: new Date(),
+        clearButton: true
+    });
 }
 </script>

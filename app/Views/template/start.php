@@ -47,6 +47,7 @@
 <link rel="stylesheet" href="<?=base_url('assets/css/master.css?v='.rand());?>">
 <link rel="stylesheet" href="<?=base_url('assets/css/responsive.css?v='.rand());?>">
 <link rel="stylesheet" href="<?=base_url('assets/vendors/chatscreen/style.css?v='.rand());?>">
+<link rel="stylesheet" href="<?=base_url('assets/vendors/datatable/datatables.min.css');?>">
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JEZV7GWTKQ"></script>

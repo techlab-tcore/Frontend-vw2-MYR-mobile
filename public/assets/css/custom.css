@@ -1956,3 +1956,20 @@ Bank account
     width: 33px;
     padding: 2px;
 }
+
+.gamelog-btn {
+    border: 0;
+    border-radius: .25em;
+    background: initial;
+    background-color: #00c85b;
+    color: #fff;
+    font-size: 1.0625em;
+    margin: .3125em;
+    padding: .625em 1.1em;
+    box-shadow: none;
+    font-weight: 500;
+}
+
+.gamelog-btn:hover {
+  background-color: #09bd5a;
+}
