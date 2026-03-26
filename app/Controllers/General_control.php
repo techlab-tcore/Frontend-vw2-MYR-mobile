@@ -310,9 +310,9 @@ class General_control extends BaseController
 		$data['secTitle'] = lang('Nav.withdrawal');
 
 		// Admin Link
-		$resAdmin = $this->user_model->selectAdminLink(['userid' => $_SESSION['token']]);
-		$data['withdrawalCount'] = $resAdmin['data']['maxDailyWithdrawalCount'];
-		$data['exceedWithdrawalCharges'] = $resAdmin['data']['afterDailyWithdrawalCountChargesPercentage'];
+		// $resAdmin = $this->user_model->selectAdminLink(['userid' => $_SESSION['token']]);
+		// $data['withdrawalCount'] = $resAdmin['data']['maxDailyWithdrawalCount'];
+		// $data['exceedWithdrawalCharges'] = $resAdmin['data']['afterDailyWithdrawalCountChargesPercentage'];
 		
 		echo view('template/start');
 		echo view('template/header');
