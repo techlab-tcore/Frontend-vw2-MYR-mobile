@@ -297,7 +297,7 @@ class User_model extends Model
 
     public function updateUserLogin($where)
 	{
-		$data = array_merge(['lang'=>$_SESSION['lang'], 'agentid'=>$_ENV['host']], $where);
+		$data = array_merge(['lang'=>$_SESSION['lang'], 'agentid'=>$_ENV['agent']], $where);
 		$payload = json_encode($data);
         
         $ch = curl_init($this->userLogin);
