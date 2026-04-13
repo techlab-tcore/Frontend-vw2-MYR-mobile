@@ -37,7 +37,7 @@ class Jackpot_model extends Model
 
     public function selectJackpot($where)
     {
-        $data = array_merge(['lang'=>$_SESSION['lang'], 'sessionid'=>$_SESSION['session'], 'agentid'=>$_ENV['host']], $where);
+        $data = array_merge(['lang'=>$_SESSION['lang'], 'sessionid'=>$_SESSION['session'], 'agentid'=>$_ENV['admin']], $where);
         $payload = json_encode($data);
 
         $ch = curl_init($this->getJackpot);
