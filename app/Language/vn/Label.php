@@ -168,5 +168,7 @@ return [
     'reset' => 'Cài lại',
     'ewallet' => 'ví điện tử',
     'action' => 'Hoạt động',
-    'chgAcc' => 'Thay đổi tài khoản',   
+    'chgAcc' => 'Thay đổi tài khoản',
+    
+    'turnoverwithdrawal' => 'Doanh thu để rút tiền',   
 ];

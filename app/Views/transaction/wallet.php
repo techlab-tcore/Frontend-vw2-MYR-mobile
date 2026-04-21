@@ -25,6 +25,16 @@
                 </div>
             </div>
             <button class="btn-depRestore" onclick="refreshAndWithdrawGame();"><?=lang('Nav.restore');?></button>
+
+            <section class="mt-3">
+                <h6 class="fw-light"><?=lang('Label.turnoverwithdrawal');?></h6>
+                <div class="justify-content-between align-items-center">
+                    <section class="progress turnover-progress">
+                        <div class="progress-bar progress-bar-striped bg-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                    </section>
+                    <code class="codeWordB"><span class="current-turnover">0</span>/<span class="total-turnover">0</span></code>
+                </div>
+            </section>
         </div>
     </div>
 

@@ -196,20 +196,29 @@ class User_control extends BaseController
             $grandbgw = 0;
             $subgwamt = 0;
             $subgwafter = 0;
+            $subgwTurnover = 0;
             foreach( $res['data']['gameWallet'] as $gw ):
                 $subgwamt += $gw['amount'];
                 $subgwafter += $gw['afterAmount'];
+                $subgwTurnover += $gw['turnover'];
             endforeach;
             $grandbgw = $subgwamt - $subgwafter;
 
             $grandbw = 0;
             $subwamt = 0;
             $subwafter = 0;
+            $subwTurnover = 0;
             foreach( $res['data']['wallet'] as $w ):
                 $subwamt += $w['amount'];
                 $subwafter += $w['afterAmount'];
+                $subwTurnover += $w['turnover'];
             endforeach;
             $grandbw = $subwamt - $subwafter;
+
+            $subPromoWallet = 0;
+            foreach( $res['data']['playerPromotionWallet'] as $promoWallet ):
+                $subPromoWallet += $promoWallet['amount'];
+            endforeach;
 
             $grandcgw = 0;
             $subcgamt = 0;
@@ -241,6 +250,13 @@ class User_control extends BaseController
             $final_grandcash = $grandcash>0 ? floor($grandcash * 10000)/10000 : 0;
             $final_grandchip = floor($grandchip * 10000)/10000;
 
+            // Turnover
+            $totalCurrentTurnover = $subwafter + $subgwafter + $subPromoWallet;
+            $totalTurnover = $res['data']['promotionTurnover'] + $subwTurnover + $subgwTurnover;
+
+            $validCurrentTurnover = $totalCurrentTurnover > $totalTurnover ? 0 : $totalCurrentTurnover;
+            // End Turnover
+
             $result = [
                 'code' => $res['code'],
                 'fullName' => $fullName,
@@ -252,6 +268,8 @@ class User_control extends BaseController
                 'vault' => $vaultBalance,
                 'fortuneToken' => $fortuneToken,
                 'jackpot' => $jackpot,
+                'currentTurnover' => bcdiv($validCurrentTurnover,1,2),
+                'totalTurnover' => bcdiv($totalTurnover,1,2),
             ];
             echo json_encode($result);
         else:

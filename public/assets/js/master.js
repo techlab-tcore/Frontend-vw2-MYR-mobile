@@ -94,6 +94,19 @@ function refreshBalance()
         success: function (data,status,xhr) {
             const obj = JSON.parse(data);
             if( obj.code==1 ) {
+                const current = (obj.currentTurnover / obj.totalTurnover) * 100;
+                let result;
+                if( isNaN(current) || obj.totalTurnover == 0 ) {
+                    result = 0;
+                } else {
+                    result = current;
+                }
+                $('.turnover-progress .progress-bar').css('width',parseFloat(result).toFixed(2)+'%');
+                $('.turnover-progress .progress-bar').attr('aria-valuenow',parseFloat(result).toFixed(2));
+                $('.turnover-progress .progress-bar').html(parseFloat(result).toFixed(2)+'%');
+                $('.current-turnover').html(obj.currentTurnover);
+                $('.total-turnover').html(obj.totalTurnover);
+                
                 var userCreated = document.getElementsByClassName("userCreated");
                 if( !!userCreated ) {
                     $('.userCreated').html(obj.userCreated);

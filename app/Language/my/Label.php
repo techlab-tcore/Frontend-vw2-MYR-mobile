@@ -168,4 +168,6 @@ return [
     'ewallet' => 'E-Dompet',
     'action' => 'Tindakan',
     'chgAcc' => 'Tukar Akaun',
+
+    'turnoverwithdrawal' => 'Perolehan untuk Pengeluaran',
 ];

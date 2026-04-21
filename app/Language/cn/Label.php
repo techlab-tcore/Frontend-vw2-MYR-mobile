@@ -169,4 +169,6 @@ return [
     'ewallet' => '电子钱包',
     'action' => '操作',
     'chgAcc' => '变更账户',
+
+    'turnoverwithdrawal' => '提款流水值',
 ];
