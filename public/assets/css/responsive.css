@@ -793,7 +793,25 @@ Copyright 2019
 
 /* Landscape */
 @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape)
-{ 
+{
+}
+
+@media (max-width: 575px) {
+    .lucky-digits{
+        gap: 0.6rem !important;
+    }
+}
+
+@media (max-width: 400px) {
+    .lucky-digits{
+        gap: 0.3rem !important;
+    }
+}
+
+@media (width: 360px) {
+    .lucky-digits{
+        gap: 0.2rem !important;
+    }
 }
 
 /* Home Screen */

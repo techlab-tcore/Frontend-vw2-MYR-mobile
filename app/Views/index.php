@@ -222,13 +222,47 @@
 <link rel="stylesheet" href="<?=base_url('assets/vendors/swiper/swiper-bundle.min.css');?>" />
 <script src="<?=base_url('assets/vendors/swiper/swiper-bundle.min.js');?>"></script>
 <script>
+const LUCKY_DELAYS = [0, 180, 380, 620];
+let luckyRunning = false;
+
 document.addEventListener('DOMContentLoaded', (event) => {
     $('.sideMainNav [data-page=home]').addClass("active");
-    
+
     if( logged )
     {
         announcementPopList();
         checkIfEmptyBankAccount(2);
+
+        //lucky Number Display
+        $.get('/user-profile', function(data, status) {
+            const obj = JSON.parse(data);
+            if( obj.code == 1 ) {
+                const uid = obj.data.userId;
+                const today = new Date();
+                const todayStr = today.toISOString().split('T')[0];
+                const savedDate = localStorage.getItem(`hideModalDate_${uid}`);
+                console.log(savedDate);
+
+                const dailypin = getDailyPin('<?=$session ? $_SESSION['token']:'';?>');
+
+                if (savedDate !== todayStr) {
+                    const myModal = new bootstrap.Modal(document.getElementById('modal-luckynum'));
+                    myModal.show();
+                    localStorage.setItem(`hideModalDate_${uid}`, todayStr);
+                }
+
+                // Auto-spin once modal is shown, then land on the actual dailypin digits
+                document.getElementById('modal-luckynum').addEventListener('shown.bs.modal', function () {
+                    const pinStr = String(dailypin).padStart(4, '0'); // ensure 4 digits e.g. "0372"
+                    const digits = pinStr.split('').map(Number);      // [0, 3, 7, 2]
+                    generateLuckyNum(digits);
+                }, { once: true });
+            }
+        })
+        .done(function() {
+        })
+        .fail(function() {
+        });
     }
 
     callingAll();

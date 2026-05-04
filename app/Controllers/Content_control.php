@@ -73,6 +73,17 @@ class Content_control extends BaseController
         $newscard .= '</a>';
         $newscard .= '</li>';
 
+         //Lucky Number
+        $newscard .= '<li class="col-xl-2 col-lg-2 col-md-3 col-6">';
+        if( $data['session']==true ):
+            $newscard .= '<a class="d-block text-decoration-none" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target=".modal-luckynum">';
+        else:
+            $newscard .= '<a class="d-block text-decoration-none" href="javascript:void(0);" onclick="alertToast(\'bg-light\', \''.lang('Validation.loginaccount').'\');">';
+        endif;
+        $newscard .= '<img class="d-block w-100 rounded-4" src="'.$_ENV['exGameRules'].'/lotto_news.png">';
+        $newscard .= '</a>';
+        $newscard .= '</li>';
+
         //Food delivery
         //$newscard .= '<li class="col-xl-2 col-lg-2 col-md-3 col-6">';
         //$newscard .= '<a class="d-block text-decoration-none" target="_blank" href="https://m.2hungry.app?channel=Vworld">';

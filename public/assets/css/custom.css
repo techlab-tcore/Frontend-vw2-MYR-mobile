@@ -1981,3 +1981,113 @@ Bank account
 .codeWordB{
     color: #000;
 }
+
+.lucky-slot {
+    width: 48px;
+    height: 64px;
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* top & bottom fade masks */
+.lucky-slot::before,
+.lucky-slot::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; height: 18px;
+    z-index: 2; pointer-events: none;
+}
+
+.lucky-reel {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lucky-reel.spinning { animation: luckyReelSpin 0.08s linear infinite; }
+.lucky-reel.stopping { animation: luckyReelStop 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+@keyframes luckyReelSpin {
+    0%   { transform: translateY(0); }
+    100% { transform: translateY(-64px); }
+}
+
+@keyframes luckyReelStop {
+    0%   { transform: translateY(-30px); }
+    60%  { transform: translateY(5px); }
+    80%  { transform: translateY(-3px); }
+    100% { transform: translateY(0); }
+}
+
+.lucky-digits{
+    gap: 1.25rem !important;
+}
+
+.lucky-digit {
+    font-family: 'Bebas Neue', 'Impact', sans-serif;
+    font-size: 42px;
+    line-height: 64px;
+    color: #FFD700;
+    text-shadow: 0 0 12px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 165, 0, 0.4);
+    display: block;
+    text-align: center;
+    width: 100%;
+    user-select: none;
+}
+
+.lucky-digit.lit { animation: luckyDigitPulse 0.5s ease-out; }
+
+@keyframes luckyDigitPulse {
+    0%   { color: #fff; text-shadow: 0 0 20px #fff, 0 0 50px #FFD700; }
+    100% { color: #FFD700; text-shadow: 0 0 12px rgba(255,215,0,0.8), 0 0 30px rgba(255,165,0,0.4); }
+}
+
+.lucky-dot {
+    font-size: 24px;
+    color: rgba(255, 215, 0, 0.4);
+    line-height: 1;
+    padding-bottom: 4px;
+}
+
+.btn-lucky {
+    font-family: 'Bebas Neue', 'Impact', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 0.2em;
+    padding: 10px 36px;
+    background: linear-gradient(180deg,rgba(145, 1, 1, 1) 5%, rgba(233, 0, 0, 1) 25%, rgba(233, 0, 0, 1) 50%, rgba(233, 0, 0, 1) 75%, rgba(145, 1, 1, 1) 95%);
+    border: 1px solid #FFD700;
+    color: #FFD700;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.btn-lucky:hover  { background: #FFD700; color: #000; box-shadow: 0 0 20px rgba(255,215,0,0.4); }
+.btn-lucky:active { transform: scale(0.97); }
+.btn-lucky:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.btn-copylno {
+    font-family: 'Bebas Neue', 'Impact', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 0.2em;
+    /* padding: 10px 36px; */
+    background: linear-gradient(180deg,rgba(145, 1, 1, 1) 5%, rgba(233, 0, 0, 1) 25%, rgba(233, 0, 0, 1) 50%, rgba(233, 0, 0, 1) 75%, rgba(145, 1, 1, 1) 95%);
+    border: 1px solid #FFD700;
+    color: #FFD700;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.btn-copylno:hover  { background: #FFD700; color: #000; box-shadow: 0 0 20px rgba(255,215,0,0.4); }
+.btn-copylno:active { transform: scale(0.97); }
+.btn-copylno:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.lnbg{
+    background: #212529;
+}

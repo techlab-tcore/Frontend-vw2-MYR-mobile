@@ -618,6 +618,58 @@
 </section>
 <!-- End Score Display -->
 
+<!-- Lucky Number Display -->
+<section class="modal fade modal-luckynum" id="modal-luckynum" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-luckynum" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <article class="modal-content border-0">
+            <div class="modal-header">
+                <button type="button" class="btn btn-primary" style="display: none;" onclick="getProfile();">
+                    <?=$_ENV['currency'];?><span class="ms-1 userBalance"></span>
+                </button>
+                <h5 class="modal-title fs-4 fw-normal" id="scoreTitle">LUCKY NUMBER</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body lnbg">
+                <section class="card-body p-xl-3 p-lg-3 p-md-3 p-3">
+                    <div class="d-flex justify-content-center">
+                        <img class="w-50" src="https://g-tcdl.com/gamecards_app/gamecard_vworld/logo/GDSV.png">
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <img class="w-100" src="<?=base_url('assets/img/v2lno.png');?>">
+                    </div>
+
+                    <!-- Lucky Number Section -->
+                    <div class="dailyPinSection d-flex justify-content-center position-relative">
+                        <img class="w-100" src="<?=base_url('assets/img/lnbg.png');?>">
+
+                        <!-- Digit slots overlaid on the background -->
+                        <div class="lucky-digits position-absolute top-50 start-50 translate-middle d-flex align-items-center">
+                            <div class="lucky-slot"><div class="lucky-reel" id="lucky-reel-0"><span class="lucky-digit" id="lucky-digit-0">–</span></div></div>
+                            <div class="lucky-dot">·</div>
+                            <div class="lucky-slot"><div class="lucky-reel" id="lucky-reel-1"><span class="lucky-digit" id="lucky-digit-1">–</span></div></div>
+                            <div class="lucky-dot">·</div>
+                            <div class="lucky-slot"><div class="lucky-reel" id="lucky-reel-2"><span class="lucky-digit" id="lucky-digit-2">–</span></div></div>
+                            <div class="lucky-dot">·</div>
+                            <div class="lucky-slot"><div class="lucky-reel" id="lucky-reel-3"><span class="lucky-digit" id="lucky-digit-3">–</span></div></div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center mt-3 gap-2">
+                        <!-- Claim Button -->
+                        <?=form_open('',['class'=>'form-validation customForm','novalidate'=>'novalidate'],['provider'=>'GDSV','gname'=>'GrandDragon2','species'=>'5']);?>
+                            <div>
+                                <button type="submit" class="btn btn-lucky" id="luckyGenBtn"><?=lang('Nav.claimnow');?></button>
+                            </div>
+                        <?=form_close();?>
+                        <button class="btn btn-copylno" id="luckyCopyBtn"><?=lang('Nav.copy');?></button>
+                    </div>
+
+                </section>
+            </div>
+        </article>
+    </div>
+</section>
+<!-- End Lucky Number Display -->
+
 <script src="<?=base_url('assets/vendors/bootstrap/js/bootstrap.bundle.min.js');?>"></script>
 <script src="<?=base_url('assets/vendors/sweetalert2/sweetalert2.min.js');?>"></script>
 <script src="<?=base_url('assets/vendors/airdatepicker/js/datepicker.min.js');?>"></script>
@@ -1279,6 +1331,90 @@ document.addEventListener('DOMContentLoaded', (event) => {
         $(this).find('form').removeClass('was-validated');
         $(this).find('.btn-close').data('provider','');
         $('.modal-lottoLanding [name=gamebalance]').val(0);
+    });
+
+    $('.modal-luckynum form').on('submit', function(e) {
+        e.preventDefault();
+        let name = $('.modal-luckynum [name=gname]').val();
+
+        if (this.checkValidity() !== false) {
+            generalLoading();
+
+            $(this).closest('.modal').modal('hide');
+
+            $.get('/device/check', function(dataDevice, statusDevice) {
+                const objDevice = JSON.parse(dataDevice);
+
+                let isMobile;
+                if( objDevice.mobile==true ) {
+                    isMobile = 1;
+                } else {
+                    isMobile = 0;
+                }
+
+                var params = {};
+                var formObj = $('.modal-luckynum form').closest("form");
+                $.each($(formObj).serializeArray(), function (index, value) {
+                    params[value.name] = value.value;
+                    params['isMobile'] = isMobile;
+                    params['credit'] = $('.modal-luckynum .userBalance').html();
+                    params['type'] = 1;
+
+                    if( params['provider']=='GD' || params['provider']=='GDS' || params['provider']=='GD8' ) {
+                        var lottoBalance = $('header .maxLottoBonus').html();
+                        params['lotto'] = params['credit'] - lottoBalance;
+                    }
+                });
+
+                //block lotto credit-in
+                if ( params['provider'] == 'GD8' || params['provider'] == 'GDS' )
+                {
+                    $.post('/game/lobby/openlotto', {
+                        params
+                    }, function(data, status) {
+                        const obj = JSON.parse(data);
+                        if( obj.code==1 ) {
+                            swal.close();
+                            refreshBalance();
+                            getGameBalance(5,params['provider']);
+                            byPassBlockPopUp(obj.url);
+                            //window.open(obj.url, '_blank');
+                        } else {
+                            swal.fire("Error!", obj.message + " (Code: "+obj.code+")", "error");
+                        }
+                    })
+                    .done(function() {
+                        $('.modal-luckynum [type=submit]').prop('disabled', false);
+                    })
+                    .fail(function() {
+                        swal.fire("Error!", "Oopss! There are something wrong. Please try again later.", "error");
+                    });
+                }
+                else
+                {
+                    $.post('/game/lobby/open', {
+                        params
+                    }, function(data, status) {
+                        const obj = JSON.parse(data);
+                        if( obj.code==1 ) {
+                            swal.close();
+                            refreshBalance();
+                            getGameBalance(5,params['provider']);
+                            byPassBlockPopUp(obj.url);
+                            //window.open(obj.url, '_blank');
+                        } else {
+                            swal.fire("Error!", obj.message + " (Code: "+obj.code+")", "error");
+                        }
+                    })
+                    .done(function() {
+                        $('.modal-luckynum [type=submit]').prop('disabled', false);
+                    })
+                    .fail(function() {
+                        swal.fire("Error!", "Oopss! There are something wrong. Please try again later.", "error");
+                    });
+                }
+            });
+        }
     });
 
     $('.modal-lottoBonusLanding form').on('submit', function(e) {
@@ -4145,5 +4281,67 @@ function airdatepicker()
         todayButton: new Date(),
         clearButton: true
     });
+}
+
+function getDailyPin(userId) {
+    const today = new Date().toISOString().slice(0, 10);
+
+    // Add a secret to break predictability
+    const seed = userId + "-" + today + "-SOME_SECRET_KEY";
+
+    let hash = 0;
+    for (let i = 0; i < seed.length; i++) {
+        hash = (hash * 31 + seed.charCodeAt(i)) % 1000000007;
+    }
+
+    return (hash % 10000).toString().padStart(4, "0");
+}
+
+function generateLuckyNum(targetDigits) {
+    if (luckyRunning) return;
+    luckyRunning = true;
+
+    console.log(targetDigits);
+    // If no target passed, generate random digits
+    const numbers = targetDigits || Array.from({ length: 4 }, () => Math.floor(Math.random() * 10));
+
+    // Start all reels spinning
+    for (let i = 0; i < 4; i++) {
+        const digit = document.getElementById(`lucky-digit-${i}`);
+        digit.textContent = Math.floor(Math.random() * 10);
+        document.getElementById(`lucky-reel-${i}`).className = 'lucky-reel spinning';
+    }
+
+    // After 600ms, stop each reel staggered on the actual pin digits
+    setTimeout(() => {
+        const stops = numbers.map((num, i) => new Promise(resolve => {
+            setTimeout(() => {
+                const reel  = document.getElementById(`lucky-reel-${i}`);
+                const digit = document.getElementById(`lucky-digit-${i}`);
+                reel.className = 'lucky-reel stopping';
+                digit.textContent = num;
+                digit.classList.remove('lit');
+                void digit.offsetWidth;
+                digit.classList.add('lit');
+                reel.addEventListener('animationend', () => {
+                    reel.className = 'lucky-reel';
+                    resolve();
+                }, { once: true });
+            }, LUCKY_DELAYS[i]);
+        }));
+
+        Promise.all(stops).then(() => {
+            luckyRunning = false;
+        });
+    }, 600);
+
+    $('.modal-luckynum .btn-copylno').on('click', function () {copyLuckyNum(targetDigits.join(''));});
+}
+
+function copyLuckyNum(digit){
+    navigator.clipboard.writeText(digit);
+    const copyBtn = document.getElementById('luckyCopyBtn');
+    if (copyBtn) copyBtn.disabled = true;
+
 }
 </script>
