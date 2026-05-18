@@ -154,6 +154,7 @@ $routes->get('list/game-provider', 'Gameprovider_control::gameProviderList', ['f
 $routes->resource('Game_control');
 $routes->post('list/game-credit/log', 'Game_control::gameCreditLog', ['filter' => 'auth']);
 $routes->post('list/game/bet-log', 'Game_control::gameBetLog', ['filter' => 'auth']);
+$routes->post('list/game/bet-TTO', 'Game_control::gameBetTTO', ['filter' => 'auth']);
 $routes->post('list/game/reference-bet-log', 'Game_control::gameRefBetLog', ['filter' => 'auth']);
 $routes->post('game/lobby/get', 'Game_control::getGameLobbyInfo', ['filter' => 'auth']);
 $routes->post('game/lobby/open', 'Game_control::openLobby', ['filter' => 'auth']);
