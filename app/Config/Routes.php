@@ -95,6 +95,7 @@ $routes->get('user/upline/contact', 'User_control::userUplineContact');
 $routes->post('user/login', 'User_control::login');
 $routes->post('user/registration', 'User_control::userRegistration');
 $routes->post('user/forgot-password', 'User_control::forgotPassword');
+$routes->post('user/editProfile', 'User_control::editProfile', ['filter' => 'auth']);
 $routes->get('user/logout', 'User_control::logout', ['filter' => 'auth']);
 $routes->get('user-profile', 'User_control::getProfile', ['filter' => 'auth']);
 $routes->get('user/balance', 'User_control::getSelfBalance', ['filter' => 'auth']);

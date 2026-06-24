@@ -8,6 +8,7 @@ return [
     'affid' => '介绍人账号',
     'fullname' => '姓名',
     'mobileno' => '手机号码',
+    'dob' => '出生日期',
     'amount' => '数额',
     'beforeamount' => '变动前数额',
     'afteramount' => '变动后数额',

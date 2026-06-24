@@ -170,5 +170,12 @@ return [
     'action' => 'Hoạt động',
     'chgAcc' => 'Thay đổi tài khoản',
     
-    'turnoverwithdrawal' => 'Doanh thu để rút tiền',   
+    'turnoverwithdrawal' => 'Doanh thu để rút tiền',
+    'curBalance' => 'Bao gồm số dư',
+    'tdyBO' => 'Các cược hôm nay',
+    'ydyBO' => 'Các cược hôm qua',
+    
+    'personalinfo' => 'Thông tin cá nhân',
+    'setupdob' => 'Thiết lập ngày sinh',
+    'profile' => 'Hồ sơ',
 ];

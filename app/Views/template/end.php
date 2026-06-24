@@ -670,6 +670,30 @@
 </section>
 <!-- End Lucky Number Display -->
 
+<!-- Setup Birthday -->
+<section class="modal fade modal-setupdob" id="modal-setupdob" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-setupdob" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-xl-down">
+        <article class="modal-content border-0">
+            <div class="modal-body p-0">
+                <div class="p-4 bg-major position-relative rounded-top">
+                    <h4 class="m-0"><?=lang('Label.setupdob');?></h4>
+                </div>
+                <?=form_open('', ['class'=>'form-validation customForm p-5 setupdobForm', 'novalidate'=>'novalidate']);?>
+                <div class="row mb-3">
+                    <label class="col-xl-6 col-lg-6 col-md-6 col-12 col-form-label text-dark position-relative required2"><?=lang('Input.dob');?></label>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                        <input type="text" class="form-control bg-white setupdob-input" name="dob" value="" placeholder="YYYY-MM-DD" required>
+                    </div>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg fw-bold"><?=lang('Nav.submit');?></button>
+                </div>
+                <?=form_close();?>
+            </div>
+        </article>
+    </div>
+</section>
+
 <script src="<?=base_url('assets/vendors/bootstrap/js/bootstrap.bundle.min.js');?>"></script>
 <script src="<?=base_url('assets/vendors/sweetalert2/sweetalert2.min.js');?>"></script>
 <script src="<?=base_url('assets/vendors/airdatepicker/js/datepicker.min.js');?>"></script>
@@ -773,9 +797,11 @@ const bankImages = {
     TNGC: "<?=base_url('assets/img/bankchannel/tng.png');?>",
     DUIN: "<?=base_url('assets/img/bankchannel/dui.png');?>",
     PYG: "<?=base_url('assets/img/bankchannel/pyg.png');?>",
-
+    FPX: "<?=base_url('assets/img/bankicon/bank.png');?>",
 }
+
 document.addEventListener('DOMContentLoaded', (event) => {
+
     $.get('/device/check', function(data, status) {
         const obj = JSON.parse(data);
         if( obj.mobile==true ) {
@@ -833,6 +859,56 @@ document.addEventListener('DOMContentLoaded', (event) => {
         affiliateQREvent.addEventListener('hidden.bs.modal', function (event) {
             document.getElementById("qrcode").innerHTML = '';
         });
+
+        if ($('.setupdob-input').length) {
+            $('.setupdob-input').datepicker({
+                autoClose: true,
+                changeMonth: true,
+                changeYear: true,
+                language: '<?=$_SESSION['lang']=='cn' || $_SESSION['lang']=='zh' ? 'zh' : 'en'?>',
+                dateFormat: 'yyyy-mm-dd',
+                maxDate: new Date(),
+                view: 'years',
+                minView: 'days'
+            });
+        }
+
+        $('.setupdobForm').off().on('submit', function(e) {
+            e.preventDefault();
+            if (this.checkValidity() === false) return;
+
+            $('.setupdobForm [type=submit]').prop('disabled', true);
+
+            var params = {};
+            $.each($(this).serializeArray(), function (i, v) { params[v.name] = v.value; });
+            if (params.dob) {
+            params.dob = params.dob + 'T00:00:00Z';
+            }
+
+            $.post('/user/editProfile', { params }, function(data) {
+                const obj = JSON.parse(data);
+                if (obj.code == 1) {
+                    $('.modal-setupdob').modal('hide');
+                    swal.fire("Success!", obj.message, "success");
+                } else {
+                    swal.fire("Error!", obj.message + " (Code: " + obj.code + ")", "error");
+                }
+            })
+            .done(function() {
+                $('.setupdobForm [type=submit]').prop('disabled', false);
+            })
+            .fail(function() {
+                swal.fire("Error!", "Oopss! There are something wrong. Please try again later.", "error");
+                $('.setupdobForm [type=submit]').prop('disabled', false);
+            });
+        });
+
+        const dobModalEl = document.getElementById('modal-setupdob');
+        if (dobModalEl) {
+            dobModalEl.addEventListener('hidden.bs.modal', function () {
+                $(this).find('form').removeClass('was-validated').trigger('reset');
+            });
+        }
 
         // var $draggableFw = $('.draggable-fw').draggabilly({
         //     containment: true
@@ -1275,7 +1351,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 });
 
                 //block lotto credit-in
-                if ( params['provider'] == 'GD8' || params['provider'] == 'GDS' ) 
+                if ( params['provider'] == 'GDV' || params['provider'] == 'GDSV' || params['provider'] == 'GD8V') 
                 {
                     $.post('/game/lobby/openlotto', {
                         params
@@ -4101,23 +4177,51 @@ function appgameRules(species, name, provider) {
         allowOutsideClick: false,
         allowEscapeKey: false,
         padding: '0.5rem',
-        title: '<?=lang('Validation.slotgamerulestitle');?>',
-        html: '<?=lang('Validation.slotgamerulescontent');?>',
+        title: name,
+        html: `
+        <div class="gameLogo d-flex justify-content-center"><img class="w-25" src='<?=$_ENV['gameProviderLogo'];?>/${provider}.png'></div>
+        <div class="betO fs-6 d-block mb-2 rounded shadow-sm"><?=lang('Label.curBalance');?>: <span class="userBalance">0.00</span></div>
+        <div class="betO fs-6 colorfff bglg d-block mb-2 rounded shadow-sm">
+            <?=lang('Label.tdyBO');?>: <span class="todayTurnover">0.00</span><br>
+            <?=lang('Label.ydyBO');?>: <span class="yesterdayTurnover">0.00</span>
+        </div>
+        <div class="betO d-block mb-2 rounded shadow-sm"><?=lang('Validation.casinogamerulestitle');?>: <span class="gRules"><?=lang('Validation.casinogamerulescontent');?></span></div>
+        `,
         customClass: {
 	 		container: 'gamerules-content'
 	 	},
+        didOpen: () => {
+            // Grab balance from an existing element on the page and sync it
+            const balance = document.querySelector('.userBalance')?.innerText ?? '0.00';
+            swal.getPopup().querySelector('.userBalance').innerText = balance;
+
+            const today = new Date().toISOString().split('T')[0];
+            const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+
+            getTotalTurnOver(today, provider).then(total => {
+                swal.getPopup().querySelector('.todayTurnover').innerText = total.toFixed(2);
+            });
+
+            getYTotalTurnOver(yesterday, provider).then(total => {
+                swal.getPopup().querySelector('.yesterdayTurnover').innerText = total.toFixed(2);
+            });
+        },
         showDenyButton: true,
         confirmButtonText: '<?=lang('Nav.entergame');?>',
-        denyButtonText: '<?=lang('Nav.cancel');?>',
+        denyButtonText: '<?=lang('Nav.cancel');?>',  
         didRender: () => { 
-            const actions = Swal.getActions(); 
-            const btn = document.createElement('button'); 
-            btn.textContent = '<?=lang('Nav.betlog');?>'; 
-            btn.className = 'gamelog-btn'; 
+            const titleEl = Swal.getTitle();
+            const btn = document.createElement('button');  
+            btn.className = 'gamelog-btn';
+            const img = document.createElement('img');
+            img.src = '<?=base_url('assets/img/icon/bet_log.png');?>'; // change to your image path
+            img.alt = '<?=lang('Nav.betlog');?>';
+
+            btn.appendChild(img);
             btn.onclick = () => 
             {
                 swal.close();
-                const ntitle = '<?=lang('Nav.betlog');?> - ' + name;
+                const ntitle = 'Bet Log - ' + name;
                 document.getElementById('scoreTitle').textContent = ntitle;
                 const modal = new bootstrap.Modal(document.getElementById('modal-gamescore'));
                 modal.show();
@@ -4138,7 +4242,7 @@ function appgameRules(species, name, provider) {
 
                 airdatepicker();
 
-                <?php if( isset($_SESSION['logged_in']) ): ?>
+            <?php if( isset($_SESSION['logged_in']) ): ?>
                 var pageindex = 1, debug = false;
                 const paymentTable = $('#paymentTable').DataTable({
                     dom: "<'row'<'col-12 overflow-auto'tr>>" + "<'row mt-3'<'col-xl-6 col-lg-6 col-md-6 col-12'i><'col-xl-6 col-lg-6 col-md-6 col-12'p>>",
@@ -4169,81 +4273,92 @@ function appgameRules(species, name, provider) {
                         parent: encoded,
                         provider: gp
                 });
-            $.ajax({
-                url: '/list/game/bet-log',
-                type: 'post',
-                data: payload,
-                contentType:"application/json; charset=utf-8",
-                dataType:"json",
-                success: function(res){
-                    if (res.code !== 1) {
-                        // alert(res.message);
-                        callback({
-                            recordsTotal: 0,
-                            recordsFiltered: 0,
-                            data: []
-                        });
+                $.ajax({
+                    url: '/list/game/bet-log',
+                    type: 'post',
+                    data: payload,
+                    contentType:"application/json; charset=utf-8",
+                    dataType:"json",
+                    success: function(res){
+                        if (res.code !== 1) {
+                            // alert(res.message);
+                            callback({
+                                recordsTotal: 0,
+                                recordsFiltered: 0,
+                                data: []
+                            });
 
+                            return;
+                        } else {
+                            callback({
+                                recordsTotal: res.totalRecord,
+                                recordsFiltered: res.totalRecord,
+                                data: res.data
+                            });
+                        }
                         return;
-                    } else {
-                        callback({
-                            recordsTotal: res.totalRecord,
-                            recordsFiltered: res.totalRecord,
-                            data: res.data
-                        });
                     }
-                    return;
-                }
-            });
-        },
-        footerCallback: function ( row, data, start, end, display ) {
-            var api = this.api(), data;
-            var intVal = function(i){ return typeof i === 'string' ? i.replace(/[\$,]/g, '')*1 : typeof i === 'number' ? i : 0; };
-
-            // var grandtotal = api.column(17).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-            // var totalOverPage = api.column(4, {page: 'current'}).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-
-            var totalOverPage = api.column(4).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-            var truncate = parseFloat(totalOverPage).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
-            var sum = parseFloat(truncate) < 0 ? '<span class="text-danger">'+truncate+'</span>' : truncate;
-            $(api.column(4).footer()).html(sum);
-
-            var totalOverPage2 = api.column(5).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-            var truncate2 = parseFloat(totalOverPage2).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
-            var sum2 = parseFloat(truncate2) < 0 ? '<span class="text-danger">'+truncate2+'</span>' : truncate2;
-            $(api.column(5).footer()).html(sum2);
-
-            var totalOverPage3 = api.column(3).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-            var truncate3 = parseFloat(totalOverPage3).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
-            var sum3 = parseFloat(truncate3) < 0 ? '<span class="text-danger">'+truncate3+'</span>' : truncate3;
-            $(api.column(3).footer()).html(sum3);
-        },
-        drawCallback: function(oSettings, json) {
-            $('#paymentTable tbody tr td.dataTables_empty').removeClass('text-end');
-            $('#paymentTable tbody tr').find('td').not('td:first-child,td:nth-child(2),td:nth-child(3),td:nth-child(4)').addClass('text-end');
-        },
-        aoColumnDefs: [{
-            aTargets: [3,4,5],
-            render: function ( data, type, row ) {
-                return parseFloat(data).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+                });
             },
-            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                parseFloat(sData) < 0 ? $(nTd).addClass('text-danger') : '';
-            }
-        }]
-    });
-    $('.filterForm').off().on('submit', function(e) {
-        e.preventDefault();
+            footerCallback: function ( row, data, start, end, display ) {
+                var api = this.api(), data;
+                var intVal = function(i){ return typeof i === 'string' ? i.replace(/[\$,]/g, '')*1 : typeof i === 'number' ? i : 0; };
 
-        if (this.checkValidity() !== false) {
-            paymentTable.draw();
-        }
-    });
-    <?php endif; ?>
+                // var grandtotal = api.column(17).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+                // var totalOverPage = api.column(4, {page: 'current'}).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+
+                var totalOverPage = api.column(4).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+                var truncate = parseFloat(totalOverPage).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+                var sum = parseFloat(truncate) < 0 ? '<span class="text-danger">'+truncate+'</span>' : truncate;
+                $(api.column(4).footer()).html(sum);
+
+                var totalOverPage2 = api.column(5).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+                var truncate2 = parseFloat(totalOverPage2).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+                var sum2 = parseFloat(truncate2) < 0 ? '<span class="text-danger">'+truncate2+'</span>' : truncate2;
+                $(api.column(5).footer()).html(sum2);
+
+                var totalOverPage3 = api.column(3).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+                var truncate3 = parseFloat(totalOverPage3).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+                var sum3 = parseFloat(truncate3) < 0 ? '<span class="text-danger">'+truncate3+'</span>' : truncate3;
+                $(api.column(3).footer()).html(sum3);
+            },
+            drawCallback: function(oSettings, json) {
+                $('#paymentTable tbody tr td.dataTables_empty').removeClass('text-end');
+                $('#paymentTable tbody tr').find('td').not('td:first-child,td:nth-child(2),td:nth-child(3),td:nth-child(4)').addClass('text-end');
+            },
+            aoColumnDefs: [{
+                aTargets: [3,4,5],
+                render: function ( data, type, row ) {
+                    return parseFloat(data).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+                },
+                fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                    parseFloat(sData) < 0 ? $(nTd).addClass('text-danger') : '';
+                }
+            }]
+        });
+        $('.filterForm').off().on('submit', function(e) {
+            e.preventDefault();
+
+            if (this.checkValidity() !== false) {
+                paymentTable.draw();
             }
-            }; 
-            actions.insertBefore(btn, actions.querySelector('.swal2-confirm')); 
-        }
+        });
+        <?php endif; ?>
+            }
+        }; 
+            const spacer = document.createElement('div');
+            spacer.style.visibility = 'hidden';
+            spacer.style.width = '36px'; // match your button width
+
+            titleEl.style.display = 'flex';
+            titleEl.style.alignItems = 'center';
+            titleEl.style.justifyContent = 'space-between';
+            titleEl.style.width = '100%';
+            titleEl.style.gap = '0';
+
+            titleEl.insertBefore(spacer, titleEl.firstChild); // spacer on the left
+            titleEl.appendChild(btn);
+        }         
     }).then( (result) => {
         if( result.isConfirmed ) {
             appLanding(species, name, provider);

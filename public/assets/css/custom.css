@@ -2124,3 +2124,9 @@ Bank account
 .wordB{
     word-break: break-word;
 }
+
+.btn-myprofile{
+    color: #fff !important;
+    border-color: #01DC66 !important;
+    background: #01DC66 !important;
+}

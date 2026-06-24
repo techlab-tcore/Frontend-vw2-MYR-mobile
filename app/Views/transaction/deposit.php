@@ -713,6 +713,13 @@ function getPgChannel(element,pgid,merchant,currency)
                 channel.forEach(function(item, index) {
                     if( item.isDeposit == 1 )
                     {
+                        if( merchant ==	'M1563323'){
+                            var node = document.createElement("input");
+                            var nodeLabel = document.createElement("label");
+                            var img = document.createElement("img");
+                            img.src = getBankImg('DUIN');
+                            var textNodeLabel = document.createTextNode('DUITNOW');
+                        }
                         var node = document.createElement("input");
                         var nodeLabel = document.createElement("label");
                         var img = document.createElement("img");

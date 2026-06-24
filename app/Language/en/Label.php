@@ -171,4 +171,11 @@ return [
     'chgAcc' => 'Change Account',
 
     'turnoverwithdrawal' => 'Turnover for Withdrawal',
+
+    'personalinfo' => 'Personal Info',
+    'setupdob' => 'Setup Date of Birth',
+    'profile' => 'Profile',
+    'curBalance' => 'Current Balance',
+    'tdyBO' => 'Today BetOver',
+    'ydyBO' => 'Yesterday BetOver',
 ];

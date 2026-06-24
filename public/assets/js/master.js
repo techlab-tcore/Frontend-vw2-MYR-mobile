@@ -161,6 +161,22 @@ function refreshBalance()
                     }
                 }
 
+                if( obj.dob==null){
+                    const dobModal = new bootstrap.Modal(document.getElementById('modal-setupdob'));
+                    dobModal.show();;
+                } else {
+                    var userDob = document.getElementsByClassName("userDob");
+                    if( !!userDob ) {
+                        $('.userDob').html(obj.dob.split('T')[0]);
+                    }
+                }
+
+                var userContact = document.getElementsByClassName("userContact");
+                if( !!userContact && obj.contact ) {
+                    var prefix = obj.region=='MYR' ? '0' : '65';
+                    $('.userContact').html(prefix + obj.contact);
+                }
+
                 if( obj.jackpot==true ) {
                     runningJackpot();
                 }

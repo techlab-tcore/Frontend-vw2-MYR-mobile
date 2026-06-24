@@ -1583,6 +1583,7 @@ class Game_control extends BaseController
         $game = '';
 		if( $provider['code']==1 && $provider['data']!=[] ):
 			foreach( $provider['data'] as $s ):
+				if( \in_array($s['code'], ['GDV', 'GDSV', 'DG8V'], true) ) continue;
 				if( $data['session']==true ):
 					if( $s['category']==$gameType && $s['status']==1 ):
 						// if( $s['code']=='GD8' || $s['code']=='MN8' || $s['code']=='GD2' ):

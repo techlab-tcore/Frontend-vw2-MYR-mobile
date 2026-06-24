@@ -14,7 +14,7 @@ class Announcement_control extends BaseController
 
         $payload = [
             'userid' => $_SESSION['token'],
-            'desc' => true
+            'desc' => false
         ];
         $res = $this->announcement_model->selectAllAnnouncementList($payload);
         // echo json_encode($res);

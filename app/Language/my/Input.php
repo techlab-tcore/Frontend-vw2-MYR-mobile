@@ -8,6 +8,7 @@ return [
     'affid' => 'ID Ahli Gabungan',
     'fullname' => 'Nama Penuh',
     'mobileno' => 'Nombor Telefon Bimbit',
+    'dob' => 'Tarikh Lahir',
     'amount' => 'Jumlah',
     'beforeamount' => 'Jumlah Sebelum',
     'afteramount' => 'Jumlah Selepas',

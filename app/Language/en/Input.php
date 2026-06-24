@@ -8,6 +8,7 @@ return [
     'affid' => 'Affiliate ID',
     'fullname' => 'Full Name',
     'mobileno' => 'Mobile No.',
+    'dob' => 'Date of Birth',
     'amount' => 'Amount',
     'beforeamount' => 'Before Amount',
     'afteramount' => 'After Amount',

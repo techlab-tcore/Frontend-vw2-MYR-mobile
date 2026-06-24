@@ -8,6 +8,7 @@ return [
     'affid' => 'ID liên kết',
     'fullname' => 'Họ và tên',
     'mobileno' => 'Số điện thoại di động',
+    'dob' => 'Ngày sinh',
     'amount' => 'Số tiền',
     'beforeamount' => 'Số tiền trước',
     'afteramount' => 'Số tiền sau',

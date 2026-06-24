@@ -1,15 +1,19 @@
 <!--<?//=view('announcement');?>-->
 
-<section class="row gx-3 bg-light p-3 d-flex align-items-stretch maccount">
-    <figure class="col-2 m-0 p-0"><img class="w-100" src="<?=base_url('assets/img/avatar.png');?>"></figure>
-    <div class="col-7">
+<section class="gx-3 bg-light p-3 d-flex align-items-stretch maccount">
+  <div class="row w-100">
+    <figure class="col-2 m-0 p-0 d-xl-block d-lg-block d-md-block d-none d-flex align-items-center justify-content-center"><img class="w-50" src="<?=base_url('assets/img/avatar.png');?>"></figure>
+    <figure class="col-2 m-0 p-0 d-xl-none d-lg-none d-md-none d-block"><img class="w-100" src="<?=base_url('assets/img/avatar.png');?>"></figure>
+    <div class="col-8">
         <span class="userFullName d-block w-100 fw-semibold">---</span>
-        <small class="badge bg-primary fw-normal"><?=lang('Label.cash');?><span class="ms-1 userCash">0.00</span></small><br>
-        <small class="badge bg-primary fw-normal"><?=lang('Label.chip');?><span class="ms-1 userChip">0.00</span></small>
+        <small class="badge bg-primary mprofile fw-normal"><?=lang('Label.cash');?><span class="ms-1 userCash">0.00</span></small><br>
+        <small class="badge bg-primary mprofile fw-normal"><?=lang('Label.chip');?><span class="ms-1 userChip">0.00</span></small>
     </div>
-    <a class="col-3 d-flex align-items-center justify-content-center text-center text-decoration-none affQR" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target=".modal-affiliateQR">
-        <img class="w-75" src="<?=base_url('assets/img/icon/affiliate_btn.png');?>">
+    <a class="col-2 d-flex align-items-center p-0 justify-content-end text-center text-decoration-none affQR" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target=".modal-affiliateQR">
+        <img class="d-xl-block d-lg-block d-md-block d-none w-50" src="<?=base_url('assets/img/icon/affiliate_btn.png');?>">
+        <img class="d-xl-none d-lg-none d-md-none d-block w-100" src="<?=base_url('assets/img/icon/affiliate_btn.png');?>">
     </a>
+    </div>
 </section>
 
 <section class="maccount-settings">
@@ -28,6 +32,33 @@
     </div>
   </div>
 </div>
+
+<section class="maccount-personalinfo">
+<h6 class="px-3 fw-semibold d-flex justify-content-center align-items-center text-center"><?=lang('Label.personalinfo');?></h6>
+<div class="container mb-3">
+  <div class="card shadow border-0">
+    <div class="card-body">
+        <div class="list-group list-group-flush">
+
+        <!-- Contact -->
+        <div class="list-group-item d-flex align-items-center border-bottom">
+            <i class="bx bx-phone me-3" aria-hidden="true"></i>
+            <?=lang('Input.mobileno');?>
+            <span class="ms-auto userContact">---</span>
+        </div>
+
+        <!-- Date of Birth -->
+        <div class="list-group-item d-flex align-items-center">
+            <i class="bx bx-calendar me-3" aria-hidden="true"></i>
+            <?=lang('Input.dob');?>
+            <span class="ms-auto userDob">---</span>
+        </div>
+
+        </div>
+    </div>
+  </div>
+</div>
+</section>
 
 <div class="container">
 <div class="card shadow border-0">
@@ -74,6 +105,7 @@
   </div>
 </div>
 </div>
+</section>
 
 <script>
 document.addEventListener('DOMContentLoaded', (event) => {

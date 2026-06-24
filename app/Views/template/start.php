@@ -132,6 +132,7 @@ document.onkeydown = function(e) {
                         <div class="d-grid gap-2 px-4 text-center">
                         <label><i class='bx bxs-user-circle me-1'></i><?=$_SESSION['username'];?></label>
                         <b class=""><i class='bx bxs-coin-stack me-1'></i><span class="userBalance text-success"></span><a href="javascript:void(0);" class="ms-1" onclick="getProfile()"><i class='bx bx-refresh'></i></a></b>
+                        <a href="<?=base_url('user/account');?>" class="btn btn-myprofile rounded-pill text-uppercase"><?=lang('Label.profile');?></a>
                         <a href="<?=base_url('user-account/deposit');?>" class="btn btn-secondary rounded-pill text-uppercase"><?=lang('Nav.deposit');?></a>
                         <button type="button" class="btn btn-secondary rounded-pill text-uppercase" onclick="refreshAndWithdrawGame();"><?=lang('Nav.restore');?></button>
                         </div>

@@ -170,4 +170,11 @@ return [
     'chgAcc' => 'Tukar Akaun',
 
     'turnoverwithdrawal' => 'Perolehan untuk Pengeluaran',
+    'curBalance' => 'Sertakan Baki',
+    'tdyBO' => 'Pertaruhan Hari Ini',
+    'ydyBO' => 'Pertaruhan Semalam',
+
+    'personalinfo' => 'Maklumat Peribadi',
+    'setupdob' => 'Isikan Tarikh Lahir',
+    'profile' => 'Profil',
 ];

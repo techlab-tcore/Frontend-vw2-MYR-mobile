@@ -171,4 +171,10 @@ return [
     'chgAcc' => '变更账户',
 
     'turnoverwithdrawal' => '提款流水值',
+    'curBalance' => '带入余额',
+    'tdyBO' => '今日押注',
+    'ydyBO' => '昨日押注',
+    'personalinfo' => '个人资料s',
+    'setupdob' => '设置出生日期',
+    'profile' => '个人资料',
 ];

@@ -338,4 +338,27 @@ class User_model extends Model
 
         return json_decode($response, true);
     }
+
+    public function updateUserProfile($where)
+	{
+		$data = array_merge(['lang'=>$_SESSION['lang'], 'sessionid'=>$_SESSION['session'], 'agentid'=>$_ENV['host']], $where);
+        //$data = array_merge(['lang'=>$_SESSION['lang'], 'agentid'=>$_ENV['secret']], $where);
+		$payload = json_encode($data);
+        
+        $ch = curl_init($this->editUser);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+        curl_setopt($ch, CURLINFO_HEADER_OUT, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($payload))
+        );
+        $response = curl_exec($ch);
+        $err = curl_error($ch);
+        curl_close($ch);
+
+        return json_decode($response, true);
+    }
 }
