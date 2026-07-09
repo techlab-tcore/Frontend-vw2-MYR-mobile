@@ -181,6 +181,7 @@ $routes->resource('Affiliate_control');
 $routes->post('list/affiliate/history', 'Affiliate_control::affiliateHistory', ['filter' => 'auth']);
 $routes->get('affiliate-downline', 'Affiliate_control::getAffiliateList', ['filter' => 'auth']);
 $routes->get('list/affiliate/downline', 'Affiliate_control::getAffiliateDownlineList', ['filter' => 'auth']);
+$routes->post('list/affiliate/settings', 'Affiliate_control::affiliateSettingsList', ['filter' => 'auth']);
 
 $routes->resource('Fortunewheel_control');
 $routes->get('fortune-wheel/top-20', 'Fortunewheel_control::fortuneWheelTopList', ['filter' => 'auth']);

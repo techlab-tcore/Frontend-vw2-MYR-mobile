@@ -350,14 +350,14 @@
                     <input type="text" class="w-100 border-0 bg-transparent text-center text-light" name="gamebalance" readonly>
                     <label><?=lang('Input.gamebalance');?></label>
                 </figure>
+                <figure class="text-center text-light">
+                    <img class="lottoPrize w-100 pt-2" src="">
+                </figure>
                 <?=form_open('',['class'=>'form-validation customForm','novalidate'=>'novalidate'],['provider'=>'','gname'=>'','species'=>'']);?>
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-primary btn-lg"><?=lang('Nav.playgame');?></button>
                 </div>
                 <?=form_close();?>
-                <figure class="text-center text-light">
-                    <img class="lottoPrize w-100 pt-2" src="">
-                </figure>
             </div>
         </div>
     </div>
@@ -693,6 +693,42 @@
         </article>
     </div>
 </section>
+<!-- END Setup Birthday -->
+
+<!-- Game Rules (Express) -->
+<section class="modal fade modal-gamerules" id="modal-gamerules" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="gameRulesTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+        <article class="modal-content border-0">
+            <div class="modal-header d-flex align-items-center">
+                <button type="button" class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title fs-5 fw-bold flex-grow-1 text-center m-0" id="gameRulesTitle">---</h5>
+                <button type="button" class="gamelog-btn gameRulesBetLog" aria-label="<?=lang('Nav.betlog');?>">
+                    <img src="<?=base_url('assets/img/icon/bet_log.png');?>" alt="<?=lang('Nav.betlog');?>">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="gameLogo d-flex justify-content-center">
+                    <img class="w-25 gameRulesLogo" src="" alt="">
+                </div>
+                <div class="betO fs-p8 d-block mb-2 rounded shadow-sm d-flex justify-content-center">
+                    <?=lang('Label.curBalance');?>: <span class="gameRulesBalance">0.00</span>
+                </div>
+                <div class="betO fs-p8 d-block mb-2 rounded shadow-sm">
+                        <table class="affPct table table-sm table-bordered mb-2"><tbody></tbody></table>
+                </div>
+                <div class="betO fs-p8 colorfff bglg d-block mb-2 rounded shadow-sm text-center">
+                    <?=lang('Label.tdyBO');?>: <span class="todayTurnover gameRulesToday">0.00</span><br>
+                    <?=lang('Label.ydyBO');?>: <span class="yesterdayTurnover gameRulesYesterday">0.00</span>
+                </div>
+                <div class="betO d-block mb-2 rounded shadow-sm small">
+                    <span class="gRulesLabel"><?=lang('Validation.slotgamerulestitle');?></span>: <span class="gRules"><?=lang('Validation.slotgamerulescontent');?></span>
+                </div>
+                <button type="button" class="btn btn-primary enter-game-btn gameRulesEnter mt-2 w-100"><?=lang('Nav.entergame');?></button>
+            </div>
+        </article>
+    </div>
+</section>
+<!-- End Game Rules -->
 
 <script src="<?=base_url('assets/vendors/bootstrap/js/bootstrap.bundle.min.js');?>"></script>
 <script src="<?=base_url('assets/vendors/sweetalert2/sweetalert2.min.js');?>"></script>
@@ -764,7 +800,7 @@ const bankImages = {
     CIMB: "<?=base_url('assets/img/bankicon/cimb.png');?>",
     "5f08387e574a951b10c50be6": "<?=base_url('assets/img/bankicon/cimb.png');?>",
     DBS: "<?=base_url('assets/img/bankicon/dbs.png');?>",
-    DUI: "<?=base_url('assets/img/bankicon/duitnow.png');?>",
+    DUIN: "<?=base_url('assets/img/bankicon/duitnow.png');?>",
     GX: "<?=base_url('assets/img/bankicon/gx.png');?>",
     "660f8ec5f62f20727f6691ab": "<?=base_url('assets/img/bankicon/gx.png');?>",
     HLB: "<?=base_url('assets/img/bankicon/hlb.png');?>",
@@ -795,9 +831,10 @@ const bankImages = {
     UOB: "<?=base_url('assets/img/bankicon/uob.png');?>",
     "64e6c3eec67433661e79bbf0": "<?=base_url('assets/img/bankicon/default.png');?>",
     TNGC: "<?=base_url('assets/img/bankchannel/tng.png');?>",
-    DUIN: "<?=base_url('assets/img/bankchannel/dui.png');?>",
+    DUI: "<?=base_url('assets/img/bankchannel/dui.png');?>",
     PYG: "<?=base_url('assets/img/bankchannel/pyg.png');?>",
     FPX: "<?=base_url('assets/img/bankicon/bank.png');?>",
+    CDUI: "<?=base_url('assets/img/bankchannel/dui.png');?>",
 }
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -845,6 +882,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     if( logged )
     {
+        getAffiliateSettings();
         // refreshBalance();
         announcementList();
         getProfile();
@@ -3581,791 +3619,673 @@ function showTime() {
 setInterval(showTime, 1000);
 
 //Game Rules
-function expressgameRules(species, name, provider) {  
-    swal.fire({
-        backdrop: true,
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        padding: '0.5rem',
-        title: name,
-        html: `
-        <div class="gameLogo d-flex justify-content-center"><img class="w-25" src='<?=$_ENV['gameProviderLogo'];?>/${provider}.png'></div>
-        <div class="betO fs-6 d-block mb-2 rounded shadow-sm"><?=lang('Label.curBalance');?>: <span class="userBalance">0.00</span></div>
-        <div class="betO fs-6 colorfff bglg d-block mb-2 rounded shadow-sm">
-            <?=lang('Label.tdyBO');?>: <span class="todayTurnover">0.00</span><br>
-            <?=lang('Label.ydyBO');?>: <span class="yesterdayTurnover">0.00</span>
-        </div>
-        <div class="betO d-block mb-2 rounded shadow-sm"><?=lang('Validation.slotgamerulestitle');?>: <span class="gRules"><?=lang('Validation.slotgamerulescontent');?></span></div>
-        `,
-        customClass: {
-	 		container: 'gamerules-content'
-	 	},
-        didOpen: () => {
-            // Grab balance from an existing element on the page and sync it
-            const balance = document.querySelector('.userBalance')?.innerText ?? '0.00';
-            swal.getPopup().querySelector('.userBalance').innerText = balance;
+function expressgameRules(species, name, provider) {
+    const modalEl = document.getElementById('modal-gamerules');
 
-            const today = new Date().toISOString().split('T')[0];
-            const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+    modalEl.querySelector('#gameRulesTitle').textContent = name;
+    const logoEl = modalEl.querySelector('.gameRulesLogo');
+    logoEl.src = `<?=$_ENV['gameProviderLogo'];?>/${provider}.png`;
+    logoEl.alt = name;
+    modalEl.querySelector('.gameRulesBalance').innerText =
+        document.querySelector('.userBalance')?.innerText ?? '0.00';
+    modalEl.querySelector('.gameRulesToday').innerText = '0.00';
+    modalEl.querySelector('.gameRulesYesterday').innerText = '0.00';
+    modalEl.querySelector('.gRulesLabel').textContent = '<?=lang('Validation.slotgamerulestitle');?>';
+    modalEl.querySelector('.gRules').innerHTML = <?=json_encode(lang('Validation.slotgamerulescontent'));?>;
+    modalEl.querySelector('.affPct').style.display = '';
 
-            getTotalTurnOver(today, provider).then(total => {
-                swal.getPopup().querySelector('.todayTurnover').innerText = total.toFixed(2);
+    const today = new Date().toISOString().split('T')[0];
+    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+
+    getTotalTurnOver(today, provider).then(total => {
+        modalEl.querySelector('.gameRulesToday').innerText = total.toFixed(2);
+    });
+    getYTotalTurnOver(yesterday, provider).then(total => {
+        modalEl.querySelector('.gameRulesYesterday').innerText = total.toFixed(2);
+    });
+    renderAffPct(provider);
+
+    const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+
+    // Strip prior handlers (persistent modal element) by cloning the buttons,
+    // then attach fresh handlers so species/name/provider closures are current.
+    const freshEnter  = modalEl.querySelector('.gameRulesEnter').cloneNode(true);
+    const freshBetlog = modalEl.querySelector('.gameRulesBetLog').cloneNode(true);
+    modalEl.querySelector('.gameRulesEnter').replaceWith(freshEnter);
+    modalEl.querySelector('.gameRulesBetLog').replaceWith(freshBetlog);
+
+    freshEnter.addEventListener('click', () => {
+        modal.hide();
+        gameLandingExpress(species, name, provider);
+    });
+
+    freshBetlog.addEventListener('click', () => {
+        modal.hide();
+        const ntitle = 'Bet Log - ' + name;
+        document.getElementById('scoreTitle').textContent = ntitle;
+        const scoreModal = new bootstrap.Modal(document.getElementById('modal-gamescore'));
+        scoreModal.show();
+        if (!$.fn.DataTable.isDataTable('#scoreTable')) {
+            if( '<?=$_SESSION['lang']?>' == 'my' ) {
+                langs = malay;
+            } else if( '<?=$_SESSION['lang']?>' == 'cn' ) {
+                langs = chinese;
+            } else if( '<?=$_SESSION['lang']?>' == 'zh' ) {
+                langs = tradchinese;
+            } else if( '<?=$_SESSION['lang']?>' == 'th' ) {
+                langs = thai;
+            } else if( '<?=$_SESSION['lang']?>' == 'vn' ) {
+                langs = viet;
+            } else {
+                langs = english;
+            }
+
+            airdatepicker();
+
+        <?php if( isset($_SESSION['logged_in']) ): ?>
+            var pageindex = 1, debug = false;
+            const paymentTable = $('#paymentTable').DataTable({
+                dom: "<'row'<'col-12 overflow-auto'tr>>" + "<'row mt-3'<'col-xl-6 col-lg-6 col-md-6 col-12'i><'col-xl-6 col-lg-6 col-md-6 col-12'p>>",
+                language: langs,
+                ordering: false,
+                deferRender: true,
+                serverSide: true,
+                processing: true,
+                destroy: true,
+                ajax: function(data, callback, settings) {
+                if (settings._iRecordsTotal == 0) {
+                    pageindex = 1;
+                } else {
+                    var pageindex = settings._iDisplayStart/settings._iDisplayLength + 1;
+                }
+
+                const fromdate = $('.filterForm [name=start]').val();
+                const todate = $('.filterForm [name=end]').val();
+                const gp = provider;
+                const text = '<?=$_SESSION['token'];?>';
+                const encoded = btoa(text);
+
+                var payload = JSON.stringify({
+                    pageindex: pageindex,
+                    rowperpage: data.length,
+                    start: fromdate,
+                    end: todate,
+                    parent: encoded,
+                    provider: gp
             });
+            $.ajax({
+                url: '/list/game/bet-log',
+                type: 'post',
+                data: payload,
+                contentType:"application/json; charset=utf-8",
+                dataType:"json",
+                success: function(res){
+                    if (res.code !== 1) {
+                        // alert(res.message);
+                        callback({
+                            recordsTotal: 0,
+                            recordsFiltered: 0,
+                            data: []
+                        });
 
-            getYTotalTurnOver(yesterday, provider).then(total => {
-                swal.getPopup().querySelector('.yesterdayTurnover').innerText = total.toFixed(2);
+                        return;
+                    } else {
+                        callback({
+                            recordsTotal: res.totalRecord,
+                            recordsFiltered: res.totalRecord,
+                            data: res.data
+                        });
+                    }
+                    return;
+                }
             });
         },
-        showDenyButton: true,
-        confirmButtonText: '<?=lang('Nav.entergame');?>',
-        denyButtonText: '<?=lang('Nav.cancel');?>',  
-        didRender: () => { 
-            const titleEl = Swal.getTitle();
-            const btn = document.createElement('button');  
-            btn.className = 'gamelog-btn';
-            const img = document.createElement('img');
-            img.src = '<?=base_url('assets/img/icon/bet_log.png');?>'; // change to your image path
-            img.alt = '<?=lang('Nav.betlog');?>';
+        footerCallback: function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+            var intVal = function(i){ return typeof i === 'string' ? i.replace(/[\$,]/g, '')*1 : typeof i === 'number' ? i : 0; };
 
-            btn.appendChild(img);
-            btn.onclick = () => 
-            {
-                swal.close();
-                const ntitle = 'Bet Log - ' + name;
-                document.getElementById('scoreTitle').textContent = ntitle;
-                const modal = new bootstrap.Modal(document.getElementById('modal-gamescore'));
-                modal.show();
-            if (!$.fn.DataTable.isDataTable('#scoreTable')) {
-                if( '<?=$_SESSION['lang']?>' == 'my' ) {
-                    langs = malay;
-                } else if( '<?=$_SESSION['lang']?>' == 'cn' ) {
-                    langs = chinese;
-                } else if( '<?=$_SESSION['lang']?>' == 'zh' ) {
-                    langs = tradchinese;
-                } else if( '<?=$_SESSION['lang']?>' == 'th' ) {
-                    langs = thai;
-                } else if( '<?=$_SESSION['lang']?>' == 'vn' ) {
-                    langs = viet;
-                } else {
-                    langs = english;
-                }
+            var totalOverPage = api.column(4).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate = parseFloat(totalOverPage).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum = parseFloat(truncate) < 0 ? '<span class="text-danger">'+truncate+'</span>' : truncate;
+            $(api.column(4).footer()).html(sum);
 
-                airdatepicker();
+            var totalOverPage2 = api.column(5).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate2 = parseFloat(totalOverPage2).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum2 = parseFloat(truncate2) < 0 ? '<span class="text-danger">'+truncate2+'</span>' : truncate2;
+            $(api.column(5).footer()).html(sum2);
 
-            <?php if( isset($_SESSION['logged_in']) ): ?>
-                var pageindex = 1, debug = false;
-                const paymentTable = $('#paymentTable').DataTable({
-                    dom: "<'row'<'col-12 overflow-auto'tr>>" + "<'row mt-3'<'col-xl-6 col-lg-6 col-md-6 col-12'i><'col-xl-6 col-lg-6 col-md-6 col-12'p>>",
-                    language: langs,
-                    ordering: false,
-                    deferRender: true,
-                    serverSide: true,
-                    processing: true,
-                    destroy: true,
-                    ajax: function(data, callback, settings) {
-                    if (settings._iRecordsTotal == 0) {
-                        pageindex = 1;
-                    } else {
-                        var pageindex = settings._iDisplayStart/settings._iDisplayLength + 1;
-                    }
-
-                    const fromdate = $('.filterForm [name=start]').val();
-                    const todate = $('.filterForm [name=end]').val();
-                    const gp = provider;
-                    const text = '<?=$_SESSION['token'];?>'; 
-                    const encoded = btoa(text);
-            
-                    var payload = JSON.stringify({
-                        pageindex: pageindex,
-                        rowperpage: data.length,
-                        start: fromdate,
-                        end: todate,
-                        parent: encoded,
-                        provider: gp
-                });
-                $.ajax({
-                    url: '/list/game/bet-log',
-                    type: 'post',
-                    data: payload,
-                    contentType:"application/json; charset=utf-8",
-                    dataType:"json",
-                    success: function(res){
-                        if (res.code !== 1) {
-                            // alert(res.message);
-                            callback({
-                                recordsTotal: 0,
-                                recordsFiltered: 0,
-                                data: []
-                            });
-
-                            return;
-                        } else {
-                            callback({
-                                recordsTotal: res.totalRecord,
-                                recordsFiltered: res.totalRecord,
-                                data: res.data
-                            });
-                        }
-                        return;
-                    }
-                });
+            var totalOverPage3 = api.column(3).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate3 = parseFloat(totalOverPage3).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum3 = parseFloat(truncate3) < 0 ? '<span class="text-danger">'+truncate3+'</span>' : truncate3;
+            $(api.column(3).footer()).html(sum3);
+        },
+        drawCallback: function(oSettings, json) {
+            $('#paymentTable tbody tr td.dataTables_empty').removeClass('text-end');
+            $('#paymentTable tbody tr').find('td').not('td:first-child,td:nth-child(2),td:nth-child(3),td:nth-child(4)').addClass('text-end');
+        },
+        aoColumnDefs: [{
+            aTargets: [3,4,5],
+            render: function ( data, type, row ) {
+                return parseFloat(data).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
             },
-            footerCallback: function ( row, data, start, end, display ) {
-                var api = this.api(), data;
-                var intVal = function(i){ return typeof i === 'string' ? i.replace(/[\$,]/g, '')*1 : typeof i === 'number' ? i : 0; };
-
-                // var grandtotal = api.column(17).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-                // var totalOverPage = api.column(4, {page: 'current'}).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-
-                var totalOverPage = api.column(4).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-                var truncate = parseFloat(totalOverPage).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
-                var sum = parseFloat(truncate) < 0 ? '<span class="text-danger">'+truncate+'</span>' : truncate;
-                $(api.column(4).footer()).html(sum);
-
-                var totalOverPage2 = api.column(5).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-                var truncate2 = parseFloat(totalOverPage2).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
-                var sum2 = parseFloat(truncate2) < 0 ? '<span class="text-danger">'+truncate2+'</span>' : truncate2;
-                $(api.column(5).footer()).html(sum2);
-
-                var totalOverPage3 = api.column(3).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-                var truncate3 = parseFloat(totalOverPage3).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
-                var sum3 = parseFloat(truncate3) < 0 ? '<span class="text-danger">'+truncate3+'</span>' : truncate3;
-                $(api.column(3).footer()).html(sum3);
-            },
-            drawCallback: function(oSettings, json) {
-                $('#paymentTable tbody tr td.dataTables_empty').removeClass('text-end');
-                $('#paymentTable tbody tr').find('td').not('td:first-child,td:nth-child(2),td:nth-child(3),td:nth-child(4)').addClass('text-end');
-            },
-            aoColumnDefs: [{
-                aTargets: [3,4,5],
-                render: function ( data, type, row ) {
-                    return parseFloat(data).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
-                },
-                fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                    parseFloat(sData) < 0 ? $(nTd).addClass('text-danger') : '';
-                }
-            }]
-        });
-        $('.filterForm').off().on('submit', function(e) {
-            e.preventDefault();
-
-            if (this.checkValidity() !== false) {
-                paymentTable.draw();
+            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                parseFloat(sData) < 0 ? $(nTd).addClass('text-danger') : '';
             }
-        });
-        <?php endif; ?>
-            }
-        }; 
-            const spacer = document.createElement('div');
-            spacer.style.visibility = 'hidden';
-            spacer.style.width = '36px'; // match your button width
+        }]
+    });
+    $('.filterForm').off().on('submit', function(e) {
+        e.preventDefault();
 
-            titleEl.style.display = 'flex';
-            titleEl.style.alignItems = 'center';
-            titleEl.style.justifyContent = 'space-between';
-            titleEl.style.width = '100%';
-            titleEl.style.gap = '0';
-
-            titleEl.insertBefore(spacer, titleEl.firstChild); // spacer on the left
-            titleEl.appendChild(btn);
-        }         
-    }).then( (result) => {
-        if( result.isConfirmed ) {
-            gameLandingExpress(species, name, provider);
-        } else if ( result.isDenied ) {
-            swal.close();
+        if (this.checkValidity() !== false) {
+            paymentTable.draw();
         }
     });
+    <?php endif; ?>
+        }
+    });
+
+    modal.show();
 }
 
-function expresscasinoRules(species, name, provider) {  
-    swal.fire({
-        backdrop: true,
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        padding: '0.5rem',
-        title: name,
-        html: `
-        <div class="gameLogo d-flex justify-content-center"><img class="w-25" src='<?=$_ENV['gameProviderLogo'];?>/${provider}.png'></div>
-        <div class="betO fs-6 d-block mb-2 rounded shadow-sm"><?=lang('Label.curBalance');?>: <span class="userBalance">0.00</span></div>
-        <div class="betO fs-6 colorfff bglg d-block mb-2 rounded shadow-sm">
-            <?=lang('Label.tdyBO');?>: <span class="todayTurnover">0.00</span><br>
-            <?=lang('Label.ydyBO');?>: <span class="yesterdayTurnover">0.00</span>
-        </div>
-        <div class="betO d-block mb-2 rounded shadow-sm"><?=lang('Validation.casinogamerulestitle');?>: <span class="gRules"><?=lang('Validation.casinogamerulescontent');?></span></div>
-        `,
-        customClass: {
-	 		container: 'gamerules-content'
-	 	},
-        didOpen: () => {
-            // Grab balance from an existing element on the page and sync it
-            const balance = document.querySelector('.userBalance')?.innerText ?? '0.00';
-            swal.getPopup().querySelector('.userBalance').innerText = balance;
+function expresscasinoRules(species, name, provider) {
+    const modalEl = document.getElementById('modal-gamerules');
 
-            const today = new Date().toISOString().split('T')[0];
-            const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+    modalEl.querySelector('#gameRulesTitle').textContent = name;
+    const logoEl = modalEl.querySelector('.gameRulesLogo');
+    logoEl.src = `<?=$_ENV['gameProviderLogo'];?>/${provider}.png`;
+    logoEl.alt = name;
+    modalEl.querySelector('.gameRulesBalance').innerText =
+        document.querySelector('.userBalance')?.innerText ?? '0.00';
+    modalEl.querySelector('.gameRulesToday').innerText = '0.00';
+    modalEl.querySelector('.gameRulesYesterday').innerText = '0.00';
+    modalEl.querySelector('.gRulesLabel').textContent = '<?=lang('Validation.casinogamerulestitle');?>';
+    modalEl.querySelector('.gRules').innerHTML = <?=json_encode(lang('Validation.casinogamerulescontent'));?>;
+    modalEl.querySelector('.affPct').style.display = '';
 
-            getTotalTurnOver(today, provider).then(total => {
-                swal.getPopup().querySelector('.todayTurnover').innerText = total.toFixed(2);
+    const today = new Date().toISOString().split('T')[0];
+    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+
+    getTotalTurnOver(today, provider).then(total => {
+        modalEl.querySelector('.gameRulesToday').innerText = total.toFixed(2);
+    });
+    getYTotalTurnOver(yesterday, provider).then(total => {
+        modalEl.querySelector('.gameRulesYesterday').innerText = total.toFixed(2);
+    });
+    renderAffPct(provider);
+
+    const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+
+    // Strip prior handlers (persistent modal element) by cloning the buttons,
+    // then attach fresh handlers so species/name/provider closures are current.
+    const freshEnter  = modalEl.querySelector('.gameRulesEnter').cloneNode(true);
+    const freshBetlog = modalEl.querySelector('.gameRulesBetLog').cloneNode(true);
+    modalEl.querySelector('.gameRulesEnter').replaceWith(freshEnter);
+    modalEl.querySelector('.gameRulesBetLog').replaceWith(freshBetlog);
+
+    freshEnter.addEventListener('click', () => {
+        modal.hide();
+        gameLandingExpress(species, name, provider);
+    });
+
+    freshBetlog.addEventListener('click', () => {
+        modal.hide();
+        const ntitle = 'Bet Log - ' + name;
+        document.getElementById('scoreTitle').textContent = ntitle;
+        const scoreModal = new bootstrap.Modal(document.getElementById('modal-gamescore'));
+        scoreModal.show();
+        if (!$.fn.DataTable.isDataTable('#scoreTable')) {
+            if( '<?=$_SESSION['lang']?>' == 'my' ) {
+                langs = malay;
+            } else if( '<?=$_SESSION['lang']?>' == 'cn' ) {
+                langs = chinese;
+            } else if( '<?=$_SESSION['lang']?>' == 'zh' ) {
+                langs = tradchinese;
+            } else if( '<?=$_SESSION['lang']?>' == 'th' ) {
+                langs = thai;
+            } else if( '<?=$_SESSION['lang']?>' == 'vn' ) {
+                langs = viet;
+            } else {
+                langs = english;
+            }
+
+            airdatepicker();
+
+        <?php if( isset($_SESSION['logged_in']) ): ?>
+            var pageindex = 1, debug = false;
+            const paymentTable = $('#paymentTable').DataTable({
+                dom: "<'row'<'col-12 overflow-auto'tr>>" + "<'row mt-3'<'col-xl-6 col-lg-6 col-md-6 col-12'i><'col-xl-6 col-lg-6 col-md-6 col-12'p>>",
+                language: langs,
+                ordering: false,
+                deferRender: true,
+                serverSide: true,
+                processing: true,
+                destroy: true,
+                ajax: function(data, callback, settings) {
+                if (settings._iRecordsTotal == 0) {
+                    pageindex = 1;
+                } else {
+                    var pageindex = settings._iDisplayStart/settings._iDisplayLength + 1;
+                }
+
+                const fromdate = $('.filterForm [name=start]').val();
+                const todate = $('.filterForm [name=end]').val();
+                const gp = provider;
+                const text = '<?=$_SESSION['token'];?>';
+                const encoded = btoa(text);
+
+                var payload = JSON.stringify({
+                    pageindex: pageindex,
+                    rowperpage: data.length,
+                    start: fromdate,
+                    end: todate,
+                    parent: encoded,
+                    provider: gp
             });
+            $.ajax({
+                url: '/list/game/bet-log',
+                type: 'post',
+                data: payload,
+                contentType:"application/json; charset=utf-8",
+                dataType:"json",
+                success: function(res){
+                    if (res.code !== 1) {
+                        // alert(res.message);
+                        callback({
+                            recordsTotal: 0,
+                            recordsFiltered: 0,
+                            data: []
+                        });
 
-            getYTotalTurnOver(yesterday, provider).then(total => {
-                swal.getPopup().querySelector('.yesterdayTurnover').innerText = total.toFixed(2);
+                        return;
+                    } else {
+                        callback({
+                            recordsTotal: res.totalRecord,
+                            recordsFiltered: res.totalRecord,
+                            data: res.data
+                        });
+                    }
+                    return;
+                }
             });
         },
-        showDenyButton: true,
-        confirmButtonText: '<?=lang('Nav.entergame');?>',
-        denyButtonText: '<?=lang('Nav.cancel');?>',  
-        didRender: () => { 
-            const titleEl = Swal.getTitle();
-            const btn = document.createElement('button');  
-            btn.className = 'gamelog-btn';
-            const img = document.createElement('img');
-            img.src = '<?=base_url('assets/img/icon/bet_log.png');?>'; // change to your image path
-            img.alt = '<?=lang('Nav.betlog');?>';
+        footerCallback: function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+            var intVal = function(i){ return typeof i === 'string' ? i.replace(/[\$,]/g, '')*1 : typeof i === 'number' ? i : 0; };
 
-            btn.appendChild(img);
-            btn.onclick = () => 
-            {
-                swal.close();
-                const ntitle = 'Bet Log - ' + name;
-                document.getElementById('scoreTitle').textContent = ntitle;
-                const modal = new bootstrap.Modal(document.getElementById('modal-gamescore'));
-                modal.show();
-            if (!$.fn.DataTable.isDataTable('#scoreTable')) {
-                if( '<?=$_SESSION['lang']?>' == 'my' ) {
-                    langs = malay;
-                } else if( '<?=$_SESSION['lang']?>' == 'cn' ) {
-                    langs = chinese;
-                } else if( '<?=$_SESSION['lang']?>' == 'zh' ) {
-                    langs = tradchinese;
-                } else if( '<?=$_SESSION['lang']?>' == 'th' ) {
-                    langs = thai;
-                } else if( '<?=$_SESSION['lang']?>' == 'vn' ) {
-                    langs = viet;
-                } else {
-                    langs = english;
-                }
+            var totalOverPage = api.column(4).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate = parseFloat(totalOverPage).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum = parseFloat(truncate) < 0 ? '<span class="text-danger">'+truncate+'</span>' : truncate;
+            $(api.column(4).footer()).html(sum);
 
-                airdatepicker();
+            var totalOverPage2 = api.column(5).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate2 = parseFloat(totalOverPage2).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum2 = parseFloat(truncate2) < 0 ? '<span class="text-danger">'+truncate2+'</span>' : truncate2;
+            $(api.column(5).footer()).html(sum2);
 
-            <?php if( isset($_SESSION['logged_in']) ): ?>
-                var pageindex = 1, debug = false;
-                const paymentTable = $('#paymentTable').DataTable({
-                    dom: "<'row'<'col-12 overflow-auto'tr>>" + "<'row mt-3'<'col-xl-6 col-lg-6 col-md-6 col-12'i><'col-xl-6 col-lg-6 col-md-6 col-12'p>>",
-                    language: langs,
-                    ordering: false,
-                    deferRender: true,
-                    serverSide: true,
-                    processing: true,
-                    destroy: true,
-                    ajax: function(data, callback, settings) {
-                    if (settings._iRecordsTotal == 0) {
-                        pageindex = 1;
-                    } else {
-                        var pageindex = settings._iDisplayStart/settings._iDisplayLength + 1;
-                    }
-
-                    const fromdate = $('.filterForm [name=start]').val();
-                    const todate = $('.filterForm [name=end]').val();
-                    const gp = provider;
-                    const text = '<?=$_SESSION['token'];?>'; 
-                    const encoded = btoa(text);
-            
-                    var payload = JSON.stringify({
-                        pageindex: pageindex,
-                        rowperpage: data.length,
-                        start: fromdate,
-                        end: todate,
-                        parent: encoded,
-                        provider: gp
-                });
-                $.ajax({
-                    url: '/list/game/bet-log',
-                    type: 'post',
-                    data: payload,
-                    contentType:"application/json; charset=utf-8",
-                    dataType:"json",
-                    success: function(res){
-                        if (res.code !== 1) {
-                            // alert(res.message);
-                            callback({
-                                recordsTotal: 0,
-                                recordsFiltered: 0,
-                                data: []
-                            });
-
-                            return;
-                        } else {
-                            callback({
-                                recordsTotal: res.totalRecord,
-                                recordsFiltered: res.totalRecord,
-                                data: res.data
-                            });
-                        }
-                        return;
-                    }
-                });
+            var totalOverPage3 = api.column(3).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate3 = parseFloat(totalOverPage3).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum3 = parseFloat(truncate3) < 0 ? '<span class="text-danger">'+truncate3+'</span>' : truncate3;
+            $(api.column(3).footer()).html(sum3);
+        },
+        drawCallback: function(oSettings, json) {
+            $('#paymentTable tbody tr td.dataTables_empty').removeClass('text-end');
+            $('#paymentTable tbody tr').find('td').not('td:first-child,td:nth-child(2),td:nth-child(3),td:nth-child(4)').addClass('text-end');
+        },
+        aoColumnDefs: [{
+            aTargets: [3,4,5],
+            render: function ( data, type, row ) {
+                return parseFloat(data).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
             },
-            footerCallback: function ( row, data, start, end, display ) {
-                var api = this.api(), data;
-                var intVal = function(i){ return typeof i === 'string' ? i.replace(/[\$,]/g, '')*1 : typeof i === 'number' ? i : 0; };
-
-                // var grandtotal = api.column(17).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-                // var totalOverPage = api.column(4, {page: 'current'}).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-
-                var totalOverPage = api.column(4).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-                var truncate = parseFloat(totalOverPage).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
-                var sum = parseFloat(truncate) < 0 ? '<span class="text-danger">'+truncate+'</span>' : truncate;
-                $(api.column(4).footer()).html(sum);
-
-                var totalOverPage2 = api.column(5).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-                var truncate2 = parseFloat(totalOverPage2).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
-                var sum2 = parseFloat(truncate2) < 0 ? '<span class="text-danger">'+truncate2+'</span>' : truncate2;
-                $(api.column(5).footer()).html(sum2);
-
-                var totalOverPage3 = api.column(3).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-                var truncate3 = parseFloat(totalOverPage3).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
-                var sum3 = parseFloat(truncate3) < 0 ? '<span class="text-danger">'+truncate3+'</span>' : truncate3;
-                $(api.column(3).footer()).html(sum3);
-            },
-            drawCallback: function(oSettings, json) {
-                $('#paymentTable tbody tr td.dataTables_empty').removeClass('text-end');
-                $('#paymentTable tbody tr').find('td').not('td:first-child,td:nth-child(2),td:nth-child(3),td:nth-child(4)').addClass('text-end');
-            },
-            aoColumnDefs: [{
-                aTargets: [3,4,5],
-                render: function ( data, type, row ) {
-                    return parseFloat(data).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
-                },
-                fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                    parseFloat(sData) < 0 ? $(nTd).addClass('text-danger') : '';
-                }
-            }]
-        });
-        $('.filterForm').off().on('submit', function(e) {
-            e.preventDefault();
-
-            if (this.checkValidity() !== false) {
-                paymentTable.draw();
+            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                parseFloat(sData) < 0 ? $(nTd).addClass('text-danger') : '';
             }
-        });
-        <?php endif; ?>
-            }
-        }; 
-            const spacer = document.createElement('div');
-            spacer.style.visibility = 'hidden';
-            spacer.style.width = '36px'; // match your button width
+        }]
+    });
+    $('.filterForm').off().on('submit', function(e) {
+        e.preventDefault();
 
-            titleEl.style.display = 'flex';
-            titleEl.style.alignItems = 'center';
-            titleEl.style.justifyContent = 'space-between';
-            titleEl.style.width = '100%';
-            titleEl.style.gap = '0';
-
-            titleEl.insertBefore(spacer, titleEl.firstChild); // spacer on the left
-            titleEl.appendChild(btn);
-        }         
-    }).then( (result) => {
-        if( result.isConfirmed ) {
-            gameLandingExpress(species, name, provider);
-        } else if ( result.isDenied ) {
-            swal.close();
+        if (this.checkValidity() !== false) {
+            paymentTable.draw();
         }
     });
+    <?php endif; ?>
+        }
+    });
+
+    modal.show();
 }
 
-function expressSportRules(species, name, provider) {  
-    swal.fire({
-        backdrop: true,
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        padding: '0.5rem',
-        title: name,
-        html: `
-        <div class="betO fs-6 d-block mb-2 rounded shadow-sm"><?=lang('Label.curBalance');?>: <span class="userBalance">0.00</span></div>
-        <div class="betO fs-6 colorfff bglg d-block mb-2 rounded shadow-sm">
-            <?=lang('Label.tdyBO');?>: <span class="todayTurnover">0.00</span><br>
-            <?=lang('Label.ydyBO');?>: <span class="yesterdayTurnover">0.00</span>
-        </div>
-        <div class="betO d-block mb-2 rounded shadow-sm"><?=lang('Validation.useragreetitle');?>: <span class="gRules"><?=lang('Validation.sportgamerulescontent');?></span></div>
-        `,
-        customClass: {
-	 		container: 'gamerules-content'
-	 	},
-        didOpen: () => {
-            // Grab balance from an existing element on the page and sync it
-            const balance = document.querySelector('.userBalance')?.innerText ?? '0.00';
-            swal.getPopup().querySelector('.userBalance').innerText = balance;
+function expressSportRules(species, name, provider) {
+    const modalEl = document.getElementById('modal-gamerules');
 
-            const today = new Date().toISOString().split('T')[0];
-            const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+    modalEl.querySelector('#gameRulesTitle').textContent = name;
+    const logoEl = modalEl.querySelector('.gameRulesLogo');
+    logoEl.src = `<?=$_ENV['gameProviderLogo'];?>/${provider}.png`;
+    logoEl.alt = name;
+    modalEl.querySelector('.gameRulesBalance').innerText =
+        document.querySelector('.userBalance')?.innerText ?? '0.00';
+    modalEl.querySelector('.gameRulesToday').innerText = '0.00';
+    modalEl.querySelector('.gameRulesYesterday').innerText = '0.00';
+    modalEl.querySelector('.gRulesLabel').textContent = '<?=lang('Validation.useragreetitle');?>';
+    modalEl.querySelector('.gRules').innerHTML = <?=json_encode(lang('Validation.sportgamerulescontent'));?>;
+    modalEl.querySelector('.affPct').style.display = '';
 
-            getTotalTurnOver(today, provider).then(total => {
-                swal.getPopup().querySelector('.todayTurnover').innerText = total.toFixed(2);
+    const today = new Date().toISOString().split('T')[0];
+    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+
+    getTotalTurnOver(today, provider).then(total => {
+        modalEl.querySelector('.gameRulesToday').innerText = total.toFixed(2);
+    });
+    getYTotalTurnOver(yesterday, provider).then(total => {
+        modalEl.querySelector('.gameRulesYesterday').innerText = total.toFixed(2);
+    });
+    renderAffPct(provider);
+
+    const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+
+    // Strip prior handlers (persistent modal element) by cloning the buttons,
+    // then attach fresh handlers so species/name/provider closures are current.
+    const freshEnter  = modalEl.querySelector('.gameRulesEnter').cloneNode(true);
+    const freshBetlog = modalEl.querySelector('.gameRulesBetLog').cloneNode(true);
+    modalEl.querySelector('.gameRulesEnter').replaceWith(freshEnter);
+    modalEl.querySelector('.gameRulesBetLog').replaceWith(freshBetlog);
+
+    freshEnter.addEventListener('click', () => {
+        modal.hide();
+        gameLandingExpress(species, name, provider);
+    });
+
+    freshBetlog.addEventListener('click', () => {
+        modal.hide();
+        const ntitle = 'Bet Log - ' + name;
+        document.getElementById('scoreTitle').textContent = ntitle;
+        const scoreModal = new bootstrap.Modal(document.getElementById('modal-gamescore'));
+        scoreModal.show();
+        if (!$.fn.DataTable.isDataTable('#scoreTable')) {
+            if( '<?=$_SESSION['lang']?>' == 'my' ) {
+                langs = malay;
+            } else if( '<?=$_SESSION['lang']?>' == 'cn' ) {
+                langs = chinese;
+            } else if( '<?=$_SESSION['lang']?>' == 'zh' ) {
+                langs = tradchinese;
+            } else if( '<?=$_SESSION['lang']?>' == 'th' ) {
+                langs = thai;
+            } else if( '<?=$_SESSION['lang']?>' == 'vn' ) {
+                langs = viet;
+            } else {
+                langs = english;
+            }
+
+            airdatepicker();
+
+        <?php if( isset($_SESSION['logged_in']) ): ?>
+            var pageindex = 1, debug = false;
+            const paymentTable = $('#paymentTable').DataTable({
+                dom: "<'row'<'col-12 overflow-auto'tr>>" + "<'row mt-3'<'col-xl-6 col-lg-6 col-md-6 col-12'i><'col-xl-6 col-lg-6 col-md-6 col-12'p>>",
+                language: langs,
+                ordering: false,
+                deferRender: true,
+                serverSide: true,
+                processing: true,
+                destroy: true,
+                ajax: function(data, callback, settings) {
+                if (settings._iRecordsTotal == 0) {
+                    pageindex = 1;
+                } else {
+                    var pageindex = settings._iDisplayStart/settings._iDisplayLength + 1;
+                }
+
+                const fromdate = $('.filterForm [name=start]').val();
+                const todate = $('.filterForm [name=end]').val();
+                const gp = provider;
+                const text = '<?=$_SESSION['token'];?>';
+                const encoded = btoa(text);
+
+                var payload = JSON.stringify({
+                    pageindex: pageindex,
+                    rowperpage: data.length,
+                    start: fromdate,
+                    end: todate,
+                    parent: encoded,
+                    provider: gp
             });
+            $.ajax({
+                url: '/list/game/bet-log',
+                type: 'post',
+                data: payload,
+                contentType:"application/json; charset=utf-8",
+                dataType:"json",
+                success: function(res){
+                    if (res.code !== 1) {
+                        // alert(res.message);
+                        callback({
+                            recordsTotal: 0,
+                            recordsFiltered: 0,
+                            data: []
+                        });
 
-            getYTotalTurnOver(yesterday, provider).then(total => {
-                swal.getPopup().querySelector('.yesterdayTurnover').innerText = total.toFixed(2);
+                        return;
+                    } else {
+                        callback({
+                            recordsTotal: res.totalRecord,
+                            recordsFiltered: res.totalRecord,
+                            data: res.data
+                        });
+                    }
+                    return;
+                }
             });
         },
-        showDenyButton: true,
-        confirmButtonText: '<?=lang('Nav.entergame');?>',
-        denyButtonText: '<?=lang('Nav.cancel');?>',  
-        didRender: () => { 
-            const titleEl = Swal.getTitle();
-            const btn = document.createElement('button');  
-            btn.className = 'gamelog-btn';
-            const img = document.createElement('img');
-            img.src = '<?=base_url('assets/img/icon/bet_log.png');?>'; // change to your image path
-            img.alt = '<?=lang('Nav.betlog');?>';
+        footerCallback: function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+            var intVal = function(i){ return typeof i === 'string' ? i.replace(/[\$,]/g, '')*1 : typeof i === 'number' ? i : 0; };
 
-            btn.appendChild(img);
-            btn.onclick = () => 
-            {
-                swal.close();
-                const ntitle = 'Bet Log - ' + name;
-                document.getElementById('scoreTitle').textContent = ntitle;
-                const modal = new bootstrap.Modal(document.getElementById('modal-gamescore'));
-                modal.show();
-            if (!$.fn.DataTable.isDataTable('#scoreTable')) {
-                if( '<?=$_SESSION['lang']?>' == 'my' ) {
-                    langs = malay;
-                } else if( '<?=$_SESSION['lang']?>' == 'cn' ) {
-                    langs = chinese;
-                } else if( '<?=$_SESSION['lang']?>' == 'zh' ) {
-                    langs = tradchinese;
-                } else if( '<?=$_SESSION['lang']?>' == 'th' ) {
-                    langs = thai;
-                } else if( '<?=$_SESSION['lang']?>' == 'vn' ) {
-                    langs = viet;
-                } else {
-                    langs = english;
-                }
+            var totalOverPage = api.column(4).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate = parseFloat(totalOverPage).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum = parseFloat(truncate) < 0 ? '<span class="text-danger">'+truncate+'</span>' : truncate;
+            $(api.column(4).footer()).html(sum);
 
-                airdatepicker();
+            var totalOverPage2 = api.column(5).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate2 = parseFloat(totalOverPage2).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum2 = parseFloat(truncate2) < 0 ? '<span class="text-danger">'+truncate2+'</span>' : truncate2;
+            $(api.column(5).footer()).html(sum2);
 
-            <?php if( isset($_SESSION['logged_in']) ): ?>
-                var pageindex = 1, debug = false;
-                const paymentTable = $('#paymentTable').DataTable({
-                    dom: "<'row'<'col-12 overflow-auto'tr>>" + "<'row mt-3'<'col-xl-6 col-lg-6 col-md-6 col-12'i><'col-xl-6 col-lg-6 col-md-6 col-12'p>>",
-                    language: langs,
-                    ordering: false,
-                    deferRender: true,
-                    serverSide: true,
-                    processing: true,
-                    destroy: true,
-                    ajax: function(data, callback, settings) {
-                    if (settings._iRecordsTotal == 0) {
-                        pageindex = 1;
-                    } else {
-                        var pageindex = settings._iDisplayStart/settings._iDisplayLength + 1;
-                    }
-
-                    const fromdate = $('.filterForm [name=start]').val();
-                    const todate = $('.filterForm [name=end]').val();
-                    const gp = provider;
-                    const text = '<?=$_SESSION['token'];?>'; 
-                    const encoded = btoa(text);
-            
-                    var payload = JSON.stringify({
-                        pageindex: pageindex,
-                        rowperpage: data.length,
-                        start: fromdate,
-                        end: todate,
-                        parent: encoded,
-                        provider: gp
-                });
-                $.ajax({
-                    url: '/list/game/bet-log',
-                    type: 'post',
-                    data: payload,
-                    contentType:"application/json; charset=utf-8",
-                    dataType:"json",
-                    success: function(res){
-                        if (res.code !== 1) {
-                            // alert(res.message);
-                            callback({
-                                recordsTotal: 0,
-                                recordsFiltered: 0,
-                                data: []
-                            });
-
-                            return;
-                        } else {
-                            callback({
-                                recordsTotal: res.totalRecord,
-                                recordsFiltered: res.totalRecord,
-                                data: res.data
-                            });
-                        }
-                        return;
-                    }
-                });
+            var totalOverPage3 = api.column(3).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate3 = parseFloat(totalOverPage3).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum3 = parseFloat(truncate3) < 0 ? '<span class="text-danger">'+truncate3+'</span>' : truncate3;
+            $(api.column(3).footer()).html(sum3);
+        },
+        drawCallback: function(oSettings, json) {
+            $('#paymentTable tbody tr td.dataTables_empty').removeClass('text-end');
+            $('#paymentTable tbody tr').find('td').not('td:first-child,td:nth-child(2),td:nth-child(3),td:nth-child(4)').addClass('text-end');
+        },
+        aoColumnDefs: [{
+            aTargets: [3,4,5],
+            render: function ( data, type, row ) {
+                return parseFloat(data).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
             },
-            footerCallback: function ( row, data, start, end, display ) {
-                var api = this.api(), data;
-                var intVal = function(i){ return typeof i === 'string' ? i.replace(/[\$,]/g, '')*1 : typeof i === 'number' ? i : 0; };
-
-                // var grandtotal = api.column(17).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-                // var totalOverPage = api.column(4, {page: 'current'}).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-
-                var totalOverPage = api.column(4).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-                var truncate = parseFloat(totalOverPage).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
-                var sum = parseFloat(truncate) < 0 ? '<span class="text-danger">'+truncate+'</span>' : truncate;
-                $(api.column(4).footer()).html(sum);
-
-                var totalOverPage2 = api.column(5).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-                var truncate2 = parseFloat(totalOverPage2).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
-                var sum2 = parseFloat(truncate2) < 0 ? '<span class="text-danger">'+truncate2+'</span>' : truncate2;
-                $(api.column(5).footer()).html(sum2);
-
-                var totalOverPage3 = api.column(3).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-                var truncate3 = parseFloat(totalOverPage3).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
-                var sum3 = parseFloat(truncate3) < 0 ? '<span class="text-danger">'+truncate3+'</span>' : truncate3;
-                $(api.column(3).footer()).html(sum3);
-            },
-            drawCallback: function(oSettings, json) {
-                $('#paymentTable tbody tr td.dataTables_empty').removeClass('text-end');
-                $('#paymentTable tbody tr').find('td').not('td:first-child,td:nth-child(2),td:nth-child(3),td:nth-child(4)').addClass('text-end');
-            },
-            aoColumnDefs: [{
-                aTargets: [3,4,5],
-                render: function ( data, type, row ) {
-                    return parseFloat(data).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
-                },
-                fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                    parseFloat(sData) < 0 ? $(nTd).addClass('text-danger') : '';
-                }
-            }]
-        });
-        $('.filterForm').off().on('submit', function(e) {
-            e.preventDefault();
-
-            if (this.checkValidity() !== false) {
-                paymentTable.draw();
+            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                parseFloat(sData) < 0 ? $(nTd).addClass('text-danger') : '';
             }
-        });
-        <?php endif; ?>
-            }
-        }; 
-            const spacer = document.createElement('div');
-            spacer.style.visibility = 'hidden';
-            spacer.style.width = '36px'; // match your button width
+        }]
+    });
+    $('.filterForm').off().on('submit', function(e) {
+        e.preventDefault();
 
-            titleEl.style.display = 'flex';
-            titleEl.style.alignItems = 'center';
-            titleEl.style.justifyContent = 'space-between';
-            titleEl.style.width = '100%';
-            titleEl.style.gap = '0';
-
-            titleEl.insertBefore(spacer, titleEl.firstChild); // spacer on the left
-            titleEl.appendChild(btn);
-        }         
-    }).then( (result) => {
-        if( result.isConfirmed ) {
-            gameLandingExpress(species, name, provider);
-        } else if ( result.isDenied ) {
-            swal.close();
+        if (this.checkValidity() !== false) {
+            paymentTable.draw();
         }
     });
+    <?php endif; ?>
+        }
+    });
+
+    modal.show();
 }
 
-function appgameRules(species, name, provider) {  
-    swal.fire({
-        backdrop: true,
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        padding: '0.5rem',
-        title: name,
-        html: `
-        <div class="gameLogo d-flex justify-content-center"><img class="w-25" src='<?=$_ENV['gameProviderLogo'];?>/${provider}.png'></div>
-        <div class="betO fs-6 d-block mb-2 rounded shadow-sm"><?=lang('Label.curBalance');?>: <span class="userBalance">0.00</span></div>
-        <div class="betO fs-6 colorfff bglg d-block mb-2 rounded shadow-sm">
-            <?=lang('Label.tdyBO');?>: <span class="todayTurnover">0.00</span><br>
-            <?=lang('Label.ydyBO');?>: <span class="yesterdayTurnover">0.00</span>
-        </div>
-        <div class="betO d-block mb-2 rounded shadow-sm"><?=lang('Validation.casinogamerulestitle');?>: <span class="gRules"><?=lang('Validation.casinogamerulescontent');?></span></div>
-        `,
-        customClass: {
-	 		container: 'gamerules-content'
-	 	},
-        didOpen: () => {
-            // Grab balance from an existing element on the page and sync it
-            const balance = document.querySelector('.userBalance')?.innerText ?? '0.00';
-            swal.getPopup().querySelector('.userBalance').innerText = balance;
+function appgameRules(species, name, provider) {
+    const modalEl = document.getElementById('modal-gamerules');
 
-            const today = new Date().toISOString().split('T')[0];
-            const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+    modalEl.querySelector('#gameRulesTitle').textContent = name;
+    const logoEl = modalEl.querySelector('.gameRulesLogo');
+    logoEl.src = `<?=$_ENV['gameProviderLogo'];?>/${provider}.png`;
+    logoEl.alt = name;
+    modalEl.querySelector('.gameRulesBalance').innerText =
+        document.querySelector('.userBalance')?.innerText ?? '0.00';
+    modalEl.querySelector('.gameRulesToday').innerText = '0.00';
+    modalEl.querySelector('.gameRulesYesterday').innerText = '0.00';
+    modalEl.querySelector('.gRulesLabel').textContent = '<?=lang('Validation.slotgamerulestitle');?>';
+    modalEl.querySelector('.gRules').innerHTML = <?=json_encode(lang('Validation.slotgamerulescontent'));?>;
+    modalEl.querySelector('.affPct').style.display = '';
 
-            getTotalTurnOver(today, provider).then(total => {
-                swal.getPopup().querySelector('.todayTurnover').innerText = total.toFixed(2);
+    const today = new Date().toISOString().split('T')[0];
+    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+
+    getTotalTurnOver(today, provider).then(total => {
+        modalEl.querySelector('.gameRulesToday').innerText = total.toFixed(2);
+    });
+    getYTotalTurnOver(yesterday, provider).then(total => {
+        modalEl.querySelector('.gameRulesYesterday').innerText = total.toFixed(2);
+    });
+    renderAffPct(provider);
+
+    const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+
+    const freshEnter  = modalEl.querySelector('.gameRulesEnter').cloneNode(true);
+    const freshBetlog = modalEl.querySelector('.gameRulesBetLog').cloneNode(true);
+    modalEl.querySelector('.gameRulesEnter').replaceWith(freshEnter);
+    modalEl.querySelector('.gameRulesBetLog').replaceWith(freshBetlog);
+
+    freshEnter.addEventListener('click', () => {
+        modal.hide();
+        appLanding(species, name, provider);
+    });
+
+    freshBetlog.addEventListener('click', () => {
+        modal.hide();
+        const ntitle = 'Bet Log - ' + name;
+        document.getElementById('scoreTitle').textContent = ntitle;
+        const scoreModal = new bootstrap.Modal(document.getElementById('modal-gamescore'));
+        scoreModal.show();
+        if (!$.fn.DataTable.isDataTable('#scoreTable')) {
+            if( '<?=$_SESSION['lang']?>' == 'my' ) {
+                langs = malay;
+            } else if( '<?=$_SESSION['lang']?>' == 'cn' ) {
+                langs = chinese;
+            } else if( '<?=$_SESSION['lang']?>' == 'zh' ) {
+                langs = tradchinese;
+            } else if( '<?=$_SESSION['lang']?>' == 'th' ) {
+                langs = thai;
+            } else if( '<?=$_SESSION['lang']?>' == 'vn' ) {
+                langs = viet;
+            } else {
+                langs = english;
+            }
+
+            airdatepicker();
+
+        <?php if( isset($_SESSION['logged_in']) ): ?>
+            var pageindex = 1, debug = false;
+            const paymentTable = $('#paymentTable').DataTable({
+                dom: "<'row'<'col-12 overflow-auto'tr>>" + "<'row mt-3'<'col-xl-6 col-lg-6 col-md-6 col-12'i><'col-xl-6 col-lg-6 col-md-6 col-12'p>>",
+                language: langs,
+                ordering: false,
+                deferRender: true,
+                serverSide: true,
+                processing: true,
+                destroy: true,
+                ajax: function(data, callback, settings) {
+                if (settings._iRecordsTotal == 0) {
+                    pageindex = 1;
+                } else {
+                    var pageindex = settings._iDisplayStart/settings._iDisplayLength + 1;
+                }
+
+                const fromdate = $('.filterForm [name=start]').val();
+                const todate = $('.filterForm [name=end]').val();
+                const gp = provider;
+                const text = '<?=$_SESSION['token'];?>';
+                const encoded = btoa(text);
+
+                var payload = JSON.stringify({
+                    pageindex: pageindex,
+                    rowperpage: data.length,
+                    start: fromdate,
+                    end: todate,
+                    parent: encoded,
+                    provider: gp
             });
+            $.ajax({
+                url: '/list/game/bet-log',
+                type: 'post',
+                data: payload,
+                contentType:"application/json; charset=utf-8",
+                dataType:"json",
+                success: function(res){
+                    if (res.code !== 1) {
+                        callback({
+                            recordsTotal: 0,
+                            recordsFiltered: 0,
+                            data: []
+                        });
 
-            getYTotalTurnOver(yesterday, provider).then(total => {
-                swal.getPopup().querySelector('.yesterdayTurnover').innerText = total.toFixed(2);
+                        return;
+                    } else {
+                        callback({
+                            recordsTotal: res.totalRecord,
+                            recordsFiltered: res.totalRecord,
+                            data: res.data
+                        });
+                    }
+                    return;
+                }
             });
         },
-        showDenyButton: true,
-        confirmButtonText: '<?=lang('Nav.entergame');?>',
-        denyButtonText: '<?=lang('Nav.cancel');?>',  
-        didRender: () => { 
-            const titleEl = Swal.getTitle();
-            const btn = document.createElement('button');  
-            btn.className = 'gamelog-btn';
-            const img = document.createElement('img');
-            img.src = '<?=base_url('assets/img/icon/bet_log.png');?>'; // change to your image path
-            img.alt = '<?=lang('Nav.betlog');?>';
+        footerCallback: function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+            var intVal = function(i){ return typeof i === 'string' ? i.replace(/[\$,]/g, '')*1 : typeof i === 'number' ? i : 0; };
 
-            btn.appendChild(img);
-            btn.onclick = () => 
-            {
-                swal.close();
-                const ntitle = 'Bet Log - ' + name;
-                document.getElementById('scoreTitle').textContent = ntitle;
-                const modal = new bootstrap.Modal(document.getElementById('modal-gamescore'));
-                modal.show();
-            if (!$.fn.DataTable.isDataTable('#scoreTable')) {
-                if( '<?=$_SESSION['lang']?>' == 'my' ) {
-                    langs = malay;
-                } else if( '<?=$_SESSION['lang']?>' == 'cn' ) {
-                    langs = chinese;
-                } else if( '<?=$_SESSION['lang']?>' == 'zh' ) {
-                    langs = tradchinese;
-                } else if( '<?=$_SESSION['lang']?>' == 'th' ) {
-                    langs = thai;
-                } else if( '<?=$_SESSION['lang']?>' == 'vn' ) {
-                    langs = viet;
-                } else {
-                    langs = english;
-                }
+            var totalOverPage = api.column(4).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate = parseFloat(totalOverPage).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum = parseFloat(truncate) < 0 ? '<span class="text-danger">'+truncate+'</span>' : truncate;
+            $(api.column(4).footer()).html(sum);
 
-                airdatepicker();
+            var totalOverPage2 = api.column(5).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate2 = parseFloat(totalOverPage2).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum2 = parseFloat(truncate2) < 0 ? '<span class="text-danger">'+truncate2+'</span>' : truncate2;
+            $(api.column(5).footer()).html(sum2);
 
-            <?php if( isset($_SESSION['logged_in']) ): ?>
-                var pageindex = 1, debug = false;
-                const paymentTable = $('#paymentTable').DataTable({
-                    dom: "<'row'<'col-12 overflow-auto'tr>>" + "<'row mt-3'<'col-xl-6 col-lg-6 col-md-6 col-12'i><'col-xl-6 col-lg-6 col-md-6 col-12'p>>",
-                    language: langs,
-                    ordering: false,
-                    deferRender: true,
-                    serverSide: true,
-                    processing: true,
-                    destroy: true,
-                    ajax: function(data, callback, settings) {
-                    if (settings._iRecordsTotal == 0) {
-                        pageindex = 1;
-                    } else {
-                        var pageindex = settings._iDisplayStart/settings._iDisplayLength + 1;
-                    }
-
-                    const fromdate = $('.filterForm [name=start]').val();
-                    const todate = $('.filterForm [name=end]').val();
-                    const gp = provider;
-                    const text = '<?=$_SESSION['token'];?>'; 
-                    const encoded = btoa(text);
-            
-                    var payload = JSON.stringify({
-                        pageindex: pageindex,
-                        rowperpage: data.length,
-                        start: fromdate,
-                        end: todate,
-                        parent: encoded,
-                        provider: gp
-                });
-                $.ajax({
-                    url: '/list/game/bet-log',
-                    type: 'post',
-                    data: payload,
-                    contentType:"application/json; charset=utf-8",
-                    dataType:"json",
-                    success: function(res){
-                        if (res.code !== 1) {
-                            // alert(res.message);
-                            callback({
-                                recordsTotal: 0,
-                                recordsFiltered: 0,
-                                data: []
-                            });
-
-                            return;
-                        } else {
-                            callback({
-                                recordsTotal: res.totalRecord,
-                                recordsFiltered: res.totalRecord,
-                                data: res.data
-                            });
-                        }
-                        return;
-                    }
-                });
+            var totalOverPage3 = api.column(3).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
+            var truncate3 = parseFloat(totalOverPage3).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
+            var sum3 = parseFloat(truncate3) < 0 ? '<span class="text-danger">'+truncate3+'</span>' : truncate3;
+            $(api.column(3).footer()).html(sum3);
+        },
+        drawCallback: function(oSettings, json) {
+            $('#paymentTable tbody tr td.dataTables_empty').removeClass('text-end');
+            $('#paymentTable tbody tr').find('td').not('td:first-child,td:nth-child(2),td:nth-child(3),td:nth-child(4)').addClass('text-end');
+        },
+        aoColumnDefs: [{
+            aTargets: [3,4,5],
+            render: function ( data, type, row ) {
+                return parseFloat(data).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
             },
-            footerCallback: function ( row, data, start, end, display ) {
-                var api = this.api(), data;
-                var intVal = function(i){ return typeof i === 'string' ? i.replace(/[\$,]/g, '')*1 : typeof i === 'number' ? i : 0; };
-
-                // var grandtotal = api.column(17).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-                // var totalOverPage = api.column(4, {page: 'current'}).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-
-                var totalOverPage = api.column(4).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-                var truncate = parseFloat(totalOverPage).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
-                var sum = parseFloat(truncate) < 0 ? '<span class="text-danger">'+truncate+'</span>' : truncate;
-                $(api.column(4).footer()).html(sum);
-
-                var totalOverPage2 = api.column(5).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-                var truncate2 = parseFloat(totalOverPage2).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
-                var sum2 = parseFloat(truncate2) < 0 ? '<span class="text-danger">'+truncate2+'</span>' : truncate2;
-                $(api.column(5).footer()).html(sum2);
-
-                var totalOverPage3 = api.column(3).data().reduce(function(a, b){ return intVal(a) + intVal(b); }, 0);
-                var truncate3 = parseFloat(totalOverPage3).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
-                var sum3 = parseFloat(truncate3) < 0 ? '<span class="text-danger">'+truncate3+'</span>' : truncate3;
-                $(api.column(3).footer()).html(sum3);
-            },
-            drawCallback: function(oSettings, json) {
-                $('#paymentTable tbody tr td.dataTables_empty').removeClass('text-end');
-                $('#paymentTable tbody tr').find('td').not('td:first-child,td:nth-child(2),td:nth-child(3),td:nth-child(4)').addClass('text-end');
-            },
-            aoColumnDefs: [{
-                aTargets: [3,4,5],
-                render: function ( data, type, row ) {
-                    return parseFloat(data).toFixed(5).replace(/(\.\d{2})\d*/, "$1").replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
-                },
-                fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                    parseFloat(sData) < 0 ? $(nTd).addClass('text-danger') : '';
-                }
-            }]
-        });
-        $('.filterForm').off().on('submit', function(e) {
-            e.preventDefault();
-
-            if (this.checkValidity() !== false) {
-                paymentTable.draw();
+            fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                parseFloat(sData) < 0 ? $(nTd).addClass('text-danger') : '';
             }
-        });
-        <?php endif; ?>
-            }
-        }; 
-            const spacer = document.createElement('div');
-            spacer.style.visibility = 'hidden';
-            spacer.style.width = '36px'; // match your button width
+        }]
+    });
+    $('.filterForm').off().on('submit', function(e) {
+        e.preventDefault();
 
-            titleEl.style.display = 'flex';
-            titleEl.style.alignItems = 'center';
-            titleEl.style.justifyContent = 'space-between';
-            titleEl.style.width = '100%';
-            titleEl.style.gap = '0';
-
-            titleEl.insertBefore(spacer, titleEl.firstChild); // spacer on the left
-            titleEl.appendChild(btn);
-        }         
-    }).then( (result) => {
-        if( result.isConfirmed ) {
-            appLanding(species, name, provider);
-        } else if ( result.isDenied ) {
-            swal.close();
+        if (this.checkValidity() !== false) {
+            paymentTable.draw();
         }
     });
+    <?php endif; ?>
+        }
+    });
+
+    modal.show();
 }
 
 function appUrlgameRules(species, name, provider) {  
@@ -4632,5 +4552,47 @@ function getYTotalTurnOver(gDate, gpCode){
             reject("Request failed");
         });
     });
+}
+
+window.affMap = {};
+const GAME_TYPE_LABELS = {
+    0: 'NONE',
+    1: '<?=lang('Label.slot');?>',
+    2: '<?=lang('Label.casino');?>',
+    3: '<?=lang('Label.sport');?>',
+    4: '<?=lang('Label.keno');?>',
+    5: '<?=lang('Label.lottery');?>',
+    6: '<?=lang('Nav.fishing');?>',
+    7: '<?=lang('Label.other');?>',
+    8: '<?=lang('Label.esport');?>'
+};
+
+function getAffiliateSettings() {
+    return $.post('/list/affiliate/settings', function(data) {
+        const res = typeof data === 'string' ? JSON.parse(data) : data;
+        if (res.code === 1) {
+            window.affMap = res.map || {};
+        }
+        console.log('affiliateSettingsList →', res);
+    })
+    .fail(function(xhr) {
+        console.error('affiliateSettingsList failed', xhr.status, xhr.responseText);
+    });
+}
+
+function renderAffPct(provider) {
+    const $body = $('.affPct tbody').empty();
+    const pcts = window.affMap[provider];
+    if (!pcts) return;
+
+    Object.keys(pcts).forEach(function(gt) {
+        const pct = pcts[gt];
+        const label = GAME_TYPE_LABELS[gt] || ('TYPE ' + gt);
+        $body.append('<tr><td>' + label + '</td><td class="text-end">' + pct + '%</td></tr>');
+    });
+}
+
+if (typeof logged !== 'undefined' && logged) {
+    getAffiliateSettings();
 }
 </script>

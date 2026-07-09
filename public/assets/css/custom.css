@@ -1744,6 +1744,14 @@ Game Rules
     -webkit-overflow-scrolling: auto;
 }
 
+#modal-gamerules .modal-content {
+    background-color: #ebf8ff;
+}
+
+#modal-gamerules .gRules {
+    line-height: 1.2;
+}
+
 /*
 Bank account
 */
@@ -2129,4 +2137,8 @@ Bank account
     color: #fff !important;
     border-color: #01DC66 !important;
     background: #01DC66 !important;
+}
+
+.fs-p8{
+    font-size: 0.8rem !important;
 }

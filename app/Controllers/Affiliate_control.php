@@ -89,4 +89,43 @@ class Affiliate_control extends BaseController
             echo json_encode(['no data']);
         endif;
     }
+
+    public function affiliateSettingsList()
+    {
+        if( !session()->get('logged_in') ): return false; endif;
+
+        $res = $this->affiliate_model->selectAffiliateSettings([
+            'userid' => $_SESSION['token']
+        ]);
+
+        if( $res['code'] != 1 || $res['data'] == [] ):
+            echo json_encode(['code'=>0, 'providers'=>[], 'map'=>(object)[]]);
+            return;
+        endif;
+
+        $map = [];
+        $providers = [];
+
+        foreach( $res['data'] as $lvl ):
+            if( (int)$lvl['level'] !== 0 ): continue; endif;
+
+            foreach( $lvl['value'] as $gp ):
+                $gpCode = $gp['gameProviderCode'];
+                $providers[$gpCode] = true;
+
+                foreach( $gp['value'] as $type ):
+                    $gtKey = (string)$type['gameType'];
+                    $aff = $type['pt'] != [] ? end($type['pt'])['percentage'] : 0;
+                    $map[$gpCode][$gtKey] = $aff;
+                endforeach;
+            endforeach;
+            break;
+        endforeach;
+
+        echo json_encode([
+            'code' => 1,
+            'providers' => array_keys($providers),
+            'map' => $map
+        ]);
+    }
 }

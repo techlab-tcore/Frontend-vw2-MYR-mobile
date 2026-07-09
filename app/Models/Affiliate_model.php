@@ -8,6 +8,7 @@ class Affiliate_model extends Model
     protected $affHistory = 'http://10.148.0.10:8961/affiliate/getaffiliatehistory';
 
     protected $affDownlineList = 'http://10.148.0.10:8961/user/getaffiliatedownlinelist';
+    protected $affSettingsList = 'http://10.148.0.10:8961/affiliate/getaffiliatesettings';
 
     public function __construct()
 	{
@@ -64,6 +65,28 @@ class Affiliate_model extends Model
 		$payload = json_encode($data);
         
         $ch = curl_init($this->affList);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+        curl_setopt($ch, CURLINFO_HEADER_OUT, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($payload))
+        );
+        $response = curl_exec($ch);
+        $err = curl_error($ch);
+        curl_close($ch);
+
+        return json_decode($response, true);
+    }
+
+    public function selectAffiliateSettings($where)
+	{
+		$data = array_merge(['lang'=>$_SESSION['lang'], 'sessionid'=>$_SESSION['session'], 'agentid'=>$_ENV['host']], $where);
+		$payload = json_encode($data);
+        
+        $ch = curl_init($this->affSettingsList);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
         curl_setopt($ch, CURLOPT_POST, 1);
