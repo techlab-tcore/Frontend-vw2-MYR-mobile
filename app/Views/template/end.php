@@ -632,7 +632,7 @@
             <div class="modal-body lnbg">
                 <section class="card-body p-xl-3 p-lg-3 p-md-3 p-3">
                     <div class="d-flex justify-content-center">
-                        <img class="w-50" src="https://g-tcdl.com/gamecards_app/gamecard_vworld/logo/GDSV.png">
+                        <img class="w-50" src="https://g-tcdl.com/gamecards_app/gamecard_vworld/logo/GDS.png">
                     </div>
                     <div class="d-flex justify-content-center">
                         <img class="w-100" src="<?=base_url('assets/img/v2lno.png');?>">
@@ -655,7 +655,7 @@
                     </div>
                     <div class="d-flex justify-content-center mt-3 gap-2">
                         <!-- Claim Button -->
-                        <?=form_open('',['class'=>'form-validation customForm','novalidate'=>'novalidate'],['provider'=>'GDSV','gname'=>'GrandDragon2','species'=>'5']);?>
+                        <?=form_open('',['class'=>'form-validation customForm','novalidate'=>'novalidate'],['provider'=>'GDS','gname'=>'GrandDragon','species'=>'5']);?>
                             <div>
                                 <button type="submit" class="btn btn-lucky" id="luckyGenBtn"><?=lang('Nav.claimnow');?></button>
                             </div>
