@@ -84,7 +84,9 @@
                                 <label class="col-xl-4 col-lg-4 col-md-4 col-12 col-form-label text-dark position-relative required2"><?=lang('Input.tacoption');?></label>
                                 <div class="col-xl-8 col-lg-8 col-md-8 col-12">
                                     <select class="form-select" id="tacmethod" name="tacmethod" required>    
+                                        <?php if( $_SESSION['regioncode'] != 'AUD' ): ?>
                                         <option value="sms">SMS</option>
+                                        <?php endif; ?>
                                         <option value="whatsapp">WhatsApp</option>
                                     </select>
                                 </div>

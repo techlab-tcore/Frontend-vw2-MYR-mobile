@@ -114,6 +114,7 @@ $routes->post('payment/deposit/add', 'Balance_control::bankTransfer', ['filter' 
 $routes->post('payment/payment-gateway/deposit/add', 'Balance_control::expressDeposit', ['filter' => 'auth']);
 $routes->post('payment/withdrawal/add', 'Balance_control::withdrawal', ['filter' => 'auth']);
 $routes->post('payment/promotion-claim', 'Balance_control::claimPromotion', ['filter' => 'auth']);
+$routes->post('payment/getPGUrl', 'Balance_control::pgUrl', ['filter' => 'auth']);
 $routes->post('transaction/permission', 'Balance_control::approvalPermission', ['filter' => 'auth']);
 
 $routes->resource('Bankcard_control');

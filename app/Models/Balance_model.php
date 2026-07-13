@@ -7,6 +7,7 @@ class Balance_model extends Model
     protected $transactionHistory = 'http://10.148.0.10:8961/payment/getpaymenthistory2';
     protected $transactionHistory3 = 'http://10.148.0.10:8961/payment/getpaymenthistory3';
     protected $addPayment = 'http://10.148.0.10:8961/payment/transfer';
+    protected $getpgLink = 'http://10.148.0.10:8961/payment/pgtransfer';
     protected $addBankSlip = 'http://10.148.0.10:8961/payment/uploadslip';
 
     protected $userTransfer = 'http://10.148.0.10:8961/playertransfer/transferbyloginid';
@@ -69,6 +70,28 @@ class Balance_model extends Model
 		$payload = json_encode($data);
         
         $ch = curl_init($this->addPayment);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+        curl_setopt($ch, CURLINFO_HEADER_OUT, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($payload))
+        );
+        $response = curl_exec($ch);
+        $err = curl_error($ch);
+        curl_close($ch);
+
+        return json_decode($response, true);
+    }
+
+    public function getPGurl($where)
+	{
+		$data = array_merge(['lang'=>$_SESSION['lang'], 'sessionid'=>$_SESSION['session'], 'agentid'=>$_ENV['admin']], $where);
+		$payload = json_encode($data);
+        
+        $ch = curl_init($this->getpgLink);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
         curl_setopt($ch, CURLOPT_POST, 1);

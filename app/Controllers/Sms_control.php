@@ -54,6 +54,10 @@ class Sms_control extends BaseController
     {
         if($this->request->getpost('params')['regioncode'] == 'MYR') {
             $regionCode = '60';
+        } elseif($this->request->getpost('params')['regioncode'] == 'SGD') {
+            $regionCode = '65';
+        } elseif($this->request->getpost('params')['regioncode'] == 'AUD') {
+            $regionCode = '61';
         } else {
             $regionCode = '65';
         }

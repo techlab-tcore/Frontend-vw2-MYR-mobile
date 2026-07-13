@@ -112,17 +112,42 @@ document.onkeydown = function(e) {
                         <select class="form-select regi-mobile-code" name="regionCode" required>
                             <option value="MYR" selected><?=lang('Label.malaysia');?></option>
                             <option value="SGD"><?=lang('Label.singapore');?></option>
+                            <option value="AUS"><?=lang('Label.australia');?></option>
                         </select>
                         <input type="text" pattern="^[0-9]{8,11}$" class="form-control rounded-end" id="regisUsername" name="mobile" placeholder="<?=lang('Input.mobileno');?>" required>
                         <small class="w-100 form-text"><?=lang('Validation.mobile');?></small>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text bg-white"><i class="bx bx-mobile"></i></span>
-                        <select class="form-select" id="tacmethod" name="tacmethod" required>   
-                            <option value="sms">SMS</option>
+                        <select class="form-select" id="tacmethod" name="tacmethod" required>
+                            <option value="sms" id="tacmethodSmsOption">SMS</option>
                             <option value="whatsapp">WhatsApp</option>
                         </select>
                     </div>
+                    <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const regionSelect = document.querySelector('.forgotPassForm select[name="regionCode"]');
+                        const tacMethodSelect = document.getElementById('tacmethod');
+                        const smsOption = document.getElementById('tacmethodSmsOption');
+
+                        function toggleSmsOption() {
+                            if (regionSelect.value === 'AUS') {
+                                if (tacMethodSelect.value === 'sms') {
+                                    tacMethodSelect.value = 'whatsapp';
+                                }
+                                smsOption.hidden = true;
+                                smsOption.disabled = true;
+                            } else {
+                                smsOption.hidden = false;
+                                smsOption.disabled = false;
+                                tacMethodSelect.value = 'sms';
+                            }
+                        }
+
+                        regionSelect.addEventListener('change', toggleSmsOption);
+                        toggleSmsOption();
+                    });
+                    </script>
                     <div class="input-group mb-3">
                         <span class="input-group-text bg-white"><i class="bx bx-barcode-reader"></i></span>
                         <input type="text" class="form-control" id="floatingTAC" name="veritac" placeholder="<?=lang('Input.smstac');?>" required>

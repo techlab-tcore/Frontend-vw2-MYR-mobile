@@ -148,6 +148,7 @@ return [
 
     'malaysia' => 'Malaysia(+6)',
     'singapore' => 'Singapura(+65)',
+    'australia' => 'Australia(+61)',
 
     'avvideotitle' => 'AV Video',
 
