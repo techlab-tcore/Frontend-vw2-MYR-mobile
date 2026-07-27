@@ -104,4 +104,37 @@ class Sms_model extends Model
 
         return json_decode($response, true);
     }
+
+    public function insertGlobalSendSMS($where)
+    {
+        $md5Key = "JDZRDRNTVDJJURKPDWQPWVVCAAGSEUZH";
+        $orgCode = "bCbwlikT";
+        $content = $where['msg'];
+        ;
+        $url = "https://httpapi.abosend.com/v2/api/sendSMS";
+        $rand = "888888";
+        $phoneNumber = $where['to'];
+
+        $param = [
+            "orgCode" => $orgCode,
+            "mobiles" => $phoneNumber,
+            "content" => $content,
+            "rand" => $rand
+        ];
+
+
+        $sign = strtoupper(md5($orgCode . $content . $rand . $md5Key));//生成 MD5 签名
+        $param["sign"] = $sign;
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($param));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        return json_decode($response, true);
+    }
 }

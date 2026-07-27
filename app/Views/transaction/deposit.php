@@ -544,132 +544,132 @@ function submitPGatetway(params)
         params
     }, function(data, status) {
         const obj = JSON.parse(data);
+        if( obj.code==1 ) {
+            if ( params['bankid'] == btoa('<?=$_ENV['payessence'];?>') || params['bankid'] == btoa('<?=$_ENV['peEwallet'];?>') ) {
+                var pgParams = {};
+                pgParams['paymentid'] = obj.paymentId;
 
-        if (obj.code != 1) {
-            swal.fire("Error!", obj.message + " (Code: " + obj.code + ")", "error").then(() => {
-                $('.pgatewayForm [type=submit]').prop('disabled', false);
-            });
-            return;
-        }
-
-        $('form').removeClass('was-validated');
-        $('form').trigger('reset');
-
-        if (params['bankid'] == btoa('<?=$_ENV['dgpay'];?>')) {
-            var pgParams = {};
-            pgParams['paymentid'] = obj.paymentId;
-
-            $.post('/payment/getPGUrl', {
-                params: pgParams
-            }, function(data2, status2) {
-                const obj2 = JSON.parse(data2);
-
-                if (obj2.code != 1) {
-                    swal.fire("Error!", obj2.message + " (Code: " + obj2.code + ")", "error").then(() => {
+                $.post('/payment/getPGUrl', {
+                    params: pgParams
+                }, function(data2, status2) {
+                    const obj2 = JSON.parse(data2);
+                    if( obj2.code==1 ) {
+                        if( obj.paymentGatewayParams.channelcode!='USDT' && params['bankid']!=btoa('<?=$_ENV['payessence'];?>') && params['bankid']!=btoa('<?=$_ENV['peEwallet'];?>') && params['bankid']!=btoa('<?=$_ENV['bigpay'];?>') )
+                        {
+                            $('.modal-depositFrame').modal('show');
+                            var node = document.createElement('iframe');
+                            node.setAttribute('allowfullscreen','allowfullscreen');
+                            node.setAttribute('frameborder','0');
+                            node.setAttribute('loading','lazy');
+                            node.setAttribute('width','100%');
+                            node.setAttribute('height','100%');
+                            node.src = obj2.url;
+                            node.seamless;
+                            document.getElementById("depositScreen").appendChild(node);
+                        } else {
+                            byPassBlockPopUp("https://vw2.myv288.com" + obj2.url);
+                        }
+                    } else {
+                        swal.fire("Error!", obj2.message + " (Code: "+obj2.code+")", "error").then(() => {
+                            $('.pgatewayForm [type=submit]').prop('disabled', false);
+                        });
+                    }
+                })
+                .done(function() {
+                    swal.close();
+                    $('.pgatewayForm [type=submit]').prop('disabled', false);
+                })
+                .fail(function() {
+                    swal.fire("Error!", "Oopss! There are something wrong. Please try again later.", "error").then(()=>{
                         $('.pgatewayForm [type=submit]').prop('disabled', false);
                     });
-                    return;
-                }
-
-                const useIframe = obj.paymentGatewayParams.channelcode != 'USDT'
-                    && params['bankid'] != btoa('<?=$_ENV['payessence'];?>')
-                    && params['bankid'] != btoa('<?=$_ENV['peEwallet'];?>')
-                    && params['bankid'] != btoa('<?=$_ENV['bigpay'];?>');
-
-                if (useIframe) {
-                    $('.modal-depositFrame').modal('show');
-                    var node = document.createElement('iframe');
-                    node.setAttribute('allowfullscreen', 'allowfullscreen');
-                    node.setAttribute('frameborder', '0');
-                    node.setAttribute('loading', 'lazy');
-                    node.setAttribute('width', '100%');
-                    node.setAttribute('height', '100%');
-                    node.src = obj2.url;
-                    node.seamless;
-                    document.getElementById("depositScreen").appendChild(node);
-                } else {
-                    byPassBlockPopUp(obj2.url);
-                }
-            })
-            .done(function() {
-                swal.close();
-                $('.pgatewayForm [type=submit]').prop('disabled', false);
-            })
-            .fail(function() {
-                swal.fire("Error!", "Oopss! There are something wrong. Please try again later.", "error").then(() => {
-                    $('.pgatewayForm [type=submit]').prop('disabled', false);
                 });
+                return false;
+            }
+
+            $('form').removeClass('was-validated');
+            $('form').trigger('reset');
+
+            var launchPG = new FormData();
+            launchPG.append('type', obj.paymentGatewayParams.type);
+            launchPG.append('userid', obj.paymentGatewayParams.userid);
+            launchPG.append('merchantcode', obj.paymentGatewayParams.merchantcode);
+            launchPG.append('apikey', obj.paymentGatewayParams.apikey);
+            launchPG.append('payurl', obj.paymentGatewayParams.payurl);
+            launchPG.append('successurl', obj.paymentGatewayParams.successurl);
+            launchPG.append('failureurl', obj.paymentGatewayParams.failureurl);
+            launchPG.append('callbackurl', obj.paymentGatewayParams.callbackurl);
+            launchPG.append('amount', obj.paymentGatewayParams.amount);
+            launchPG.append('systemamount', obj.paymentGatewayParams.systemamount);
+            launchPG.append('currency', obj.paymentGatewayParams.currency);
+            launchPG.append('item_id', obj.paymentGatewayParams.item_id);
+            launchPG.append('item_description', obj.paymentGatewayParams.item_description);
+            launchPG.append('name', obj.paymentGatewayParams.name);
+            launchPG.append('email', obj.paymentGatewayParams.email);
+            launchPG.append('telephone', obj.paymentGatewayParams.telephone);
+            launchPG.append('accountid', obj.paymentGatewayParams.accountid);
+            launchPG.append('bankcode', obj.paymentGatewayParams.bankcode);
+            launchPG.append('channelcode', obj.paymentGatewayParams.channelcode);
+            launchPG.append('channelremark', obj.paymentGatewayParams.channelremark);
+            launchPG.append('charges', obj.paymentGatewayParams.charges);
+            launchPG.append('ip', obj.paymentGatewayParams.ip);
+            launchPG.append('remark', obj.paymentGatewayParams.remark);
+
+            var myJSON = JSON.stringify(obj.paymentGatewayParams);
+            const ss = btoa(myJSON);
+
+            $.ajax({
+                type: 'GET',
+                url: obj.paymentGatewayUrl + '?verify=' + ss, 
+                success: function (data) {
+                    // var win = window.open(data, '_blank');
+                    // win.document.write(data);
+                    // win.document.close();
+
+                    if( obj.paymentGatewayParams.channelcode!='USDT' && params['bankid']!=btoa('<?=$_ENV['payessence'];?>') && params['bankid']!=btoa('<?=$_ENV['peEwallet'];?>') && params['bankid']!=btoa('<?=$_ENV['bigpay'];?>') && params['bankid']!=btoa('<?=$_ENV['epicpayFPX'];?>') && params['bankid']!=btoa('<?=$_ENV['tgpay'];?>') && params['bankid']!=btoa('<?=$_ENV['tgpayEwallet'];?>'))
+                    {
+                        $('.modal-depositFrame').modal('show');
+                        var node = document.createElement('iframe');
+                        node.setAttribute('allowfullscreen','allowfullscreen');
+                        node.setAttribute('frameborder','0');
+                        node.setAttribute('loading','lazy');
+                        node.setAttribute('width','100%');
+                        node.setAttribute('height','100%');
+                        node.src = obj.paymentGatewayUrl + '?verify=' + ss;
+                        node.seamless;
+                        document.getElementById("depositScreen").appendChild(node);
+                    } else {
+                        // var win = window.open(obj.paymentGatewayUrl + '?verify=' + ss, '_blank');
+                        // win.document.write(data);
+                        // win.document.close();
+
+                        byPassBlockPopUp(obj.paymentGatewayUrl + '?verify=' + ss);
+                    }
+                },
+                error: function(xhr, type, exception){},
+                beforeSend: function() {}
+            }).done(function() {
+                swal.close();
             });
+            // e.stopImmediatePropagation();
             return false;
+
+
+            // swal.fire("Success!", obj.message, "success").then(() => {
+            //     $('form').removeClass('was-validated');
+            //     $('form').trigger('reset');
+            // });
+        } else {
+            swal.fire("Error!", obj.message + " (Code: "+obj.code+")", "error").then(() => {
+                $('.pgatewayForm [type=submit]').prop('disabled', false);
+            });
         }
-
-        var launchPG = new FormData();
-        launchPG.append('type', obj.paymentGatewayParams.type);
-        launchPG.append('userid', obj.paymentGatewayParams.userid);
-        launchPG.append('merchantcode', obj.paymentGatewayParams.merchantcode);
-        launchPG.append('apikey', obj.paymentGatewayParams.apikey);
-        launchPG.append('payurl', obj.paymentGatewayParams.payurl);
-        launchPG.append('successurl', obj.paymentGatewayParams.successurl);
-        launchPG.append('failureurl', obj.paymentGatewayParams.failureurl);
-        launchPG.append('callbackurl', obj.paymentGatewayParams.callbackurl);
-        launchPG.append('amount', obj.paymentGatewayParams.amount);
-        launchPG.append('systemamount', obj.paymentGatewayParams.systemamount);
-        launchPG.append('currency', obj.paymentGatewayParams.currency);
-        launchPG.append('item_id', obj.paymentGatewayParams.item_id);
-        launchPG.append('item_description', obj.paymentGatewayParams.item_description);
-        launchPG.append('name', obj.paymentGatewayParams.name);
-        launchPG.append('email', obj.paymentGatewayParams.email);
-        launchPG.append('telephone', obj.paymentGatewayParams.telephone);
-        launchPG.append('accountid', obj.paymentGatewayParams.accountid);
-        launchPG.append('bankcode', obj.paymentGatewayParams.bankcode);
-        launchPG.append('channelcode', obj.paymentGatewayParams.channelcode);
-        launchPG.append('channelremark', obj.paymentGatewayParams.channelremark);
-        launchPG.append('charges', obj.paymentGatewayParams.charges);
-        launchPG.append('ip', obj.paymentGatewayParams.ip);
-        launchPG.append('remark', obj.paymentGatewayParams.remark);
-
-        var myJSON = JSON.stringify(obj.paymentGatewayParams);
-        const ss = btoa(myJSON);
-        const gatewayUrl = obj.paymentGatewayUrl + '?verify=' + ss;
-
-        $.ajax({
-            type: 'GET',
-            url: gatewayUrl,
-            success: function(data) {
-                const useIframe = obj.paymentGatewayParams.channelcode != 'USDT'
-                    && params['bankid'] != btoa('<?=$_ENV['payessence'];?>')
-                    && params['bankid'] != btoa('<?=$_ENV['peEwallet'];?>')
-                    && params['bankid'] != btoa('<?=$_ENV['bigpay'];?>')
-                    && params['bankid'] != btoa('<?=$_ENV['epicpayFPX'];?>');
-
-                if (useIframe) {
-                    $('.modal-depositFrame').modal('show');
-                    var node = document.createElement('iframe');
-                    node.setAttribute('allowfullscreen', 'allowfullscreen');
-                    node.setAttribute('frameborder', '0');
-                    node.setAttribute('loading', 'lazy');
-                    node.setAttribute('width', '100%');
-                    node.setAttribute('height', '100%');
-                    node.src = gatewayUrl;
-                    node.seamless;
-                    document.getElementById("depositScreen").appendChild(node);
-                } else {
-                    byPassBlockPopUp(gatewayUrl);
-                }
-            },
-            error: function(xhr, type, exception) {},
-            beforeSend: function() {}
-        }).done(function() {
-            swal.close();
-        });
-
-        return false;
     })
     .done(function() {
         $('.pgatewayForm [type=submit]').prop('disabled', false);
     })
     .fail(function() {
-        swal.fire("Error!", "Oopss! There are something wrong. Please try again later.", "error").then(() => {
+        swal.fire("Error!", "Oopss! There are something wrong. Please try again later.", "error").then(()=>{
             $('.pgatewayForm [type=submit]').prop('disabled', false);
         });
     });
@@ -755,18 +755,25 @@ function getPgChannel(element,pgid,merchant,currency)
                 channel.forEach(function(item, index) {
                     if( item.isDeposit == 1 )
                     {
-                        if( merchant ==	'M1563323'){
-                            var node = document.createElement("input");
-                            var nodeLabel = document.createElement("label");
-                            var img = document.createElement("img");
-                            img.src = getBankImg('DUIN');
-                            var textNodeLabel = document.createTextNode('DUITNOW');
-                        }
                         var node = document.createElement("input");
                         var nodeLabel = document.createElement("label");
                         var img = document.createElement("img");
-                        img.src = getBankImg(item.code);
-                        var textNodeLabel = document.createTextNode(item.channelName.EN);
+                        var textNodeLabel;
+
+                        switch (merchant) {
+                            case 'M1398123':
+                                img.src = getBankImg('FPX');
+                                textNodeLabel = document.createTextNode('FPX');
+                                break;
+                            case 'M1563323':
+                                img.src = getBankImg('DUIN');
+                                textNodeLabel = document.createTextNode('DUITNOW');
+                                break;
+                            default:
+                                img.src = getBankImg(item.code);
+                                textNodeLabel = document.createTextNode(item.channelName.EN);
+                                break;
+                        }
 
                         node.setAttribute("type", 'radio');
                         node.setAttribute("name", 'channel');
@@ -877,6 +884,9 @@ async function getRadioPGatewayList(element)
             {
                     //DGPAY filter
                     pg.forEach(function(item, index) {
+                        <?php if(($_SESSION['token'] ?? '') != '69dcc3df092088aa094f6b8d'): ?>
+                        if (item.bank == '6a510c4bfa21daeb727d1d4e') { return; }
+                        <?php endif; ?>
                         let oderNo = index + 1;
                     // <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
                     // <label class="btn btn-outline-primary" for="btnradio1">Radio 1</label>
@@ -888,7 +898,7 @@ async function getRadioPGatewayList(element)
                         if(item.name.slice(-3) == "TNG"){
                             img.src = getBankImg('TNGC');
                         }else if(item.name.slice(-3) == "DUI"){
-                            img.src = getBankImg('DUI');
+                            img.src = getBankImg('CDUI');
                         }else{
                             img.src = getBankImg('PYG');
                         }

@@ -159,4 +159,40 @@ class Sms_control extends BaseController
             $session->set('taccode', $veritac);
         endif;
     }
+
+    public function insertSMSGlobal()
+    {
+        if($this->request->getpost('params')['regioncode'] == 'MYR') {
+            $regionCode = '60';
+        } elseif($this->request->getpost('params')['regioncode'] == 'SGD') {
+            $regionCode = '65';
+        } elseif($this->request->getpost('params')['regioncode'] == 'AUD') {
+            $regionCode = '61';
+        } else {
+            $regionCode = '65';
+        }
+
+        $length_of_string = 6;
+        $str_result = '0123456789';
+        $veritac = substr(str_shuffle($str_result), 0, $length_of_string);
+
+        $msg = '*'.$veritac.'*';
+        $msg .= ' is your verification code. For your security, do not share this code.';
+
+        $contactno = $regionCode . $this->request->getpost('params')['contact'];
+        $payload = [
+            'to' => $contactno,
+            'msg' => $msg
+        ];
+
+        $res = $this->sms_model->insertGlobalSendSMS($payload);
+
+        if ($res['code'] == 200):
+            $session = session();
+            // $session->set('taccode', $this->request->getpost('params')['veritac']);
+            $session->set('taccode', $veritac);
+        endif;
+
+        echo json_encode($res);
+    }
 }

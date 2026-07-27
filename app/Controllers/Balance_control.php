@@ -148,6 +148,20 @@ class Balance_control extends BaseController
         echo json_encode($res);
     }
 
+    public function pgUrl()
+    {
+        if( !session()->get('logged_in') ): return false; endif;
+
+        $payload = [
+            'userid' => $_SESSION['token'],
+            'paymentid' => $this->request->getPost('params')['paymentid']
+        ];
+
+        $res = $this->balance_model->getPGurl($payload);
+        echo json_encode($res);
+ 
+    }
+
     public function bankTransfer()
     {
         if( !session()->get('logged_in') ): return false; endif;
@@ -184,20 +198,6 @@ class Balance_control extends BaseController
             'slipname' => $this->request->getPost('params')['slip']
         ], $res);
         echo json_encode($merge);
-    }
-
-    public function pgUrl()
-    {
-        if( !session()->get('logged_in') ): return false; endif;
-
-        $payload = [
-            'userid' => $_SESSION['token'],
-            'paymentid' => $this->request->getPost('params')['paymentid']
-        ];
-
-        $res = $this->balance_model->getPGurl($payload);
-        echo json_encode($res);
- 
     }
 
     public function triggerCreditTransfer()
