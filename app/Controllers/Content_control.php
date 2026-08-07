@@ -73,7 +73,7 @@ class Content_control extends BaseController
         $newscard .= '</a>';
         $newscard .= '</li>';
 
-         //Lucky Number
+        //Lucky Number
         $newscard .= '<li class="col-xl-2 col-lg-2 col-md-3 col-6">';
         if( $data['session']==true ):
             $newscard .= '<a class="d-block text-decoration-none" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target=".modal-luckynum">';
