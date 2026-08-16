@@ -172,7 +172,9 @@ return [
     'chgAcc' => 'เปลี่ยนบัญชี',
 
     'turnoverwithdrawal' => 'ยอดเทิร์นโอเวอร์สำหรับการถอน',
+    'winoverwithdrawal' => 'Winover for Withdrawal',
     'curBalance' => 'รวมยอดคงเหลือ',
+    'pendingrebate' => 'จำนวนเงินที่รอดำเนินการ',
     'tdyBO' => 'เดิมพันวันนี้',
     'ydyBO' => 'เดิมพันเมื่อวาน',
 

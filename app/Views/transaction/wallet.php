@@ -35,6 +35,26 @@
                     <code class="codeWordB"><span class="current-turnover">0</span>/<span class="total-turnover">0</span></code>
                 </div>
             </section>
+
+            <section class="mt-3">
+                <h6 class="fw-light"><?=lang('Label.winoverwithdrawal');?></h6>
+                <div class="justify-content-between align-items-center">
+                    <section class="progress winover-progress">
+                        <div class="progress-bar progress-bar-striped bg-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                    </section>
+                    <code class="codeWordB"><span class="current-winover">0</span>/<span class="total-winover">0</span></code>
+                </div>
+            </section>
+
+            <section class="mt-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <h6 class="fw-light m-0 me-2"><?=lang('Label.pendingrebate');?></h6>
+                        <span class="text-success fs-5 pendingRebate">0.00</span>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-sm btn-claimRebate" onclick="claimRebate();"><?=lang('Label.claim');?></button>
+                </div>
+            </section>
         </div>
     </div>
 

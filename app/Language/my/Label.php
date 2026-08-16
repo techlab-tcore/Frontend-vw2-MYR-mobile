@@ -171,6 +171,8 @@ return [
     'chgAcc' => 'Tukar Akaun',
 
     'turnoverwithdrawal' => 'Perolehan untuk Pengeluaran',
+    'winoverwithdrawal' => 'Winover untuk Pengeluaran',
+    'pendingrebate' => 'Jumlah Tertangguh',
     'curBalance' => 'Sertakan Baki',
     'tdyBO' => 'Pertaruhan Hari Ini',
     'ydyBO' => 'Pertaruhan Semalam',

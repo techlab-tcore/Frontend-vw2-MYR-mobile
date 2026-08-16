@@ -730,6 +730,24 @@
 </section>
 <!-- End Game Rules -->
 
+<!-- Maintenance modal -->
+ <section class="modal fade modal-maintenance" id="modal-maintenance" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-maintenance" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <article class="modal-content border-0">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bx bxs-megaphone me-1"></i>Maintenance</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="row g-2 p-3">
+                    Maintenance in Progress
+                </div>
+            </div>
+        </article>
+    </div>
+</section>
+<!-- End of maintenance modal -->
+
 <script src="<?=base_url('assets/vendors/bootstrap/js/bootstrap.bundle.min.js');?>"></script>
 <script src="<?=base_url('assets/vendors/sweetalert2/sweetalert2.min.js');?>"></script>
 <script src="<?=base_url('assets/vendors/airdatepicker/js/datepicker.min.js');?>"></script>
@@ -1481,7 +1499,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 });
 
                 //block lotto credit-in
-                if ( params['provider'] == 'GD8' || params['provider'] == 'GDS' )
+                if ( params['provider']=='GDV' || params['provider']=='GDSV' || params['provider']=='GD8V' )
                 {
                     $.post('/game/lobby/openlotto', {
                         params

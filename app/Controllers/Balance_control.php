@@ -265,6 +265,21 @@ class Balance_control extends BaseController
                     default: $status = '---';
                 endswitch;
 
+                if( $ph['cancelled'] == true ):
+                    switch($ph['rtAction']):
+                        case 1: $cancel = '<span class="badge bg-danger fw-normal ms-1">CANCEL</span>'; break;
+                        case 2: $cancel = '<span class="badge bg-danger fw-normal ms-1">RESET</span>'; break;
+                        default: $cancel = '';
+                    endswitch;
+                    //$cancel = '<span class="badge bg-danger fw-normal ms-1"><i class="bx bx-x"></i></span>';
+                else:
+                    switch($ph['rtAction']):
+                        case 1: $cancel = '<span class="badge bg-danger fw-normal ms-1">CANCEL</span>'; break;
+                        case 2: $cancel = '<span class="badge bg-danger fw-normal ms-1">RESET</span>'; break;
+                        default: $cancel = '';
+                    endswitch;
+                endif;
+
                 switch($ph['type']):
                     case 1: $type = lang('Label.deposit'); break;
                     case 2: $type = lang('Label.withdrawal'); break;
@@ -415,5 +430,14 @@ class Balance_control extends BaseController
         else:
             echo json_encode(['no data']);
         endif;
+    }
+
+    public function claimPendingRebate()
+    {
+        $payload = [
+            'userid' => $_SESSION['token']
+        ];
+        $res = $this->balance_model->claimRebate($payload);
+        echo json_encode($res);
     }
 }

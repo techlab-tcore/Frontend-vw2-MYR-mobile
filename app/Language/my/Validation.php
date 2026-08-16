@@ -20,6 +20,7 @@ return [
     'openinsmartphone' => 'Sila buka permainan ini menggunakan Smart-Phone',
     'transferminamount' => 'Amaun pindahan mestilah lebih besar daripada jumlah deposit minimum MYR 20',
     'receipt' => 'Resit Diperlukan Untuk Bank Sasaran',
+    'filesizelimit' => 'Saiz fail tidak boleh melebihi {0}MB.',
     'newpass' => 'Kata Laluan Baru dengan minimum 6 huruf dan digit. Watak istimewa tidak dibenarkan.',
     'smstac' => 'TAC SMS tidak betul.',
     'tacexceed' => 'Jika TAC tidak berjaya menerima lebih daripada 2 kali, sila klik pada perkhidmatan pelanggan WhatsApp seperti di bawah untuk memintanya.',

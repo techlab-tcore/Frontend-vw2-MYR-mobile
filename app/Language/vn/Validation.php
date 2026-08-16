@@ -20,6 +20,7 @@ return [
     'openinsmartphone' => 'Vui lòng mở trò chơi này bằng Điện thoại thông minh',
     'transferminamount' => 'Số tiền chuyển phải lớn hơn số tiền gửi tối thiểu là 20 MYR',
     'receipt' => 'Yêu cầu phải có biên lai đối với Ngân hàng mục tiêu',
+    'filesizelimit' => 'Kích thước tệp không được vượt quá {0}MB.',
     'newpass' => 'Mật khẩu mới có tối thiểu 6 chữ cái và chữ số. Ký tự đặc biệt được phép.',
     'smstac' => 'Mã SMS TAC không chính xác.',
     'tacexceed' => 'Nếu TAC không nhận được thành công trong hơn 2 lần, vui lòng nhấp vào WhatsApp dịch vụ khách hàng như bên dưới để yêu cầu.',

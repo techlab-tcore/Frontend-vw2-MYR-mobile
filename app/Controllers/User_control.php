@@ -192,6 +192,8 @@ class User_control extends BaseController
             $dob = $res['data']['dob'];
             $region = $res['data']['regionCode'];
             $contact = $res['data']['contact'];
+            $winoverAmount = $res['data']['winoverAmount'];
+            $rebateAmount = $res['data']['pendingRebate'];
 
             $date = Time::parse(date('Y-m-d H:i:s', strtotime($res['data']['createDate'])));
             $created = $date->toDateTimeString();
@@ -275,7 +277,10 @@ class User_control extends BaseController
                 'totalTurnover' => bcdiv($totalTurnover,1,2),
                 'dob' => $dob,
                 'region' => $region,
-                'contact' => $contact
+                'contact' => $contact,
+                'pendingRebate' => bcdiv($rebateAmount,1,2),
+                'currentBalance' => bcdiv($userBalance,1,2),
+                'winoverAmount' => bcdiv($winoverAmount,1,2)
             ];
             echo json_encode($result);
         else:
@@ -519,7 +524,6 @@ class User_control extends BaseController
     public function editProfile()
     {
         if( !session()->get('logged_in') ): return false; endif;
-
 
         $payload = [
             'userid' => $_SESSION['token'],

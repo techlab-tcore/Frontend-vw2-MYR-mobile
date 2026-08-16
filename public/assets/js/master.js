@@ -107,6 +107,27 @@ function refreshBalance()
                 $('.current-turnover').html(obj.currentTurnover);
                 $('.total-turnover').html(obj.totalTurnover);
                 
+                const currentWin = (obj.balance / obj.winoverAmount) * 100;
+                let resultWin;
+                if( isNaN(currentWin) || obj.winoverAmount == 0 ) {
+                    resultWin = 0;
+                } else {
+                    resultWin = currentWin;
+                }
+                $('.winover-progress .progress-bar').css('width',parseFloat(resultWin).toFixed(2)+'%');
+                $('.winover-progress .progress-bar').attr('aria-valuenow',parseFloat(resultWin).toFixed(2));
+                $('.winover-progress .progress-bar').html(parseFloat(resultWin).toFixed(2)+'%');
+                if( obj.winoverAmount==0 ) {
+                    $('.current-winover').html(obj.winoverAmount);
+                    $('.total-winover').html(obj.winoverAmount);
+                } else {
+                    $('.current-winover').html(obj.currentBalance);
+                    $('.total-winover').html(obj.winoverAmount);
+                }
+
+                $('.pendingRebate').html(' <small class="Ecurrency">MYR </small>' + obj.pendingRebate);
+                $('.btn-claimRebate').prop('disabled', parseFloat(obj.pendingRebate) == 0);
+                
                 var userCreated = document.getElementsByClassName("userCreated");
                 if( !!userCreated ) {
                     $('.userCreated').html(obj.userCreated);

@@ -139,7 +139,7 @@
                             <div class="row mb-3">
                                 <label class="col-xl-4 col-lg-4 col-md-4 col-12 col-form-label color-55vp3"><?=lang('Input.uploadreceipt');?> <span class="text-danger">*</span></label>
                                 <div class="col-xl-8 col-lg-8 col-md-8 col-12">
-                                    <input class="form-control" type="file" id="receipt" name="receipt" required>
+                                    <input class="form-control" type="file" id="receipt" name="receipt" accept=".png,.jpg,.jpeg,.pdf,image/png,image/jpeg,application/pdf" required>
                                 </div>
                             </div>
                             <!-- <div class="row mb-3">
@@ -412,12 +412,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 return false;
             }
 
-            // const promoExist = $('.pgatewayForm #promo-list').html();
+            const promoExist = $('.pgatewayForm #promo-list').html();
             // alert(promoExist.length);
-            // if( promoExist.length>0 )
-            // {
-                // if( params['promotion']=='' )
-                // {
+            if( promoExist.length>0 )
+            {
+                if( params['promotion']=='' )
+                {
                     swal.fire({
                         backdrop: true,
                         allowOutsideClick: false,
@@ -438,14 +438,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         }
                     });
                     return false;
-                // } else {
-                //     beforePGDeposit(params);
-                //     //submitPGatetway(params);
-                // }
-            // } else {
-            //     beforePGDeposit(params);
-            //     //submitPGatetway(params);
-            // }
+                } else {
+                     beforePGDeposit(params);
+                     //submitPGatetway(params);
+                }
+            } else {
+                 beforePGDeposit(params);
+                 //submitPGatetway(params);
+            }
         }
     });
 
@@ -459,6 +459,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
             const imgSource = $('.bankTransferForm [name=receipt]')[0].files[0];
             const img = $('.bankTransferForm [name=receipt]')[0].files[0]['name'];
             const ext = img.substr( (img.lastIndexOf('.') +1) );
+
+            const allowedExt = ['png','jpg','jpeg','pdf'];
+            const allowedMime = ['image/png','image/jpeg','application/pdf'];
+            if( !allowedExt.includes(ext.toLowerCase()) || !allowedMime.includes(imgSource.type) )
+            {
+                swal.fire('Warning', 'Only PNG, JPG, JPEG or PDF files are allowed.', 'warning');
+                $('.bankTransferForm [type=submit]').prop('disabled', false);
+                return;
+            }
+
+            const maxSizeMB = 10;
+            if( imgSource.size > maxSizeMB * 1024 * 1024 )
+            {
+                swal.fire('Warning', '<?=lang('Validation.filesizelimit',[10]);?>', 'warning');
+                $('.bankTransferForm [type=submit]').prop('disabled', false);
+                return;
+            }
 
             let timestamp = Math.floor(Date.now() / 1000);
             const userstamp = '<?=isset($_SESSION['username'])?$_SESSION['username']:'';?>';
@@ -545,7 +562,7 @@ function submitPGatetway(params)
     }, function(data, status) {
         const obj = JSON.parse(data);
         if( obj.code==1 ) {
-            if ( params['bankid'] == btoa('<?=$_ENV['payessence'];?>') || params['bankid'] == btoa('<?=$_ENV['peEwallet'];?>') ) {
+            if ( params['bankid'] == btoa('<?=$_ENV['payessence'];?>') || params['bankid'] == btoa('<?=$_ENV['peEwallet'];?>') || params['bankid'] == btoa('<?=$_ENV['dgpay'];?>') ) {
                 var pgParams = {};
                 pgParams['paymentid'] = obj.paymentId;
 
@@ -553,6 +570,7 @@ function submitPGatetway(params)
                     params: pgParams
                 }, function(data2, status2) {
                     const obj2 = JSON.parse(data2);
+
                     if( obj2.code==1 ) {
                         if( obj.paymentGatewayParams.channelcode!='USDT' && params['bankid']!=btoa('<?=$_ENV['payessence'];?>') && params['bankid']!=btoa('<?=$_ENV['peEwallet'];?>') && params['bankid']!=btoa('<?=$_ENV['bigpay'];?>') )
                         {
@@ -567,7 +585,7 @@ function submitPGatetway(params)
                             node.seamless;
                             document.getElementById("depositScreen").appendChild(node);
                         } else {
-                            byPassBlockPopUp("https://vw2.myv288.com" + obj2.url);
+                            byPassBlockPopUp(obj2.url);
                         }
                     } else {
                         swal.fire("Error!", obj2.message + " (Code: "+obj2.code+")", "error").then(() => {

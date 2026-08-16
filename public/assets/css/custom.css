@@ -2142,3 +2142,8 @@ Bank account
 .fs-p8{
     font-size: 0.8rem !important;
 }
+
+.affButton{
+    width: 35px;
+    height: 35px;
+}

@@ -48,13 +48,14 @@
         <!-- End Desktop -->
 
         <!-- Mobile -->
-        <div class="d-xl-none d-lg-none d-md-none d-inline-block">
+        <div class="d-xl-none d-lg-none d-md-none d-flex align-items-center">
             <?php if( !isset($_SESSION['logged_in']) ): ?>
                 <button type="button" class="btn btn-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target=".modal-login"><?=lang('Nav.login');?></button>
                 <!-- <a class="btn btn-secondary btn-sm me-2" href="<?//=base_url('create-account');?>"><?//=lang('Nav.join');?></a> -->
             <?php else: ?>
                 <!-- <span class="me-3" onclick="refreshBalance()"><i class='bx bxs-coin-stack me-1'></i><span class="userBalance text-success"></span></span> -->
-                <span class="me-3"><?=$_SESSION['username'];?></span>
+                <span><?=$_SESSION['username'];?></span>
+                <span class="me-2"><a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target=".modal-affiliateQR"><img class="affButton" src="<?=base_url('assets/img/affiliate.png');?>" alt="affiliate"></a></span>
             <?php endif; ?>
         </div>
 

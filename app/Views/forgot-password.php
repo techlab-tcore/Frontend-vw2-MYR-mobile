@@ -300,16 +300,36 @@ function requestSmsTac(dom)
 
         if( tacmethod==="whatsapp" && contact!==''  ) {
 
+            //disable get tac option and allow readonly
+            const otpMethodBtn = document.getElementById('tacmethod');
+            otpMethodBtn.disabled = true;
+            $('.forgotPassForm [name=mobile]').prop('readonly', true);
+
+            $('.btn-tac').prop('disabled', true);
+
             whatsappTAC2(contact, regioncode);
         }
         else if (tacmethod === 'sms' && contact !== '') {
+
+            //disable get tac option and allow readonly
+            const otpMethodBtn = document.getElementById('tacmethod');
+            otpMethodBtn.disabled = true;
+            $('.forgotPassForm [name=mobile]').prop('readonly', true);
+
+            $('.btn-tac').prop('disabled', true);
 
             var pass = Math.floor(100 + Math.random() * 900000);
             sms(contact, pass, regioncode);
 
         } else if (tacmethod === 'sms2' && contact !== '') {
 
-            var pass = Math.floor(100 + Math.random() * 900000);
+            //disable get tac option and allow readonly
+            const otpMethodBtn = document.getElementById('tacmethod');
+            otpMethodBtn.disabled = true;
+            $('.forgotPassForm [name=mobile]').prop('readonly', true);
+
+            $('.btn-tac').prop('disabled', true);
+
             GlobalSMSTAC(contact, regioncode);
 
         } else if( obj.code==39 ) {

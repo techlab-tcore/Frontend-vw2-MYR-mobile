@@ -15,7 +15,7 @@ class Lossrebate_model extends Model
 
     public function updateLossRebate2($where)
 	{
-		$data = array_merge(['lang'=>$_SESSION['lang'], 'sessionid'=>$_SESSION['session'], 'agentid'=>$_ENV['admin']], $where);
+		$data = array_merge(['lang'=>$_SESSION['lang'], 'sessionid'=>$_SESSION['session'], 'agentid'=>$_ENV['host']], $where);
 		$payload = json_encode($data);
         
         $ch = curl_init($this->approve2);
@@ -37,7 +37,7 @@ class Lossrebate_model extends Model
 
     public function updateLossRebate($where)
 	{
-		$data = array_merge(['lang'=>$_SESSION['lang'], 'sessionid'=>$_SESSION['session'], 'agentid'=>$_ENV['admin']], $where);
+		$data = array_merge(['lang'=>$_SESSION['lang'], 'sessionid'=>$_SESSION['session'], 'agentid'=>$_ENV['host']], $where);
 		$payload = json_encode($data);
         
         $ch = curl_init($this->approve);

@@ -172,7 +172,8 @@ return [
     'chgAcc' => 'Change Account',
 
     'turnoverwithdrawal' => 'Turnover for Withdrawal',
-
+    'winoverwithdrawal' => 'Winover for Withdrawal',
+    'pendingrebate' => 'Pending Amount',
     'personalinfo' => 'Personal Info',
     'setupdob' => 'Setup Date of Birth',
     'profile' => 'Profile',

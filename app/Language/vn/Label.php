@@ -172,6 +172,8 @@ return [
     'chgAcc' => 'Thay đổi tài khoản',
     
     'turnoverwithdrawal' => 'Doanh thu để rút tiền',
+    'winoverwithdrawal' => 'Winover để rút tiền',
+    'pendingrebate' => 'số tiền đang chờ xử lý',
     'curBalance' => 'Bao gồm số dư',
     'tdyBO' => 'Các cược hôm nay',
     'ydyBO' => 'Các cược hôm qua',

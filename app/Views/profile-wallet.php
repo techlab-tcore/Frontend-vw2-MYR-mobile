@@ -32,6 +32,23 @@
             <code class="codeWord"><span class="current-turnover">0</span>/<span class="total-turnover">0</span></code>
         </div>
     </section>
+    <section class="mt-3">
+        <h6 class="fw-light"><?=lang('Label.winoverwithdrawal');?></h6>
+        <div class="justify-content-between align-items-center">
+            <section class="progress winover-progress">
+                <div class="progress-bar progress-bar-striped bg-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+            </section>
+            <code class="codeWord"><span class="current-winover">0</span>/<span class="total-winover">0</span></code>
+        </div>
+    </section>
+    <dl class="row m-0 g-0 my-2">
+        <dd class="col-xl-8 col-lg-8 col-md-8 col-6 m-0 position-relative">
+            <span class="d-block pt-4"><?=lang('Label.pendingrebate');?></span><p class="color-major fs-2 m-0 pendingRebate">MYR 0.00</p>
+        </dd>
+        <dd class="col-xl-4 col-lg-4 col-md-4 col-12 m-0 d-flex align-items-center justify-content-center">
+            <button type="button" class="btn btn-primary btn-lg shadow btn-claimRebate" onclick="claimRebate();"><?=lang('Label.claim');?></button>
+        </dd>
+    </dl>
 </section>
 <!-- End Desktop -->
 
@@ -70,6 +87,23 @@
             <code class="codeWord"><span class="current-turnover">0</span>/<span class="total-turnover">0</span></code>
         </div>
     </section>
+    <section class="mt-3">
+        <h6 class="fw-light"><?=lang('Label.winoverwithdrawal');?></h6>
+        <div class="justify-content-between align-items-center">
+            <section class="progress winover-progress">
+                <div class="progress-bar progress-bar-striped bg-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+            </section>
+            <code class="codeWord"><span class="current-winover">0</span>/<span class="total-winover">0</span></code>
+        </div>
+    </section>
+    <dl class="row m-0 g-0 my-2">
+        <dd class="col-xl-8 col-lg-8 col-md-8 col-6 m-0 position-relative">
+            <span class="d-block pt-4"><?=lang('Label.pendingrebate');?></span><p class="color-major fs-2 m-0 pendingRebate">MYR 0.00</p>
+        </dd>
+        <dd class="col-xl-4 col-lg-4 col-md-4 col-12 m-0 d-flex align-items-center justify-content-center">
+            <button type="button" class="btn btn-primary btn-lg shadow btn-claimRebate" onclick="claimRebate();"><?=lang('Label.claim');?></button>
+        </dd>
+    </dl>
     <!--
     <div class="pt-3 btn-profileWallet <?//=$_SESSION['lang'];?>">
         <a class="btn btn-outline-secondary btn-sm text-decoration-none text-uppercase" data-click="deposit" href="<?//=base_url('user-account/deposit');?>"><?//=lang('Nav.deposit');?></a>

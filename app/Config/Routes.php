@@ -63,6 +63,7 @@ $routes->get('user/initial/bank-account', 'General_control::index_setupFirstBank
 $routes->get('forgot-password', 'General_control::index_forgotPassword');
 $routes->get('user-account/ewallet', 'General_control::index_ewallet', ['filter' => 'preauth']);
 $routes->get('user-account/deposit', 'General_control::index_deposit', ['filter' => 'preauth']);
+$routes->get('user-account/deposit/(:any)', 'General_control::index_depositp/$1', ['filter' => 'preauth']);
 $routes->get('user-account/withdrawal', 'General_control::index_withdrawal', ['filter' => 'preauth']);
 $routes->get('user-balance-transfer', 'General_control::index_userTransfer', ['filter' => 'preauth']);
 $routes->get('history/user-balance-transfer', 'General_control::index_userTransferHistory', ['filter' => 'preauth']);
@@ -117,6 +118,7 @@ $routes->post('payment/withdrawal/add', 'Balance_control::withdrawal', ['filter'
 $routes->post('payment/promotion-claim', 'Balance_control::claimPromotion', ['filter' => 'auth']);
 $routes->post('payment/getPGUrl', 'Balance_control::pgUrl', ['filter' => 'auth']);
 $routes->post('transaction/permission', 'Balance_control::approvalPermission', ['filter' => 'auth']);
+$routes->post('payment/claimpendingrebate', 'Balance_control::claimPendingRebate', ['filter' => 'auth']);
 
 $routes->resource('Bankcard_control');
 $routes->get('list/bank-account/company', 'Bankcard_control::companyBankCard', ['filter' => 'auth']);

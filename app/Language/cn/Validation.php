@@ -20,6 +20,7 @@ return [
     'openinsmartphone' => '请使用智能手机打开此游戏',
     'transferminamount' => '转账金额必须大于最低存款金额 MYR 20',
     'receipt' => '目标银行需要收据',
+    'filesizelimit' => '文件大小不得超过 {0}MB。',
     'newpass' => '新密码最少包含6个字母和数字。不允许使用特殊字符。',
     'smstac' => '手机验证码错误。',
     'tacexceed' => '验证码（TAC）接收第二次后不成功请点击下面WhatsApp客服索取',

@@ -867,6 +867,30 @@ class Game_control extends BaseController
         endif;
     }
 
+    public function gameBetTTO()
+    {
+        if( !session()->get('logged_in') ): return false; endif;
+
+        $start = $_POST['params']['start'] ?? null;
+        $end   = $_POST['params']['end'] ?? null;
+
+        if( !empty($start) && !empty($end) ):
+            $from = date('c', strtotime(date('Y-m-d 00:00:00', strtotime($start))));
+            $to = date('c', strtotime(date('Y-m-d 23:59:59', strtotime($end))));
+        else:
+            $from = date('c', strtotime(date('Y-m-d 00:00:00')));
+            $to = date('c', strtotime(date('Y-m-d 23:59:59')));
+        endif;
+
+        $payload = $this->game_model->selectAllGameBetLog([
+            'userid' => $_SESSION['token'],
+            'fromdate' => $from,
+            'todate' => $to,
+            'desc' => true
+        ]);
+        echo json_encode($payload);
+    }
+
     public function gameCreditLog()
     {
         if( !session()->get('logged_in') ): return false; endif;
@@ -1583,7 +1607,7 @@ class Game_control extends BaseController
         $game = '';
 		if( $provider['code']==1 && $provider['data']!=[] ):
 			foreach( $provider['data'] as $s ):
-				if( \in_array($s['code'], ['GDV', 'GDSV', 'DG8V'], true) ) continue;
+				if( \in_array($s['code'], ['GDV', 'GDSV', 'GD8V'], true) ) continue;
 				if( $data['session']==true ):
 					if( $s['category']==$gameType && $s['status']==1 ):
 						// if( $s['code']=='GD8' || $s['code']=='MN8' || $s['code']=='GD2' ):

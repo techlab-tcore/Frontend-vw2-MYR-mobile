@@ -20,6 +20,7 @@ return [
     'openinsmartphone' => 'Please open this game using Smart-Phone',
     'transferminamount' => 'Transfer amount must be greater than mininum deposit amount MYR 20',
     'receipt' => 'Receipt Is Required For Target Bank',
+    'filesizelimit' => 'File size must not exceed {0}MB.',
     'newpass' => 'New Password with minimum 6 letters and digits. Special character is allow.',
     'smstac' => 'The SMS TAC is incorrect.',
     'tacexceed' => 'If the TAC is not receiving successfully for more than 2 times, please click on the customer service WhatsApp as below to request it.',

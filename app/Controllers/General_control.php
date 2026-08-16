@@ -335,6 +335,21 @@ class General_control extends BaseController
 		echo view('template/end');
 	}
 
+	public function index_depositp($promoid)
+	{
+		if( !session()->get('logged_in') ): return false; endif;
+		$data['session'] = session()->get('logged_in') ? true : false;
+
+		$data['secTitle'] = lang('Nav.deposit');
+		$data['promoid'] = base64_encode($promoid);
+		
+		echo view('template/start');
+		echo view('template/header');
+        echo view('transaction/deposit', $data);
+		echo view('template/footer', $data);
+		echo view('template/end');
+	}
+
 	public function index_ewallet()
 	{
 		if( !session()->get('logged_in') ): return false; endif;
@@ -641,6 +656,16 @@ class General_control extends BaseController
 				$date2 = Time::parse(date('Y-m-d H:i:s', strtotime($p['endDate'])));
                 $endDate = $date2->toDateTimeString();
 
+				$promoID = base64_encode($p['promotionId']);
+
+				if( isset($p['blockReason']) && $p['blockReason']==1 ):
+					$imgStyle = '';
+					$claimDisabled = '';
+				else:
+					$imgStyle = ' style="filter: grayscale(100%); opacity: 0.5;"';
+					$claimDisabled = ' disabled style="pointer-events: none; opacity: 0.5;"';
+				endif;
+
 				$allPromo .= '<li class="col-xl-12 col-lg-12 col-md-12 col-12">';
 				$allPromo .= '<div class="container">';
 				$allPromo .= '<article class="row g-0">';
@@ -653,6 +678,9 @@ class General_control extends BaseController
 				$allPromo .= '<h4 class="m-0 pb-2 promoSubject">'.$p['title'][$lng].'</h4>';
 				$allPromo .= '<div class="w-100 mt-auto">';
 				$allPromo .= '<button type="button" class="btn btn-primary text-uppercase shadow-sm" onclick="getPromo(\''.base64_encode($p['promotionId']).'\');">'.lang('Nav.rules').'</button>';
+				if( session()->get('logged_in')):
+					$allPromo .= '<a class="btn btn-primary text-uppercase shadow-sm ms-2" href="user-account/deposit/'.$promoID.'">'.lang('Label.claim').'</a>';
+				endif;
 				$allPromo .= '</div>';
 				$allPromo .= '</div>';
 
@@ -680,6 +708,9 @@ class General_control extends BaseController
 					$promoNewMember .= '<h4 class="m-0 pb-2 promoSubject">'.$p['title'][$lng].'</h4>';
 					$promoNewMember .= '<div class="w-100 mt-auto">';
 					$promoNewMember .= '<button type="button" class="btn btn-primary text-uppercase shadow-sm" onclick="getPromo(\''.base64_encode($p['promotionId']).'\');">'.lang('Nav.rules').'</button>';
+					if( session()->get('logged_in')):
+						$promoNewMember .= '<a class="btn btn-primary text-uppercase shadow-sm ms-2" href="user-account/deposit/'.$promoID.'">'.lang('Label.claim').'</a>';
+					endif;
 					$promoNewMember .= '</div>';
 					$promoNewMember .= '</div>';
 
@@ -736,6 +767,9 @@ class General_control extends BaseController
 					$promoSport .= '<h4 class="m-0 pb-2 promoSubject">'.$p['title'][$lng].'</h4>';
 					$promoSport .= '<div class="w-100 mt-auto">';
 					$promoSport .= '<button type="button" class="btn btn-primary text-uppercase shadow-sm" onclick="getPromo(\''.base64_encode($p['promotionId']).'\');">'.lang('Nav.rules').'</button>';
+					if( session()->get('logged_in')):
+						$promoNewMember .= '<a class="btn btn-primary text-uppercase shadow-sm ms-2" href="user-account/deposit/'.$promoID.'">'.lang('Label.claim').'</a>';
+					endif;					
 					$promoSport .= '</div>';
 					$promoSport .= '</div>';
 
@@ -764,6 +798,9 @@ class General_control extends BaseController
 					$promoSlot .= '<h4 class="m-0 pb-2 promoSubject">'.$p['title'][$lng].'</h4>';
 					$promoSlot .= '<div class="w-100 mt-auto">';
 					$promoSlot .= '<button type="button" class="btn btn-primary text-uppercase shadow-sm" onclick="getPromo(\''.base64_encode($p['promotionId']).'\');">'.lang('Nav.rules').'</button>';
+					if( session()->get('logged_in')):
+						$promoSlot .= '<a class="btn btn-primary text-uppercase shadow-sm ms-2" href="user-account/deposit/'.$promoID.'">'.lang('Label.claim').'</a>';
+					endif;					
 					$promoSlot .= '</div>';
 					$promoSlot .= '</div>';
 
@@ -792,6 +829,9 @@ class General_control extends BaseController
 					$promoCasino .= '<h4 class="m-0 pb-2 promoSubject">'.$p['title'][$lng].'</h4>';
 					$promoCasino .= '<div class="w-100 mt-auto">';
 					$promoCasino .= '<button type="button" class="btn btn-primary text-uppercase shadow-sm" onclick="getPromo(\''.base64_encode($p['promotionId']).'\');">'.lang('Nav.rules').'</button>';
+					if( session()->get('logged_in')):
+						$promoCasino .= '<a class="btn btn-primary text-uppercase shadow-sm ms-2" href="user-account/deposit/'.$promoID.'">'.lang('Label.claim').'</a>';
+					endif;					
 					$promoCasino .= '</div>';
 					$promoCasino .= '</div>';
 

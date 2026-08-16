@@ -172,6 +172,8 @@ return [
     'chgAcc' => '变更账户',
 
     'turnoverwithdrawal' => '提款流水值',
+    'winoverwithdrawal' => '提款赢额值',
+    'pendingrebate' => '待付金额',    
     'curBalance' => '带入余额',
     'tdyBO' => '今日押注',
     'ydyBO' => '昨日押注',
